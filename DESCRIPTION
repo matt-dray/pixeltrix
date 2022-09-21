@@ -1,0 +1,13 @@
+Package: pixeltrix
+Title: Create Matrices from Users' Pixel Art
+Version: 0.0.0.9000
+Authors@R: 
+    person("Matt", "Dray", , "mwdray@gmail.com", role = c("aut", "cre"))
+Description: A Shiny app where the user interactively draws a 'pixel art' image
+    and it gets converted into a copyable matrix object.
+License: MIT + file LICENSE
+URL: https://github.com/matt-dray/pixeltrix
+BugReports: https://github.com/matt-dray/pixeltrix/issues
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2
