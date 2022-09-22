@@ -18,7 +18,7 @@ A work-in-progress R package for interactive pixel art in the plot window.
 You can install it from GitHub:
 
 ``` r
-install.packages("pixeltrix")  # if not yet installed
+install.packages("remotes")  # if not yet installed
 remotes::install_github("matt-dray/pixeltrix")
 ```
 
