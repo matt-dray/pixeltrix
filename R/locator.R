@@ -1,25 +1,28 @@
 #' Create Pixel Art, Get a Matrix
 #'
-#' A provided matrix will be opened in the plotting window as a grid of
+#' A plotting canvas will be opened with the provided dimensions with a grid of
 #' clickable squares. These can be clicked between 'on' and 'off' states.
 #' Press ESCAPE to exit the interactive mode and be returned a matrix with the
 #' updated values.
 #'
-#' @param m A matrix. Can only contain values of 0 and 1.
+#' @param n_rows Integer. The number of 'pixels' high that the plot should be.
+#' @param n_cols Integer. The number of 'pixels' wide that the plot should be.
+#'
+#' @details Numeric inputs will be converted to integers.
 #'
 #' @return A matrix.
 #'
 #' @export
 #'
 #' @examples \dontrun{
-#' m <- matrix(sample(c(0, 1), 12, replace = TRUE), nrow = 3, ncol = 4)
-#' click_pixels(m)
+#' click_pixels(3, 4)
 #' }
-click_pixels <- function(m) {
+click_pixels <- function(n_rows = 8L, n_cols = 16L) {
 
-  if (!unique(as.vector(m)) %in% c(0, 1)) {
-    stop("The matrix 'm' can only take values of 0 and 1.")
-  }
+  n_rows <- as.integer(n_rows)
+  n_cols <- as.integer(n_cols)
+
+  m <- matrix(0, n_rows, n_cols)
 
   .plot_grid(m)
 

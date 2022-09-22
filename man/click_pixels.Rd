@@ -4,23 +4,27 @@
 \alias{click_pixels}
 \title{Create Pixel Art, Get a Matrix}
 \usage{
-click_pixels(m)
+click_pixels(n_rows = 8L, n_cols = 16L)
 }
 \arguments{
-\item{m}{A matrix. Can only contain values of 0 and 1.}
+\item{n_rows}{Integer. The number of 'pixels' high that the plot should be.}
+
+\item{n_cols}{Integer. The number of 'pixels' wide that the plot should be.}
 }
 \value{
 A matrix.
 }
 \description{
-A provided matrix will be opened in the plotting window as a grid of
+A plotting canvas will be opened with the provided dimensions with a grid of
 clickable squares. These can be clicked between 'on' and 'off' states.
 Press ESCAPE to exit the interactive mode and be returned a matrix with the
 updated values.
 }
+\details{
+Numeric inputs will be converted to integers.
+}
 \examples{
 \dontrun{
-m <- matrix(sample(c(0, 1), 12, replace = TRUE), nrow = 3, ncol = 4)
-click_pixels(m)
+click_pixels(3, 4)
 }
 }
