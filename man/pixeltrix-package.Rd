@@ -4,9 +4,9 @@
 \name{pixeltrix-package}
 \alias{pixeltrix}
 \alias{pixeltrix-package}
-\title{pixeltrix: Create Matrices from Users' Pixel Art}
+\title{pixeltrix: Convert Interactive Pixel Art to a Matrix}
 \description{
-A Shiny app where the user interactively draws a 'pixel art' image and it gets converted into a copyable matrix object.
+An interactive 'app' where the user interactively clicks 'pixels' in an image and it's converted into a matrix object.
 }
 \seealso{
 Useful links:

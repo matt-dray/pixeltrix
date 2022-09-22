@@ -1,15 +1,13 @@
 Package: pixeltrix
-Title: Create Matrices from Users' Pixel Art
-Version: 0.0.0.9001
+Title: Convert Interactive Pixel Art to a Matrix
+Version: 0.0.0.9002
 Authors@R: 
     person("Matt", "Dray", , "mwdray@gmail.com", role = c("aut", "cre"))
-Description: A Shiny app where the user interactively draws a 'pixel art' image
-    and it gets converted into a copyable matrix object.
+Description: An interactive 'app' where the user interactively clicks 'pixels' 
+    in an image and it's converted into a matrix object.
 License: MIT + file LICENSE
 URL: https://github.com/matt-dray/pixeltrix
 BugReports: https://github.com/matt-dray/pixeltrix/issues
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
-Imports: 
-    shiny
