@@ -89,11 +89,14 @@ click_pixels <- function(
 
   m <- t(m[nrow(m):1, ])
 
+  pal <- grDevices::colorRampPalette(c("white", "black"))
+
   graphics::image(
     m,
     zlim = c(0, n),
-    col = grDevices::gray.colors(n + 1, 0, 1, rev = TRUE),
-    xlab = "", ylab = "",
+    col = pal(n + 1),
+    xlab = "",
+    ylab = "",
     axes = FALSE
   )
 
