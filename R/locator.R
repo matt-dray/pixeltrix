@@ -92,7 +92,7 @@ click_pixels <- function(
   graphics::image(
     m,
     zlim = c(0, n),
-    col = gray.colors(n + 1, 0, 1, rev = TRUE),
+    col = grDevices::gray.colors(n + 1, 0, 1, rev = TRUE),
     xlab = "", ylab = "",
     axes = FALSE
   )
@@ -109,8 +109,8 @@ click_pixels <- function(
   y_unit <- 1 / (y_n - 1)
   y_lines <- seq(0 - y_unit - (y_unit / 2), 1 + y_unit + (y_unit / 2), y_unit)
 
-  abline(v = x_lines)
-  abline(h = y_lines)
+  graphics::abline(v = x_lines)
+  graphics::abline(h = y_lines)
 
 }
 
