@@ -4,27 +4,39 @@
 \alias{click_pixels}
 \title{Create Pixel Art, Get a Matrix}
 \usage{
-click_pixels(n_rows = 8L, n_cols = 16L)
+click_pixels(n_rows = 8L, n_cols = 16L, n_states = 2L, grid = TRUE)
 }
 \arguments{
 \item{n_rows}{Integer. The number of 'pixels' high that the plot should be.}
 
 \item{n_cols}{Integer. The number of 'pixels' wide that the plot should be.}
+
+\item{n_states}{Integer. The number of states that a pixel can be. Click a
+pixel to cycle through the states. See details.}
+
+\item{grid}{Logical. Should a boundary line be placed around the pixels to
+make them easier to differentiate? Defaults to TRUE.}
 }
 \value{
 A matrix.
 }
 \description{
 A plotting canvas will be opened with the provided dimensions with a grid of
-clickable squares. These can be clicked between 'on' and 'off' states.
-Press ESCAPE to exit the interactive mode and be returned a matrix with the
-updated values.
+clickable squares. These can be clicked between 'on' and 'off' states, or
+a number of states provided by the user. Press the ESCAPE key to exit the
+interactive mode and be returned a matrix with the updated values.
 }
 \details{
-Numeric inputs will be converted to integers.
+The pixel states are in a zero-indexed sequence, so
+\code{n_states = 2} results in binary values of 0 and 1, while
+\code{n_states = 4} would yield 0, 1, 2 and 3. Clicking a pixel changes
+increases its state value by one. Clicking a pixel with the maximum
+state value will cycle it back to the lowest state value.\preformatted{Pixel colours change from lightest to darkest as you click through
+their states.
+
+Numeric values are coerced to integers.
+}
 }
 \examples{
-\dontrun{
-click_pixels(3, 4)
-}
+\dontrun{click_pixels(3, 4, 4, FALSE)}
 }

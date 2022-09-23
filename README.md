@@ -7,7 +7,7 @@
 [![Codecov test coverage](https://codecov.io/gh/matt-dray/pixeltrix/branch/main/graph/badge.svg)](https://app.codecov.io/gh/matt-dray/pixeltrix?branch=main)
 <!-- badges: end -->
 
-A work-in-progress R package for interactive pixel art in the plot window.
+A simple work-in-progress R package for interactive pixel art in the plot window.
 
 1. Provide dimensions for a pixel-plotting canvas.
 2. It will be plotted as an interactive image.
@@ -24,13 +24,13 @@ install.packages("remotes")  # if not yet installed
 remotes::install_github("matt-dray/pixeltrix")
 ```
 
-Begin the interactive plot:
+Begin the interactive plot with `click_pixels()`. You can set the number of rows and columns of pixels in the plot, set the number of pixel states (defaults to binary) and choose to turn off the grid overlay.
 
 ``` r
 click_pixels(n_row = 8, n_col = 10) -> m
 ```
 
-Click the pixels to turn 'on' and 'off' pixels. Design a little character or something.
+Click individual pixels in the plot to cycle through their states (lightest to darkest). If `n_states = 2` (default), then the pixels are 'off' (0, white) or 'on' (1, grey). Design a little character or something.
 
 <img src="man/figures/little-guy.png" alt="An 8 by 10 pixel grid with a basic character with a big face and little arms and legs.">
 
