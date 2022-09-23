@@ -18,6 +18,8 @@ install.packages("remotes")  # if not yet installed
 remotes::install_github("matt-dray/pixeltrix")
 ```
 
+It's made entirely with base R. Graphics with `image()`, interactive plot-point selection with `locator()`. Wrapped up in a `repeat` loop.
+
 ## How
 
 Begin an interactive plot with `click_pixels()`. You can set the number of rows and columns of pixels in the plot, set the number of pixel states (defaults to binary) and choose to turn off the grid overlay.
