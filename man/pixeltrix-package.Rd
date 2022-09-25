@@ -4,9 +4,9 @@
 \name{pixeltrix-package}
 \alias{pixeltrix}
 \alias{pixeltrix-package}
-\title{pixeltrix: Convert Interactive Pixel Art to a Matrix}
+\title{pixeltrix: Click Pixels and Get a Matrix}
 \description{
-An interactive 'app' where the user interactively clicks 'pixels' in an image and it's converted into a matrix object.
+A simple tool that lets you click ‘pixels’ interactively in a plot window and returns your final image as a matrix.
 }
 \seealso{
 Useful links:

@@ -44,7 +44,7 @@ edit_pixels <- function(m, n_states = NULL, grid = TRUE) {
     }
   }
 
-  if (!is.null(n_states) && n_states < max(m)) {
+  if (!is.null(n_states) && n_states < max(m + 1L)) {
     stop(
       "The number of states, 'n_states', can't be less than ",
       "the maximum value in the provided matrix, 'm'."
