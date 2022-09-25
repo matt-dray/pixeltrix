@@ -1,10 +1,12 @@
 #' Interactive Pixel-Clicking Tool (New Canvas)
 #'
 #' Opens an interactive plotting canvas with a grid of clickable squares
-#' ('pixels'). Click pixels repeatedly to cycle through a number of 'states'.
-#' Successive clicks increase the state value by 1 (wrapping back to 0) and make
-#' the pixel a darker colour. Press the ESCAPE key to exit the interactive mode
-#' and be returned a matrix that contains the state values of each pixel.
+#' ('pixels'). The canvas is 'blank' in that all the values are set initially
+#' to a 'state' of 0. Click pixels repeatedly to cycle through a number of
+#' 'states'. Successive clicks increase the state value by 1 (wrapping back to
+#' 0) and make the pixel a darker colour. Press the ESCAPE key to exit the
+#' interactive mode and be returned a matrix that contains the state values of
+#' each pixel.
 #'
 #' @param n_rows Integer. The number of 'pixels' high that the plot should be.
 #' @param n_cols Integer. The number of 'pixels' wide that the plot should be.

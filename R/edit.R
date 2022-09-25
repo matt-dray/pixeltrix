@@ -1,10 +1,12 @@
 #' Interactive Pixel-Clicking Tool (User-Provided Matrix)
 #'
 #' Opens an interactive plotting canvas with a grid of clickable squares
-#' ('pixels'). Click pixels repeatedly to cycle through a number of 'states'.
-#' Successive clicks increase the state value by 1 (wrapping back to 0) and make
-#' the pixel a darker colour. Press the ESCAPE key to exit the interactive mode
-#' and be returned a matrix that contains the state values of each pixel.
+#' ('pixels') that represent the cells of a matrix provided by the user,
+#' ideally the output from \code{\link{click_pixels}}. Click the pixels in the
+#' plotting window repeatedly to cycle through a number of 'states'. Successive
+#' clicks increase the state value by 1 (wrapping back to 0) and make the pixel
+#' a darker colour. Press the ESCAPE key to exit the interactive mode and be
+#' returned a matrix that contains the state values of each pixel.
 #'
 #' @param m A matrix of integers. The maximum value is assumed to be the number
 #'     of pixel states desired. Override by supplying a 'n_states' value larger

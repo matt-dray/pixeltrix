@@ -8,7 +8,8 @@ edit_pixels(m, n_states = NULL, grid = TRUE)
 }
 \arguments{
 \item{m}{A matrix of integers. The maximum value is assumed to be the number
-of pixel states desired. Can be overriden by supplying n_states.}
+of pixel states desired. Override by supplying a 'n_states' value larger
+than the maximum in the matrix.}
 
 \item{n_states}{Integer. The number of states that a pixel can be. Click a
 pixel to cycle through the states. See details.}
@@ -21,10 +22,12 @@ A matrix.
 }
 \description{
 Opens an interactive plotting canvas with a grid of clickable squares
-('pixels'). Click pixels repeatedly to cycle through a number of 'states'.
-Successive clicks increase the state value by 1 (wrapping back to 0) and make
-the pixel a darker colour. Press the ESCAPE key to exit the interactive mode
-and be returned a matrix that contains the state values of each pixel.
+('pixels') that represent the cells of a matrix provided by the user,
+ideally the output from \code{\link{click_pixels}}. Click the pixels in the
+plotting window repeatedly to cycle through a number of 'states'. Successive
+clicks increase the state value by 1 (wrapping back to 0) and make the pixel
+a darker colour. Press the ESCAPE key to exit the interactive mode and be
+returned a matrix that contains the state values of each pixel.
 }
 \details{
 The pixel states are in a zero-indexed sequence, so
@@ -34,7 +37,7 @@ its state value by 1. Clicking a pixel with the maximum state value
 will cycle it back to the lowest state value of 0.\preformatted{Pixel colours change from lightest to darkest as you click through
 their states.
 
-Numeric values are coerced to integers.
+The numeric value for 'n_states', if provided, will coerced to integers.
 }
 }
 \examples{

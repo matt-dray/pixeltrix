@@ -22,10 +22,12 @@ A matrix.
 }
 \description{
 Opens an interactive plotting canvas with a grid of clickable squares
-('pixels'). Click pixels repeatedly to cycle through a number of 'states'.
-Successive clicks increase the state value by 1 (wrapping back to 0) and make
-the pixel a darker colour. Press the ESCAPE key to exit the interactive mode
-and be returned a matrix that contains the state values of each pixel.
+('pixels'). The canvas is 'blank' in that all the values are set initially
+to a 'state' of 0. Click pixels repeatedly to cycle through a number of
+'states'. Successive clicks increase the state value by 1 (wrapping back to
+0) and make the pixel a darker colour. Press the ESCAPE key to exit the
+interactive mode and be returned a matrix that contains the state values of
+each pixel.
 }
 \details{
 The pixel states are in a zero-indexed sequence, so
@@ -35,7 +37,8 @@ its state value by 1. Clicking a pixel with the maximum state value
 will cycle it back to the lowest state value of 0.\preformatted{Pixel colours change from lightest to darkest as you click through
 their states.
 
-Numeric values are coerced to integers.
+Numeric values provided to 'n_rows', 'n_cols' and 'n_states' are coerced
+to integers.
 }
 }
 \examples{
