@@ -1,6 +1,6 @@
 Package: pixeltrix
 Title: Click Pixels and Get a Matrix
-Version: 0.1.0
+Version: 0.0.0.9004
 Authors@R: 
     person("Matt", "Dray", , "mwdray@gmail.com", role = c("aut", "cre"))
 Description: A simple tool that lets you click ‘pixels’ interactively in a

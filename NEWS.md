@@ -1,4 +1,4 @@
-# pixeltrix 0.1.0
+# pixeltrix 0.0.0.9004
 
 * Added an `edit_pixels()` function so that a matrix created with `click_pixels()` can be updated (#6).
 * Moved support functions to utils.R.
