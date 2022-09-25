@@ -5,41 +5,43 @@
 [![Project Status: Concept – Minimal or no implementation has been done yet, or the repository is only intended to be a limited example, demo, or proof-of-concept.](https://www.repostatus.org/badges/latest/concept.svg)](https://www.repostatus.org/#concept)
 [![R-CMD-check](https://github.com/matt-dray/tamRgo/workflows/R-CMD-check/badge.svg)](https://github.com/matt-dray/tamRgo/actions)
 [![Codecov test coverage](https://codecov.io/gh/matt-dray/pixeltrix/branch/main/graph/badge.svg)](https://app.codecov.io/gh/matt-dray/pixeltrix?branch=main)
+[![Blog post](https://img.shields.io/badge/rostrum.blog-post-008900?labelColor=000000&logo=data%3Aimage%2Fgif%3Bbase64%2CR0lGODlhEAAQAPEAAAAAABWCBAAAAAAAACH5BAlkAAIAIf8LTkVUU0NBUEUyLjADAQAAACwAAAAAEAAQAAAC55QkISIiEoQQQgghRBBCiCAIgiAIgiAIQiAIgSAIgiAIQiAIgRAEQiAQBAQCgUAQEAQEgYAgIAgIBAKBQBAQCAKBQEAgCAgEAoFAIAgEBAKBIBAQCAQCgUAgEAgCgUBAICAgICAgIBAgEBAgEBAgEBAgECAgICAgECAQIBAQIBAgECAgICAgICAgECAQECAQICAgICAgICAgEBAgEBAgEBAgICAgICAgECAQIBAQIBAgECAgICAgIBAgECAQECAQIBAgICAgIBAgIBAgEBAgECAgECAgICAgICAgECAgECAgQIAAAQIKAAAh%2BQQJZAACACwAAAAAEAAQAAAC55QkIiESIoQQQgghhAhCBCEIgiAIgiAIQiAIgSAIgiAIQiAIgRAEQiAQBAQCgUAQEAQEgYAgIAgIBAKBQBAQCAKBQEAgCAgEAoFAIAgEBAKBIBAQCAQCgUAgEAgCgUBAICAgICAgIBAgEBAgEBAgEBAgECAgICAgECAQIBAQIBAgECAgICAgICAgECAQECAQICAgICAgICAgEBAgEBAgEBAgICAgICAgECAQIBAQIBAgECAgICAgIBAgECAQECAQIBAgICAgIBAgIBAgEBAgECAgECAgICAgICAgECAgECAgQIAAAQIKAAA7)](https://www.rostrum.blog/2022/09/24/pixeltrix/)
 <!-- badges: end -->
 
-A simple R package for interactive pixel art in the plot window that returns a matrix.
+A simple R package that lets you select ‘pixels’ interactively from a plot window and returns your final image as a matrix
 
-## Install
+## How to
 
-You can install it [from GitHub](https://github.com/matt-dray/pixeltrix):
+You can install {pixeltrix} [from GitHub](https://github.com/matt-dray/pixeltrix). There are no dependencies.
 
 ``` r
 install.packages("remotes")  # if not yet installed
 remotes::install_github("matt-dray/pixeltrix")
+library(pixeltrix)
 ```
 
-It's made entirely with base R. Graphics with `image()`, interactive plot-point selection with `locator()`. Wrapped up in a `repeat` loop.
+To use:
 
-## How
+1. Begin an interactive plot with `click_pixels()`. You can set the dimensions, the number of clickable 'states' and whether to use a grid overlay.
+2. Click pixels in the plot to cycle through their states (higher values are darker).
+3. Press the <kbd>Esc</kbd> key when you're done, or the 'Finish' button in RStudio's plot window. A matrix is returned that encodes your image.
 
-Begin an interactive plot with `click_pixels()`. You can set the number of rows and columns of pixels in the plot, set the number of pixel states (defaults to binary) and choose to turn off the grid overlay.
+You can supply the matrix output from `click_pixels()` into `edit_pixels()` in order to make changes.
 
-Click individual pixels in the plot to cycle through their states (lightest to darkest). If `n_states = 2` (default), then the pixels are 'off' (0, white) or 'on' (1, grey). 
+## Examples
 
-Press <kbd>Esc</kbd> when you're done. A matrix is returned that encodes your pixel art.
-
-## Binary example
-
-Here's a 1-bit original kuchipatchi sprite from [the original Tamagotchi](https://en.wikipedia.org/wiki/Tamagotchi).
+### Tamagotchi
 
 ``` r
-click_pixels(n_row = 14, n_col = 14) -> m1
+click_pixels(n_row = 14, n_col = 14) -> tam_sprite
 ```
 
 <img src="man/figures/kuchipatchi.png" alt="A 14 by 14 pixel grid with a two-toned sprite of a pet character from the original 90s Tamagotchi pets.">
 
+<details><summary>Click to expand the output matrix.</summary>
+
 ``` r
-m1
+tam_sprite
 #       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
 #  [1,]    0    0    0    0    1    1    1    1    1     1     0     0     0     0
 #  [2,]    0    0    0    1    0    0    0    0    0     0     1     0     0     0
@@ -57,18 +59,20 @@ m1
 # [14,]    0    0    0    0    0    0    1    0    0     0     1     0     0     0
 ```
 
-## Three-tone example
+</details>
 
-Here's the player character from [the first generation of Pokémon games](https://en.wikipedia.org/wiki/Pok%C3%A9mon_Red_and_Blue) on the Game Boy. It uses three states: 0 for white, 1 for light grey, 2 for dark grey.
+### Pokémon
 
 ``` r
-click_pixels(14, 16, n_states = 3) -> m2
+click_pixels(14, 16, n_states = 3) -> poke_sprite
 ```
 
 <img src="man/figures/ash.png" alt="A 14 by 16 pixel grid with a three-toned sprite of the main character from the first generation of Pokemon games for the Game Boy.">
 
+<details><summary>Click to expand the output matrix.</summary>
+
 ``` r
-m2
+poke_sprite
 #       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
 #  [1,]    0    0    0    0    2    2    2    2    2     2     0     0     0     0
 #  [2,]    0    0    0    2    1    1    1    1    1     1     2     0     0     0
@@ -87,3 +91,5 @@ m2
 # [15,]    0    0    2    1    1    1    2    2    1     1     1     2     0     0
 # [16,]    0    0    0    2    2    2    0    0    2     2     2     0     0     0
 ```
+
+</details>
