@@ -7,7 +7,8 @@
 #' and be returned a matrix that contains the state values of each pixel.
 #'
 #' @param m A matrix of integers. The maximum value is assumed to be the number
-#'     of pixel states desired. Can be overriden by supplying n_states.
+#'     of pixel states desired. Override by supplying a 'n_states' value larger
+#'     than the maximum in the matrix.
 #' @param n_states Integer. The number of states that a pixel can be. Click a
 #'     pixel to cycle through the states. See details.
 #' @param grid Logical. Should a boundary line be placed around the pixels to
@@ -22,7 +23,7 @@
 #'     Pixel colours change from lightest to darkest as you click through
 #'     their states.
 #'
-#'     Numeric values are coerced to integers.
+#'     The numeric value for 'n_states', if provided, will coerced to integers.
 #'
 #' @return A matrix.
 #'
@@ -64,30 +65,6 @@ edit_pixels <- function(m, n_states = NULL, grid = TRUE) {
     .add_grid(m)
   }
 
-  repeat {
+  .repeat_loop(m, n_states, grid)
 
-    p <- .locate_on_grid(m)
-
-    if (is.null(p)) {
-
-      break
-
-    } else {
-
-      m <- .update_matrix(m, p, n_states)
-
-      grDevices::dev.off()
-
-      .plot_canvas(m, n_states)
-
-      if (grid) {
-        .add_grid(m)
-      }
-
-    }
-
-  }
-
-  m
-
-  }
+}

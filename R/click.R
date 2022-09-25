@@ -22,7 +22,8 @@
 #'     Pixel colours change from lightest to darkest as you click through
 #'     their states.
 #'
-#'     Numeric values are coerced to integers.
+#'     Numeric values provided to 'n_rows', 'n_cols' and 'n_states' are coerced
+#'     to integers.
 #'
 #' @return A matrix.
 #'
@@ -56,30 +57,6 @@ click_pixels <- function(
     .add_grid(m)
   }
 
-  repeat {
-
-    p <- .locate_on_grid(m)
-
-    if (is.null(p)) {
-
-      break
-
-    } else {
-
-      m <- .update_matrix(m, p, n_states)
-
-      grDevices::dev.off()
-
-      .plot_canvas(m, n_states)
-
-      if (grid) {
-        .add_grid(m)
-      }
-
-    }
-
-  }
-
-  m
+  .repeat_loop(m, n_states, grid)
 
 }

@@ -1,4 +1,34 @@
 
+.repeat_loop <- function(m, n, g) {
+
+  repeat {
+
+    p <- .locate_on_grid(m)
+
+    if (is.null(p)) {
+
+      break
+
+    } else {
+
+      m <- .update_matrix(m, p, n)
+
+      grDevices::dev.off()
+
+      .plot_canvas(m, n)
+
+      if (g) {
+        .add_grid(m)
+      }
+
+    }
+
+  }
+
+  m
+
+}
+
 .plot_canvas <- function(m, n) {
 
   graphics::par(mar = rep(1, 4))
