@@ -35,12 +35,12 @@
 edit_pixels <- function(m, n_states = NULL, grid = TRUE) {
 
   if (!is.matrix(m) | !is.integer(m)) {
-    stop("'m' must be a matrix object composed of integers.")
+    stop("Argument 'm' must be a matrix object composed of integers.")
   }
 
   if (!is.null(n_states)) {
     if (!is.numeric(n_states)) {
-      stop("'n_states' must be an integer value or NULL.")
+      stop("Argument 'n_states' must be an integer value or NULL.")
     }
   }
 
@@ -52,7 +52,7 @@ edit_pixels <- function(m, n_states = NULL, grid = TRUE) {
   }
 
   if (!is.logical(grid)) {
-    stop("'grid' must be TRUE or FALSE.")
+    stop("Argument 'grid' must be TRUE or FALSE.")
   }
 
   if (is.null(n_states)) {

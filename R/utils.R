@@ -9,18 +9,16 @@
 
       break
 
-    } else {
+    }
 
-      m <- .update_matrix(m, p, n)
+    m <- .update_matrix(m, p, n)
 
-      grDevices::dev.off()
+    grDevices::dev.off()
 
-      .plot_canvas(m, n)
+    .plot_canvas(m, n)
 
-      if (g) {
-        .add_grid(m)
-      }
-
+    if (g) {
+      .add_grid(m)
     }
 
   }
@@ -33,14 +31,27 @@
 
   graphics::par(mar = rep(1, 4))
 
-  m <- t(m[nrow(m):1, ])
+  n_rows <- nrow(m)
+  n_cols <- ncol(m)
+
+  if (n_rows > 1 & n_cols > 1) {
+    m <- t(m[nrow(m):1, ])
+  }
+
+  if (n_rows == 1) {
+    m <- t(m)
+  }
+
+  if (n_cols == 1) {
+    m <- t(rev(m))
+  }
 
   pal <- grDevices::colorRampPalette(c("white", "black"))
 
   graphics::image(
     m,
     zlim = c(0, n),
-    col = pal(n + 1),
+    col  = pal(n + 1),
     xlab = "",
     ylab = "",
     axes = FALSE
@@ -51,12 +62,20 @@
 .add_grid <- function(m) {
 
   x_n <- ncol(m)
-  x_unit <- 1 / (x_n - 1)
-  x_lines <- seq(0 - x_unit - (x_unit / 2), 1 + x_unit + (x_unit / 2), x_unit)
+  if (x_n > 1) {
+    x_unit  <- 1 / (x_n - 1)
+    x_lines <- seq(0 - x_unit - (x_unit / 2), 1 + x_unit + (x_unit / 2), x_unit)
+  } else if (x_n == 1) {
+    x_lines <- c(-1, 1)
+  }
 
   y_n <- nrow(m)
-  y_unit <- 1 / (y_n - 1)
-  y_lines <- seq(0 - y_unit - (y_unit / 2), 1 + y_unit + (y_unit / 2), y_unit)
+  if (y_n > 1) {
+    y_unit  <- 1 / (y_n - 1)
+    y_lines <- seq(0 - y_unit - (y_unit / 2), 1 + y_unit + (y_unit / 2), y_unit)
+  } else if (y_n == 1) {
+    y_lines <- c(-1, 1)
+  }
 
   graphics::abline(v = x_lines)
   graphics::abline(h = y_lines)
@@ -65,31 +84,32 @@
 
 .locate_on_grid <- function(m) {
 
-  x_n <- ncol(m)
+  x_n    <- ncol(m)
   x_unit <- 1 / (x_n - 1)
   x_mids <- seq(0, 1, x_unit)
 
-  y_n <- nrow(m)
+  y_n    <- nrow(m)
   y_unit <- 1 / (y_n - 1)
   y_mids <- seq(0, 1, y_unit)
 
   p <- graphics::locator(1)
 
   if (length(p) == 0) {
-
     return(NULL)
-
-  } else {
-
-    x_diffs <- abs(p$x - x_mids)
-    y_diffs <- rev(abs(p$y - y_mids))
-
-    list(
-      x = which.min(x_diffs),
-      y = which.min(y_diffs)
-    )
-
   }
+
+  x_diffs <- abs(p$x - x_mids)
+  y_diffs <- rev(abs(p$y - y_mids))
+
+  p <- list(
+    x = which.min(x_diffs),
+    y = which.min(y_diffs)
+  )
+
+  if (length(p$x) == 0) p$x <- 1
+  if (length(p$y) == 0) p$y <- 1
+
+  return(p)
 
 }
 
