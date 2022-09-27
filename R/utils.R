@@ -39,7 +39,7 @@
   }
 
   if (n_rows == 1) {
-    m <- as.matrix(rev(m))
+    m <- t(m)
   }
 
   if (n_cols == 1) {
