@@ -1,9 +1,14 @@
+# pixeltrix 0.1.0
+
+* Added basic error tests.
+* Allowed for single row and single column matrices to be accepted by `click_pixels()` and `edit_pixels()` (#4).
+* Removed redundancies in function documentation.
+
 # pixeltrix 0.0.0.9004
 
 * Added an `edit_pixels()` function so that a matrix created with `click_pixels()` can be updated (#6).
 * Moved support functions to utils.R.
 * Simplified the README and added a blog badge.
-* Bump to 0.1.0.
 
 # pixeltrix 0.0.0.9003
 

@@ -2,17 +2,20 @@
 % Please edit documentation in R/click.R
 \name{click_pixels}
 \alias{click_pixels}
-\title{Interactive Pixel-Clicking Tool (New Canvas)}
+\title{Click 'Pixels' in an Interactive Plot}
 \usage{
 click_pixels(n_rows = 8L, n_cols = 16L, n_states = 2L, grid = TRUE)
 }
 \arguments{
-\item{n_rows}{Integer. The number of 'pixels' high that the plot should be.}
+\item{n_rows}{Integer. The number of 'pixels' high that the plot should be.
+Numeric values are coerced to integer.}
 
-\item{n_cols}{Integer. The number of 'pixels' wide that the plot should be.}
+\item{n_cols}{Integer. The number of 'pixels' wide that the plot should be.
+Numeric values are coerced to integer.}
 
 \item{n_states}{Integer. The number of states that a pixel can be. Click a
-pixel to cycle through the states. See details.}
+pixel to cycle through the states. Numeric values are coerced to integer.
+See details.}
 
 \item{grid}{Logical. Should a boundary line be placed around the pixels to
 make them easier to differentiate? Defaults to TRUE.}
@@ -21,25 +24,16 @@ make them easier to differentiate? Defaults to TRUE.}
 A matrix.
 }
 \description{
-Opens an interactive plotting canvas with a grid of clickable squares
-('pixels'). The canvas is 'blank' in that all the values are set initially
-to a 'state' of 0. Click pixels repeatedly to cycle through a number of
-'states'. Successive clicks increase the state value by 1 (wrapping back to
-0) and make the pixel a darker colour. Press the ESCAPE key to exit the
-interactive mode and be returned a matrix that contains the state values of
-each pixel.
+Opens a new interactive plotting canvas with a grid of clickable squares
+('pixels').
 }
 \details{
-The pixel states are in a zero-indexed sequence, so
-\code{n_states = 2} results in binary values of 0 and 1, while
-\code{n_states = 4} would yield 0, 1, 2 and 3. Clicking a pixel increases
-its state value by 1. Clicking a pixel with the maximum state value
-will cycle it back to the lowest state value of 0.\preformatted{Pixel colours change from lightest to darkest as you click through
-their states.
-
-Numeric values provided to 'n_rows', 'n_cols' and 'n_states' are coerced
-to integers.
-}
+Click the pixels in the plotting window repeatedly to cycle through
+a number of 'states'. Successive clicks increase the state value by 1
+(wrapping back to 0, the default when the canvas is first plotted) and
+make the pixel darker grey in colour. Press the ESCAPE key to exit the
+mode and be returned a matrix that contains the state values of each
+pixel.
 }
 \examples{
 \dontrun{click_pixels(3, 4, 4, TRUE)}

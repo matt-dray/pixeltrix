@@ -1,12 +1,13 @@
 Package: pixeltrix
 Title: Click Pixels and Get a Matrix
-Version: 0.0.0.9004
+Version: 0.1.0
 Authors@R: 
     person("Matt", "Dray", , "mwdray@gmail.com", role = c("aut", "cre"))
 Description: A simple tool that lets you click ‘pixels’ interactively in a
-    plot window and returns your final image as a matrix.
+    plot window and returns your final image as a matrix. Could be used to help
+    create simple videogame sprites, for example.
 License: MIT + file LICENSE
-URL: https://github.com/matt-dray/pixeltrix
+URL: https://github.com/matt-dray/pixeltrix, https://matt-dray.github.io/pixeltrix
 BugReports: https://github.com/matt-dray/pixeltrix/issues
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
