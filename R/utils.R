@@ -9,18 +9,16 @@
 
       break
 
-    } else {
+    }
 
-      m <- .update_matrix(m, p, n)
+    m <- .update_matrix(m, p, n)
 
-      grDevices::dev.off()
+    grDevices::dev.off()
 
-      .plot_canvas(m, n)
+    .plot_canvas(m, n)
 
-      if (g) {
-        .add_grid(m)
-      }
-
+    if (g) {
+      .add_grid(m)
     }
 
   }
@@ -97,20 +95,21 @@
   p <- graphics::locator(1)
 
   if (length(p) == 0) {
-
     return(NULL)
-
-  } else {
-
-    x_diffs <- abs(p$x - x_mids)
-    y_diffs <- rev(abs(p$y - y_mids))
-
-    list(
-      x = which.min(x_diffs),
-      y = which.min(y_diffs)
-    )
-
   }
+
+  x_diffs <- abs(p$x - x_mids)
+  y_diffs <- rev(abs(p$y - y_mids))
+
+  p <- list(
+    x = which.min(x_diffs),
+    y = which.min(y_diffs)
+  )
+
+  if (length(p$x) == 0) p$x <- 1
+  if (length(p$y) == 0) p$y <- 1
+
+  return(p)
 
 }
 
