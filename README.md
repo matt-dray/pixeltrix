@@ -28,6 +28,8 @@ To use:
 
 You can supply the matrix output from `click_pixels()` into `edit_pixels()` in order to make changes.
 
+You can draw your matrix to a plotting window with `draw_pixels()`.
+
 ## Examples
 
 ### Tamagotchi

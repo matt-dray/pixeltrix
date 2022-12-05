@@ -1,3 +1,7 @@
+# pixeltrix 0.1.1
+
+* Added `draw_pixels()` to draw a matrix to the plotting window (#12).
+
 # pixeltrix 0.1.0
 
 * Added basic error tests.

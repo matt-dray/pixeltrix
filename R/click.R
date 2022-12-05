@@ -33,11 +33,14 @@ click_pixels <- function(
 ) {
 
   if (!is.numeric(c(n_rows, n_cols, n_states))) {
-    stop("Arguments 'n_rows', 'n_cols' and 'n_states' must be integer values.")
+    stop(
+      "Arguments 'n_rows', 'n_cols' and 'n_states' must be integer values.",
+      call. = FALSE
+      )
   }
 
   if (!is.logical(grid)) {
-    stop("Argument 'grid' must be TRUE or FALSE.")
+    stop("Argument 'grid' must be TRUE or FALSE.", call. = FALSE)
   }
 
   n_rows   <- as.integer(n_rows)

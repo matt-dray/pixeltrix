@@ -6,7 +6,7 @@
 \alias{pixeltrix-package}
 \title{pixeltrix: Click Pixels and Get a Matrix}
 \description{
-A simple tool that lets you click ‘pixels’ interactively in a plot window and returns your final image as a matrix. Could be used to help create simple videogame sprites, for example.
+A very simple tool that lets you click ‘pixels’ interactively in a plot window and returns your final image as a matrix. Could be used to help create simple videogame sprites, for example.
 }
 \seealso{
 Useful links:

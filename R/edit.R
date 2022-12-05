@@ -28,24 +28,31 @@
 edit_pixels <- function(m, n_states = NULL, grid = TRUE) {
 
   if (!is.matrix(m) | !is.integer(m)) {
-    stop("Argument 'm' must be a matrix object composed of integers.")
+    stop(
+      "Argument 'm' must be a matrix object composed of integers.",
+      call. = FALSE
+    )
   }
 
   if (!is.null(n_states)) {
     if (!is.numeric(n_states)) {
-      stop("Argument 'n_states' must be an integer value or NULL.")
+      stop(
+        "Argument 'n_states' must be an integer value or NULL.",
+        call. = FALSE
+      )
     }
   }
 
   if (!is.null(n_states) && n_states < max(m + 1L)) {
     stop(
       "The number of states, 'n_states', can't be less than ",
-      "the maximum value in the provided matrix, 'm'."
+      "the maximum value in the provided matrix, 'm'.",
+      call. = FALSE
     )
   }
 
   if (!is.logical(grid)) {
-    stop("Argument 'grid' must be TRUE or FALSE.")
+    stop("Argument 'grid' must be TRUE or FALSE.", call. = FALSE)
   }
 
   if (is.null(n_states)) {
