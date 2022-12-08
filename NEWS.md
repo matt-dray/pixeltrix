@@ -1,6 +1,8 @@
 # pixeltrix 0.1.1
 
 * Added `draw_pixels()` to draw a matrix to the plotting window (#12).
+* Added `frame_pixels()` and `gif_pixels()` (#13).
+* Provided to the user some instruction messages.
 
 # pixeltrix 0.1.0
 

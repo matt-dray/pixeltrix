@@ -30,7 +30,7 @@ draw_pixels <- function(m, colours = NULL, ...) {
     )
   }
 
-  if (length(unique(as.vector(m))) < length(colours)) {
+  if (length(seq(0, max(as.vector(m)))) < length(colours)) {
     stop(
       "Length of argument 'colours' should not exceed the number of unique ",
       "pixel states in matrix 'm'.",
@@ -45,14 +45,18 @@ draw_pixels <- function(m, colours = NULL, ...) {
     )
   }
 
-  m_invert <- matrix(rev(t(m)), ncol(m), nrow(m))
+  m_rev <- m[, seq(ncol(m), 1)]
+
+  par_orig <- par(mar = rep(0, 4))
 
   graphics::image(
-    m_invert,
+    m_rev,
     col = colours,
     xaxt = "n",
     yaxt = "n",
     ...
   )
+
+  on.exit(par(par_orig))
 
 }

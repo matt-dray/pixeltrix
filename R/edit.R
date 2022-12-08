@@ -67,6 +67,8 @@ edit_pixels <- function(m, n_states = NULL, grid = TRUE) {
     .add_grid(m)
   }
 
+  message("Click squares in the plot window. Press <Esc> to end.")
+
   .repeat_loop(m, n_states, grid)
 
 }

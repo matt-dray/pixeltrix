@@ -1,17 +1,20 @@
 Package: pixeltrix
-Title: Click Pixels and Get a Matrix
+Title: Simple Interactive Sprite Creator
 Version: 0.1.1
 Authors@R: 
     person("Matt", "Dray", , "mwdray@gmail.com", role = c("aut", "cre"))
 Description: A very simple tool that lets you click ‘pixels’ interactively in a
-    plot window and returns your final image as a matrix. Could be used to help
-    create simple videogame sprites, for example.
+    plot window and returns your final image as a matrix. Provide multiple
+    frames to create an animated gif.
 License: MIT + file LICENSE
 URL: https://github.com/matt-dray/pixeltrix, https://matt-dray.github.io/pixeltrix
 BugReports: https://github.com/matt-dray/pixeltrix/issues
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
+Imports: 
+    gifski
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
+
