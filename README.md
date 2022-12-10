@@ -53,34 +53,29 @@ You can also:
 
 ## Examples
 
-### Pokémon
+### One frame
+
+To a create a sprite in a single frame, use `click_pixels()`.
 
 ``` r
 blue <- click_pixels(14, 16, n_states = 3)  # opens an interactive plot
 # Click squares in the plot window. Press <Esc> to end.
 ```
 
-This is what the plot looks like when you interact with it:
+This opens an interactive, clickable plot. Here’s how that looks in
+RStudio.
 
-<img src="man/figures/blue_click.png" alt="A 14 by 16 pixel grid with a sprite of the main character from the first generation of Pokemon games for the Game Boy. The background is white, the outlines are dark grey and the highlights are light grey. There's a black grid around the pixels." width="33%">
+<img src="man/figures/blue_rstudio.png" alt="An RStudio window. The console has run the function edit_pixels(blue) and has printed the message 'click squares in the plot window, press Esc to end.' In the plot pane is a 14 by 16 pixel grid with a sprite of the main character from the first generation of Pokemon games for the Game Boy. The background is white, the outlines are dark grey and the highlights are light grey. There's a black grid around the pixels." width="50%">
 
-You can plot the output matrix with colour.
+A matrix is returned when you’re finished.
 
-``` r
-blue_cols <- c("white", "#879afb", "gray20")
-draw_pixels(blue, blue_cols)
-```
-
-<img src="man/figures/blue_draw.png" alt="A 14 by 16 pixel grid with a sprite of the main character from the first generation of Pokemon games for the Game Boy. The background is white, the outlines are dark grey and the highlights are light blue." width="33%">
-
-<br>
 <details>
 <summary>
-Click for output matrix.
+Click for matrix.
 </summary>
 
 ``` r
-pixeltrix::blue
+pixeltrix::blue  # # made available in the package
 #       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13]
 #  [1,]    0    0    0    0    2    2    2    2    2     2     0     0     0
 #  [2,]    0    0    0    2    1    1    1    1    1     1     2     0     0
@@ -119,10 +114,21 @@ pixeltrix::blue
 
 </details>
 
-### Mario
+<br>
 
-You can create animation frames as a list of matrices. The last frame is
-used as a template for the next.
+You can plot this matrix with colour and save it as an image.
+
+``` r
+blue_cols <- c("white", "#879afb", "gray20")
+draw_pixels(blue, blue_cols)
+```
+
+<img src="man/figures/blue_draw.png" alt="A 14 by 16 pixel grid with a sprite of the main character from the first generation of Pokemon games for the Game Boy. The background is white, the outlines are dark grey and the highlights are light blue." width="33%">
+
+### Animated frames
+
+You can create multiple animation frames as a list of matrices with
+`frame_pixels()`. The last frame is used as a template for the next.
 
 ``` r
 mario <- frame_pixels(16, 16, n_states = 4)
@@ -137,7 +143,7 @@ mario <- frame_pixels(16, 16, n_states = 4)
 # Final frame count: 3
 ```
 
-You can then convert the list to a gif.
+You can then convert the list to a gif with `gif_pixels()`.
 
 ``` r
 mario_cols <- c("white", "#FDA428", "#FC0D1B", "#A32B2E")
@@ -149,14 +155,13 @@ gif_pixels(mario_frames, mario_cols, "mario.gif", delay = 0.15)
 
 <img src="man/figures/mario.gif" alt="An animated 16 by 16 pixel grid with a coloured sprite of Mario from the original Super Mario Bros for the NES. There are three frames that each show a step in Mario's walk cycle." width="33%">
 
-<br>
 <details>
 <summary>
-Click for output list of matrices.
+Click for list of matrices.
 </summary>
 
 ``` r
-pixeltrix::mario
+pixeltrix::mario  # made available in the package
 # [[1]]
 #       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13]
 #  [1,]    0    0    0    0    0    2    2    2    2     2     0     0     0
