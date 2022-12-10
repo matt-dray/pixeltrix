@@ -12,7 +12,7 @@ A simple R package that lets you select ‘pixels’ interactively from a plot w
 
 ## How to
 
-You can install {pixeltrix} [from GitHub](https://github.com/matt-dray/pixeltrix). It depends on [{gifski} to make gifs](https://cloud.r-project.org/web/packages/gifski/index.html).
+You can install {pixeltrix} [from GitHub](https://github.com/matt-dray/pixeltrix). You should also install [{gifski}](https://cloud.r-project.org/web/packages/gifski/index.html) if you want to make gifs.
 
 ``` r
 install.packages("remotes")  # if not yet installed
@@ -20,15 +20,17 @@ remotes::install_github("matt-dray/pixeltrix")
 library(pixeltrix)
 ```
 
-To use:
+Basic use:
 
-1. Begin an interactive plot with `click_pixels()`. You can set the dimensions, the number of clickable 'states' and whether to use a grid overlay.
-2. Click pixels in the plot to cycle through their states (higher values are darker).
-3. Press the <kbd>Esc</kbd> key when you're done, or the 'Finish' button in RStudio's plot window. A matrix is returned that encodes your image.
+1. Use `click_pixels()` to begin an interactive plot of squares ('pixels')
+2. Click pixels in the plot to cycle through their states.
+3. Press the <kbd>Esc</kbd> key when you're done, or the 'Finish' button in RStudio's plot window, to return a matrix that encodes your image.
 
-You can supply the matrix output from `click_pixels()` into `edit_pixels()` in order to make changes.
+You can also:
 
-You can draw your matrix to a plotting window with `draw_pixels()`.
+* supply a matrix output from `click_pixels()` to `edit_pixels()` so you can make changes
+* draw your matrix to the plotting window as an image with `draw_pixels()`
+* create a list of animation 'frames' with `frame_pixels()` and write them to a gif with `gif_pixels()`
 
 ## Examples
 

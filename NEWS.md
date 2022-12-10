@@ -1,8 +1,10 @@
 # pixeltrix 0.1.1
 
-* Added `draw_pixels()` to draw a matrix to the plotting window (#12).
-* Added `frame_pixels()` and `gif_pixels()` (#13).
-* Provided to the user some instruction messages.
+* Added `draw_pixels()` to plot the matrix with `image()` to the plotting window (#12).
+* Added `frame_pixels()` and `gif_pixels()` to capture successive 'frames' of an animation and write it to a gif (#13).
+* Suggested {gifski} for creating gifs (towards #15).
+* Provided to the user some instruction messages when they enter interactive mode.
+* Improved code commentary.
 
 # pixeltrix 0.1.0
 
