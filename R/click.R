@@ -35,6 +35,13 @@ click_pixels <- function(
     grid     = TRUE
 ) {
 
+  if (!is.matrix(m) | !is.integer(m)) {
+    stop(
+      "Argument 'm' must be a matrix object composed of integers.",
+      call. = FALSE
+    )
+  }
+
   if (!is.logical(grid)) {
     stop("Argument 'grid' must be TRUE or FALSE.", call. = FALSE)
   }
@@ -92,7 +99,7 @@ click_pixels <- function(
 #' }
 edit_pixels <- function(m, n_states = NULL, grid = TRUE) {
 
-  if (!is.matrix(m) | !is.numeric(m)) {
+  if (!is.matrix(m) | !is.integer(m)) {
     stop(
       "Argument 'm' must be a matrix object composed of integers.",
       call. = FALSE
