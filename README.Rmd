@@ -1,0 +1,121 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+
+```
+
+# pixeltrix
+
+<!-- badges: start -->
+[![Project Status: Concept – Minimal or no implementation has been done yet, or the repository is only intended to be a limited example, demo, or proof-of-concept.](https://www.repostatus.org/badges/latest/concept.svg)](https://www.repostatus.org/#concept)
+[![R-CMD-check](https://github.com/matt-dray/tamRgo/workflows/R-CMD-check/badge.svg)](https://github.com/matt-dray/tamRgo/actions)
+[![Codecov test coverage](https://codecov.io/gh/matt-dray/pixeltrix/branch/main/graph/badge.svg)](https://app.codecov.io/gh/matt-dray/pixeltrix?branch=main)
+[![Blog post](https://img.shields.io/badge/rostrum.blog-post-008900?labelColor=000000&logo=data%3Aimage%2Fgif%3Bbase64%2CR0lGODlhEAAQAPEAAAAAABWCBAAAAAAAACH5BAlkAAIAIf8LTkVUU0NBUEUyLjADAQAAACwAAAAAEAAQAAAC55QkISIiEoQQQgghRBBCiCAIgiAIgiAIQiAIgSAIgiAIQiAIgRAEQiAQBAQCgUAQEAQEgYAgIAgIBAKBQBAQCAKBQEAgCAgEAoFAIAgEBAKBIBAQCAQCgUAgEAgCgUBAICAgICAgIBAgEBAgEBAgEBAgECAgICAgECAQIBAQIBAgECAgICAgICAgECAQECAQICAgICAgICAgEBAgEBAgEBAgICAgICAgECAQIBAQIBAgECAgICAgIBAgECAQECAQIBAgICAgIBAgIBAgEBAgECAgECAgICAgICAgECAgECAgQIAAAQIKAAAh%2BQQJZAACACwAAAAAEAAQAAAC55QkIiESIoQQQgghhAhCBCEIgiAIgiAIQiAIgSAIgiAIQiAIgRAEQiAQBAQCgUAQEAQEgYAgIAgIBAKBQBAQCAKBQEAgCAgEAoFAIAgEBAKBIBAQCAQCgUAgEAgCgUBAICAgICAgIBAgEBAgEBAgEBAgECAgICAgECAQIBAQIBAgECAgICAgICAgECAQECAQICAgICAgICAgEBAgEBAgEBAgICAgICAgECAQIBAQIBAgECAgICAgIBAgECAQECAQIBAgICAgIBAgIBAgEBAgECAgECAgICAgICAgECAgECAgQIAAAQIKAAA7)](https://www.rostrum.blog/2022/09/24/pixeltrix/)
+<!-- badges: end -->
+
+A simple R package that lets you select ‘pixels’ interactively from a plot window and returns your final image as a matrix, or a list of matrices that can be converted to a gif.
+
+## How to
+
+You can install {pixeltrix} [from GitHub](https://github.com/matt-dray/pixeltrix). You should also install [{gifski}](https://cloud.r-project.org/web/packages/gifski/index.html) if you want to make gifs.
+
+``` r
+install.packages("remotes")  # if not yet installed
+remotes::install_github("matt-dray/pixeltrix")
+library(pixeltrix)
+```
+
+Basic use:
+
+1. Use `click_pixels()` to begin an interactive plot of squares ('pixels')
+2. Click pixels in the plot to cycle through their states.
+3. Press the <kbd>Esc</kbd> key when you're done, or the 'Finish' button in RStudio's plot window, to return a matrix that encodes your image.
+
+You can also:
+
+* supply a matrix output from `click_pixels()` to `edit_pixels()` so you can make changes
+* draw your matrix to the plotting window as an image with `draw_pixels()`
+* create a list of animation 'frames' with `frame_pixels()` and write them to a gif with `gif_pixels()`
+
+## Examples
+
+### One frame
+
+To a create a sprite in a single frame, use `click_pixels()`.
+
+```{r eval=FALSE}
+blue <- click_pixels(14, 16, n_states = 3)  # opens an interactive plot
+# Click squares in the plot window. Press <Esc> to end.
+```
+
+This opens an interactive, clickable plot. Here's how that looks in RStudio.
+
+<img src="man/figures/blue_rstudio.png" alt="An RStudio window. The console has run the function edit_pixels(blue) and has printed the message 'click squares in the plot window, press Esc to end.' In the plot pane is a 14 by 16 pixel grid with a sprite of the main character from the first generation of Pokemon games for the Game Boy. The background is white, the outlines are dark grey and the highlights are light grey. There's a black grid around the pixels." width="50%">
+
+A matrix is returned when you're finished.
+
+<details><summary>Click for matrix.</summary>
+
+```{r blue}
+pixeltrix::blue  # # made available in the package
+```
+
+</details>
+
+<br>
+
+You can plot this matrix with colour and save it as an image.
+
+```{r eval=FALSE}
+blue_cols <- c("white", "#879afb", "gray20")
+draw_pixels(blue, blue_cols)
+```
+
+<img src="man/figures/blue_draw.png" alt="A 14 by 16 pixel grid with a sprite of the main character from the first generation of Pokemon games for the Game Boy. The background is white, the outlines are dark grey and the highlights are light blue." width="33%">
+
+### Animated frames
+
+You can create multiple animation frames as a list of matrices with `frame_pixels()`. The last frame is used as a template for the next.
+
+```{r eval=FALSE}
+mario <- frame_pixels(16, 16, n_states = 4)
+# Click squares in the plot window. Press <Esc> to end.
+# Add a frame? y/n: y
+# Click squares in the plot window. Press <Esc> to end.
+# Current frame count: 2
+# Add a frame? y/n: y
+# Click squares in the plot window. Press <Esc> to end.
+# Current frame count: 3
+# Add a frame? y/n: n
+# Final frame count: 3
+```
+
+You can then convert the list to a gif with `gif_pixels()`.
+
+```{r eval=FALSE}
+mario_cols <- c("white", "#FDA428", "#FC0D1B", "#A32B2E")
+gif_pixels(mario_frames, mario_cols, "mario.gif", delay = 0.15)
+# Inserting image 3 at 0.30s (100%)...
+# Encoding to gif... done!
+# [1] "mario.gif"
+```
+
+<img src="man/figures/mario.gif" alt="An animated 16 by 16 pixel grid with a coloured sprite of Mario from the original Super Mario Bros for the NES. There are three frames that each show a step in Mario's walk cycle." width="33%">
+
+<details><summary>Click for list of matrices.</summary>
+
+```{r mario}
+pixeltrix::mario  # made available in the package
+```
+
+</details>
