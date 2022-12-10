@@ -49,7 +49,7 @@
     ylab = ""
   )
 
-  on.exit(par(par_start))  # revert to user's original settings
+  on.exit(graphics::par(par_start))  # revert to user's original settings
 
 }
 

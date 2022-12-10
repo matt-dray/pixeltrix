@@ -53,7 +53,7 @@ draw_pixels <- function(m, colours = NULL, ...) {
 
   }
 
-  par_start <- par(mar = rep(0, 4))
+  par_start <- graphics::par(mar = rep(0, 4))
 
   graphics::image(
     t(m[nrow(m):1, ]),  # reverse matrix rows and transpose
@@ -64,7 +64,7 @@ draw_pixels <- function(m, colours = NULL, ...) {
     ...
   )
 
-  on.exit(par(par_start))
+  on.exit(graphics::par(par_start))  # revert to user's original settings
 
 }
 
