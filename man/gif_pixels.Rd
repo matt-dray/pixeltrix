@@ -19,7 +19,8 @@ random colours will be selected on your behalf.}
 \item{file}{A filepath expressed as a character vector, ending with
 extension '.gif'. This is where the output animation will be written.}
 
-\item{...}{Parameters to pass to \code{\link[gifski:save_gif]}.}
+\item{...}{Parameters to pass to \code{\link[gifski]{save_gif}} (you must
+have 'gifski' installed).}
 }
 \value{
 Nothing.

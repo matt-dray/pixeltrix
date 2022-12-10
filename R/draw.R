@@ -56,7 +56,7 @@ draw_pixels <- function(m, colours = NULL, ...) {
   par_start <- par(mar = rep(0, 4))
 
   graphics::image(
-    t(mat[nrow(mat):1, ]),  # reverse matrix rows and transpose
+    t(m[nrow(m):1, ]),  # reverse matrix rows and transpose
     col = colours,
     axes = FALSE,
     xlab = "",
@@ -124,7 +124,8 @@ frame_pixels <- function(...) {
 #'     random colours will be selected on your behalf.
 #' @param file A filepath expressed as a character vector, ending with
 #'     extension '.gif'. This is where the output animation will be written.
-#' @param ...  Parameters to pass to \code{\link[gifski:save_gif]}.
+#' @param ...  Parameters to pass to \code{\link[gifski]{save_gif}} (you must
+#'     have 'gifski' installed).
 #'
 #' @return Nothing.
 #'
@@ -156,7 +157,7 @@ gif_pixels <- function(
     )
   }
 
-  if (length(seq(0, max(as.vector(m)))) < length(colours)) {
+  if (length(seq(0, max(as.vector(unlist(frames))))) < length(colours)) {
     stop(
       "Length of argument 'colours' should not exceed the number of unique ",
       "pixel states in matrix 'm'.",

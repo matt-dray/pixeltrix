@@ -5,6 +5,7 @@
 * Suggested {gifski} for creating gifs (towards #15).
 * Provided to the user some instruction messages when they enter interactive mode.
 * Improved code commentary.
+* Added two matrix outputs as example datasets (Pokemon and Mario).
 
 # pixeltrix 0.1.0
 
