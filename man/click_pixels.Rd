@@ -36,5 +36,8 @@ mode and be returned a matrix that contains the state values of each
 pixel.
 }
 \examples{
-\dontrun{click_pixels(3, 4, 4, TRUE)}
+\dontrun{
+# Create a 16 x 16 pixel matrix with 3 possible states to cycle through
+click_pixels(n_rows = 16, n_cols = 16, n_states = 3, grid = TRUE)
+}
 }
