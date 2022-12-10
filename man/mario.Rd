@@ -5,8 +5,8 @@
 \alias{mario}
 \title{Example Sprite Matrix: Mario}
 \format{
-A list of matrices, each with 16 rows and 16 columns, taking values
-of 0 to 3.
+A list of matrices, each with 16 rows and 16 columns, taking integers
+from 0 to 2.
 }
 \source{
 Super Mario Bros (1983), Nintendo Entertainment System, Nintendo.

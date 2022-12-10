@@ -5,7 +5,7 @@
 \alias{blue}
 \title{Example Sprite Matrix: Pokemon}
 \format{
-A matrix with 16 rows and 14 columns, taking values of 0 to 2.
+A matrix with 16 rows and 14 columns, taking integers from 0 to 2.
 }
 \source{
 Hand-copied from Pokemon Blue (1996), The Pokemon Company.

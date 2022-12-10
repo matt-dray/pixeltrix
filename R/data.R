@@ -11,7 +11,7 @@
 #' )
 #' }
 #'
-#' @format A matrix with 16 rows and 14 columns, taking values of 0 to 2.
+#' @format A matrix with 16 rows and 14 columns, taking integers from 0 to 2.
 #'
 #' @source Hand-copied from Pokemon Blue (1996), The Pokemon Company.
 "blue"
@@ -32,8 +32,8 @@
 #' )
 #' }
 #'
-#' @format A list of matrices, each with 16 rows and 16 columns, taking values
-#'     of 0 to 3.
+#' @format A list of matrices, each with 16 rows and 16 columns, taking integers
+#'     from 0 to 2.
 #'
 #' @source Super Mario Bros (1983), Nintendo Entertainment System, Nintendo.
 "mario"
