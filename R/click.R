@@ -30,7 +30,7 @@
 #' }
 click_pixels <- function(
     n_rows   = 8L,
-    n_cols   = 16L,
+    n_cols   = 8L,
     n_states = 2L,
     grid     = TRUE
 ) {

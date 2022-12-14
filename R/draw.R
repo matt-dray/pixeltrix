@@ -73,18 +73,40 @@ draw_pixels <- function(m, colours = NULL, ...) {
 #' Opens a new interactive plotting canvas with a grid of clickable squares
 #' ('pixels'). When finished, the user is prompted to provide another.
 #'
-#' @param ... Parameters to pass to \code{\link{click_pixels}}.
+#' @param n_rows Integer. The number of 'pixels' high that the plot should be.
+#'     Numeric values are coerced to integer.
+#' @param n_cols Integer. The number of 'pixels' wide that the plot should be.
+#'     Numeric values are coerced to integer.
+#' @param n_states Integer. The number of states that a pixel can be. Click a
+#'     pixel to cycle through the states. Numeric values are coerced to integer.
+#'     See details.
+#' @param grid Logical. Should a boundary line be placed around the pixels to
+#'     make them easier to differentiate? Defaults to TRUE.
+#'
+#' @details Click the pixels in the plotting window repeatedly to cycle through
+#'     a number of 'states'. Successive clicks increase the state value by 1
+#'     (wrapping back to 0, the default when the canvas is first plotted) and
+#'     make the pixel darker grey in colour. Press the ESCAPE key to exit the
+#'     mode. You'll be prompted interactively in the console to add a new frame
+#'     or not. If you refuse a new frame, you'll be returned a list of matrices,
+#'     each of which contain the state values of each pixel for each frame of
+#'     your animation.
 #'
 #' @return A list of matrices.
 #'
 #' @export
 #'
 #' @examples \dontrun{m <- frame_pixels(n_rows = 8, n_cols = 8, n_states = 3)}
-frame_pixels <- function(...) {
+frame_pixels <- function(
+    n_rows   = 8L,
+    n_cols   = 8L,
+    n_states = 2L,
+    grid     = TRUE
+) {
 
   m_list <- list()
 
-  m <- click_pixels(...)
+  m <- click_pixels(n_rows, n_cols, n_states, grid)
 
   m_list[[1]] <- m
 
@@ -93,7 +115,7 @@ frame_pixels <- function(...) {
     answer <- readline("Add a frame? y/n: ")
 
     if (substr(answer, 1, 1) == "y") {
-      m <- edit_pixels(m)
+      m <- edit_pixels(m, n_states)
       m_list <- append(m_list, list(m))
       message("Current frame count: ", length(m_list))
     }

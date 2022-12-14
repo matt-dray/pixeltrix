@@ -4,10 +4,21 @@
 \alias{frame_pixels}
 \title{Create Frames of a Pixel Animation}
 \usage{
-frame_pixels(...)
+frame_pixels(n_rows = 8L, n_cols = 8L, n_states = 2L, grid = TRUE)
 }
 \arguments{
-\item{...}{Parameters to pass to \code{\link{click_pixels}}.}
+\item{n_rows}{Integer. The number of 'pixels' high that the plot should be.
+Numeric values are coerced to integer.}
+
+\item{n_cols}{Integer. The number of 'pixels' wide that the plot should be.
+Numeric values are coerced to integer.}
+
+\item{n_states}{Integer. The number of states that a pixel can be. Click a
+pixel to cycle through the states. Numeric values are coerced to integer.
+See details.}
+
+\item{grid}{Logical. Should a boundary line be placed around the pixels to
+make them easier to differentiate? Defaults to TRUE.}
 }
 \value{
 A list of matrices.
@@ -15,6 +26,16 @@ A list of matrices.
 \description{
 Opens a new interactive plotting canvas with a grid of clickable squares
 ('pixels'). When finished, the user is prompted to provide another.
+}
+\details{
+Click the pixels in the plotting window repeatedly to cycle through
+a number of 'states'. Successive clicks increase the state value by 1
+(wrapping back to 0, the default when the canvas is first plotted) and
+make the pixel darker grey in colour. Press the ESCAPE key to exit the
+mode. You'll be prompted interactively in the console to add a new frame
+or not. If you refuse a new frame, you'll be returned a list of matrices,
+each of which contain the state values of each pixel for each frame of
+your animation.
 }
 \examples{
 \dontrun{m <- frame_pixels(n_rows = 8, n_cols = 8, n_states = 3)}

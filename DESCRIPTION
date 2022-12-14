@@ -1,11 +1,11 @@
 Package: pixeltrix
-Title: Simple Interactive Sprite Creator
-Version: 0.1.1
+Title: Simple Interactive Pixel Art
+Version: 0.1.3
 Authors@R: 
     person("Matt", "Dray", , "mwdray@gmail.com", role = c("aut", "cre"))
-Description: A very simple tool that lets you click ‘pixels’ interactively in a
-    plot window and returns your final image as a matrix. Provide multiple
-    frames to create an animated gif.
+Description: A very simple 'pixel art' tool that lets you click squares
+    interactively in a plot window and returns your final image as a matrix. 
+    Provide multiple frames to create an animated gif.
 License: MIT + file LICENSE
 URL: https://github.com/matt-dray/pixeltrix, https://matt-dray.github.io/pixeltrix
 BugReports: https://github.com/matt-dray/pixeltrix/issues

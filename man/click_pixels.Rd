@@ -4,7 +4,7 @@
 \alias{click_pixels}
 \title{Click 'Pixels' in an Interactive Plot}
 \usage{
-click_pixels(n_rows = 8L, n_cols = 16L, n_states = 2L, grid = TRUE)
+click_pixels(n_rows = 8L, n_cols = 8L, n_states = 2L, grid = TRUE)
 }
 \arguments{
 \item{n_rows}{Integer. The number of 'pixels' high that the plot should be.

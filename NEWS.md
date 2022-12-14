@@ -1,3 +1,13 @@
+# pixeltrix 0.1.3
+
+* Fixed lack of `n_states()` being passed to `edit_pixels()` in `frame_pixels()` (#18, thanks @TimTaylor), replacing dots in `frame_pixels()` with full set of arguments to pass to `click_pixels()` and `edit_pixels()`.
+* Altered slightly the title and description of the package.
+* Set default canvas dimensions to 8 by 8.
+
+# pixeltrix 0.1.2
+
+* Fixed integer check in `click_pixels()`.
+
 # pixeltrix 0.1.1
 
 * Added `draw_pixels()` to plot the matrix with `image()` to the plotting window (#12).
