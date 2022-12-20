@@ -1,32 +1,34 @@
 #' Click 'Pixels' in an Interactive Plot
 #'
-#' Opens a new interactive plotting canvas with a grid of clickable squares
-#' ('pixels').
+#' Opens an interactive plot with a grid of squares ('pixels') that you can
+#' click to cycle through. Returns a matrix 'blueprint' of your image.
 #'
-#' @param n_rows Integer. The number of 'pixels' high that the plot should be.
+#' @param n_rows Integer. The number of pixels high that the plot should be.
 #'     Numeric values are coerced to integer.
-#' @param n_cols Integer. The number of 'pixels' wide that the plot should be.
+#' @param n_cols Integer. The number of pixels wide that the plot should be.
 #'     Numeric values are coerced to integer.
-#' @param n_states Integer. The number of states that a pixel can be. Click a
-#'     pixel to cycle through the states. Numeric values are coerced to integer.
+#' @param n_states Integer. The number of states that a pixel can be cycled
+#'     through with successive clicks. Numeric values are coerced to integer.
 #'     See details.
-#' @param colours Character vector. As many named/hex colours as n_state. The
-#'     provided order is the order that colours will be cycled through when
-#'     pixels are clicked.
-#' @param grid Logical. Should a boundary line be placed around the pixels to
-#'     make them easier to differentiate? Defaults to TRUE.
+#' @param colours Character vector. As many named/hex colours as n_state. Each
+#'     click in the interactive plot will cycle a pixel through these colours.
+#'     Defaults to NULL, which generates a gradation from white to dark grey.
+#'     See details.
+#' @param grid Logical. Should a black boundary line be placed around the pixels
+#'     to help differentiate? Defaults to TRUE.
 #'
 #' @details Click repeatedly the pixels in the interactive plotting window to
-#'     cycle through a number of 'states'. The initial state value is 0 and
-#'     successive clicks increase it by 1, wrapping back to 0 after the maximum
-#'     state value has been reached. Press the ESCAPE key to exit the
-#'     interactive mode and be returned a matrix that contains the state value
-#'     of each pixel.
+#'     cycle through the provided number of 'states'. The initial state value is
+#'     0 and successive clicks increase it by 1, wrapping back to 0 once the
+#'     maximum number of states is exceeded. Press the ESCAPE key to exit the
+#'     interactive mode.
 #'
-#' @return A matrix with two attributes: 'n_states' is the number of pixel
-#'     state values provided to the function, and 'colours', which is the
-#'     character vector of colours provided to the function by the user, or, if
-#'     NULL, then a gradated set of greys provided by default.
+#' @return A matrix. Values correspond to the state of each pixel, which is
+#'     determined by the number of clicks. There are two additional attributes:
+#'     'n_states' is the number of pixel state values provided; 'colours' is
+#'     a character vector provided by the user (or a gradated set of greys
+#'     provided by default when colours' is NULL), which is named according to
+#'     the corresponding state value in the output matrix.
 #'
 #' @export
 #'
@@ -78,7 +80,7 @@ click_pixels <- function(
   m <- .repeat_loop(m, n_states, colours, grid)
 
   attr(m, "n_states") <- n_states
-  attr(m, "colours")  <- colours
+  attr(m, "colours")  <- setNames(colours, seq(0, n_states - 1))
 
   m
 
