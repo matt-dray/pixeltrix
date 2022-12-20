@@ -10,8 +10,6 @@
 #'     the provided matrix. The order you provide the colours matches the order
 #'     of the values in the matrix, from 0 to n. Defaults to NULL, which means
 #'     random colours will be selected on your behalf.
-#' @param ... Additional graphical parameters passed to
-#'     \code{\link[graphics]{image}} and thus \code{\link[graphics]{plot}}.
 #'
 #' @return Nothing.
 #'
@@ -21,7 +19,7 @@
 #'   my_matrix <- click_pixels(n_states = 3)
 #'   draw_pixels(my_matrix, c("black", "#0000FF", "green"))  # one colour per state
 #' }
-draw_pixels <- function(m, colours = NULL, ...) {
+draw_pixels <- function(m, colours = NULL) {
 
   if (!inherits(m, "matrix") | !is.numeric(m) | all(diff(1:3) != 1)) {
     stop(
@@ -38,19 +36,15 @@ draw_pixels <- function(m, colours = NULL, ...) {
     )
   }
 
-  # Random colour palette if none provided
+  # Take colours from attributes of input matrix, if present
+  if (is.null(colours) & !is.null(attr(m, "colours"))) {
+    colours <- attr(m, "colours")
+  }
+
+  # If matrix has no 'colour' attribute, create gradated grey palette
   if (is.null(colours)) {
-
-    warning(
-      "Applying random colours. Set arg 'colours' for your own palette.",
-      call. = FALSE
-    )
-
-    colours <- sample(
-      grDevices::colours(),
-      length(unique(as.numeric(m)))
-    )
-
+    get_greys <- grDevices::colorRampPalette(c("white", "grey20"))
+    colours   <- get_greys(n_states)  # gradated colours from white to dark grey
   }
 
   par_start <- graphics::par(mar = rep(0, 4))
@@ -60,8 +54,7 @@ draw_pixels <- function(m, colours = NULL, ...) {
     col = colours,
     axes = FALSE,
     xlab = "",
-    ylab = "",
-    ...
+    ylab = ""
   )
 
   on.exit(graphics::par(par_start))  # revert to user's original settings

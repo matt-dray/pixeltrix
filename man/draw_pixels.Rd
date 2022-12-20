@@ -4,7 +4,7 @@
 \alias{draw_pixels}
 \title{Draw 'Pixel' Matrix in a Plot Window}
 \usage{
-draw_pixels(m, colours = NULL, ...)
+draw_pixels(m, colours = NULL)
 }
 \arguments{
 \item{m}{A matrix of integers. The maximum value is assumed to be the number
@@ -15,9 +15,6 @@ than the maximum in the matrix.}
 the provided matrix. The order you provide the colours matches the order
 of the values in the matrix, from 0 to n. Defaults to NULL, which means
 random colours will be selected on your behalf.}
-
-\item{...}{Additional graphical parameters passed to
-\code{\link[graphics]{image}} and thus \code{\link[graphics]{plot}}.}
 }
 \value{
 Nothing.
