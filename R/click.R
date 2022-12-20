@@ -10,6 +10,9 @@
 #' @param n_states Integer. The number of states that a pixel can be. Click a
 #'     pixel to cycle through the states. Numeric values are coerced to integer.
 #'     See details.
+#' @param colours Character vector. As many named/hex colours as n_state. The
+#'     provided order is the order that colours will be cycled through when
+#'     pixels are clicked.
 #' @param grid Logical. Should a boundary line be placed around the pixels to
 #'     make them easier to differentiate? Defaults to TRUE.
 #'
@@ -20,18 +23,27 @@
 #'     interactive mode and be returned a matrix that contains the state value
 #'     of each pixel.
 #'
-#' @return A matrix.
+#' @return A matrix with two attributes: 'n_states' is the number of pixel
+#'     state values provided to the function, and 'colours', which is the
+#'     character vector of colours provided to the function by the user, or, if
+#'     NULL, then a gradated set of greys provided by default.
 #'
 #' @export
 #'
 #' @examples \dontrun{
-#'     # Create a 16 x 16 pixel matrix with 3 possible states to cycle through
-#'     my_matrix <- click_pixels(n_rows = 16, n_cols = 16, n_states = 3)
+#'     # Create a 16 x 16 pixel matrix with 3 possible pixel states
+#'     my_matrix <- click_pixels(
+#'       n_rows   = 16,
+#'       n_cols   = 16,
+#'       n_states = 3,
+#'       colours  = c("blue", "#FF0000", "yellow")
+#'     )
 #' }
 click_pixels <- function(
     n_rows   = 8L,
     n_cols   = 8L,
     n_states = 2L,
+    colours  = NULL,
     grid     = TRUE
 ) {
 
@@ -43,21 +55,32 @@ click_pixels <- function(
     stop("Argument 'grid' must be TRUE or FALSE.", call. = FALSE)
   }
 
+  if (!is.null(colours) && (length(colours) != n_states)) {
+    stop(
+      "Argument 'colours' must be a character vector of length 'n_states'.",
+      call. = FALSE
+    )
+  }
+
   n_rows   <- as.integer(n_rows)
   n_cols   <- as.integer(n_cols)
   n_states <- as.integer(n_states)
 
-  m <- matrix(0L, n_rows, n_cols)
-
-  .plot_canvas(m, n_states)
-
-  if (grid) {
-    .add_grid(m)
+  if (is.null(colours)) {
+    get_greys <- grDevices::colorRampPalette(c("white", "grey20"))
+    colours   <- get_greys(n_states)  # gradated colours from white to dark grey
   }
 
-  message("Click squares in the plot window. Press <Esc> to end.")
+  m <- matrix(0L, n_rows, n_cols)
 
-  .repeat_loop(m, n_states, grid)
+  .plot_canvas(m, n_states, colours)
+  if (grid) .add_grid(m)
+  m <- .repeat_loop(m, n_states, colours, grid)
+
+  attr(m, "n_states") <- n_states
+  attr(m, "colours")  <- colours
+
+  m
 
 }
 

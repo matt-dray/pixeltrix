@@ -4,7 +4,13 @@
 \alias{click_pixels}
 \title{Click 'Pixels' in an Interactive Plot}
 \usage{
-click_pixels(n_rows = 8L, n_cols = 8L, n_states = 2L, grid = TRUE)
+click_pixels(
+  n_rows = 8L,
+  n_cols = 8L,
+  n_states = 2L,
+  colours = NULL,
+  grid = TRUE
+)
 }
 \arguments{
 \item{n_rows}{Integer. The number of 'pixels' high that the plot should be.
@@ -17,11 +23,18 @@ Numeric values are coerced to integer.}
 pixel to cycle through the states. Numeric values are coerced to integer.
 See details.}
 
+\item{colours}{Character vector. As many named/hex colours as n_state. The
+provided order is the order that colours will be cycled through when
+pixels are clicked.}
+
 \item{grid}{Logical. Should a boundary line be placed around the pixels to
 make them easier to differentiate? Defaults to TRUE.}
 }
 \value{
-A matrix.
+A matrix with two attributes: 'n_states' is the number of pixel
+state values provided to the function, and 'colours', which is the
+character vector of colours provided to the function by the user, or, if
+NULL, then a gradated set of greys provided by default.
 }
 \description{
 Opens a new interactive plotting canvas with a grid of clickable squares
@@ -37,7 +50,7 @@ of each pixel.
 }
 \examples{
 \dontrun{
-    # Create a 16 x 16 pixel matrix with 3 possible states to cycle through
+    # Create a 16 x 16 pixel matrix with 3 possible pixel states
     my_matrix <- click_pixels(n_rows = 16, n_cols = 16, n_states = 3)
 }
 }

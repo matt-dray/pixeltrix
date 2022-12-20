@@ -1,5 +1,7 @@
 # Loop continuously to accept a click, update matrix values, then re-plot
-.repeat_loop <- function(m, n_states, grid) {
+.repeat_loop <- function(m, n_states, colours, grid) {
+
+  message("Click squares in the plot window. Press <Esc> to end.")
 
   repeat {
 
@@ -11,7 +13,7 @@
 
     grDevices::dev.off()
 
-    .plot_canvas(m, n_states)
+    .plot_canvas(m, n_states, colours)
 
     if (grid) .add_grid(m)
 
@@ -22,26 +24,25 @@
 }
 
 # Plot 'pixels' given the dimensions of the input matrix
-.plot_canvas <- function(m, n_states) {
+.plot_canvas <- function(m, n_states, colours) {
 
   par_start <- graphics::par(mar = rep(0, 4))  # set margins, save current
 
   n_rows <- nrow(m)
   n_cols <- ncol(m)
 
-  if (n_rows > 1 & n_cols > 1) m <- t(m[nrow(m):1, ])
+  if (n_rows > 1 & n_cols > 1) {
+    m <- t(m[seq(n_rows, 1), ])
+  }
 
-  # Transposition and reversal required with pixel dimension of 1
+  # Transpose/reverse needed with pixel dimension of 1
   if (n_rows == 1) m <- t(m)
   if (n_cols == 1) m <- t(rev(m))
 
-  # Generate greyscale colour palette, darker for higher values
-  pal <- grDevices::colorRampPalette(c("white", "black"))
-
   graphics::image(
     m,
-    zlim = c(0, n_states),
-    col  = pal(n_states + 1),
+    zlim = c(0, n_states - 1),
+    col  = colours,
     axes = FALSE,
     xlab = "",
     ylab = ""
