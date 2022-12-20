@@ -29,7 +29,7 @@ Defaults to NULL, which generates a gradation from white to dark grey.
 See details.}
 
 \item{grid}{Logical. Should a black boundary line be placed around the pixels
-to help differentiate? Defaults to TRUE.}
+to help differentiate between them? Defaults to TRUE.}
 }
 \value{
 A matrix. Values correspond to the state of each pixel, which is
