@@ -13,20 +13,20 @@
 #' @param grid Logical. Should a boundary line be placed around the pixels to
 #'     make them easier to differentiate? Defaults to TRUE.
 #'
-#' @details Click the pixels in the plotting window repeatedly to cycle through
-#'     a number of 'states'. Successive clicks increase the state value by 1
-#'     (wrapping back to 0, the default when the canvas is first plotted) and
-#'     make the pixel darker grey in colour. Press the ESCAPE key to exit the
-#'     mode and be returned a matrix that contains the state values of each
-#'     pixel.
+#' @details Click repeatedly the pixels in the interactive plotting window to
+#'     cycle through a number of 'states'. The initial state value is 0 and
+#'     successive clicks increase it by 1, wrapping back to 0 after the maximum
+#'     state value has been reached. Press the ESCAPE key to exit the
+#'     interactive mode and be returned a matrix that contains the state value
+#'     of each pixel.
 #'
 #' @return A matrix.
 #'
 #' @export
 #'
 #' @examples \dontrun{
-#' # Create a 16 x 16 pixel matrix with 3 possible states to cycle through
-#' click_pixels(n_rows = 16, n_cols = 16, n_states = 3, grid = TRUE)
+#'     # Create a 16 x 16 pixel matrix with 3 possible states to cycle through
+#'     my_matrix <- click_pixels(n_rows = 16, n_cols = 16, n_states = 3)
 #' }
 click_pixels <- function(
     n_rows   = 8L,
@@ -88,11 +88,11 @@ click_pixels <- function(
 #' @export
 #'
 #' @examples \dontrun{
-#' # Create a 3 x 4 pixel matrix with 3 possible states to cycle through
-#' mat <- click_pixels(n_rows = 3, n_cols = 4, n_states = 3)
+#'     # Create a 3 x 4 pixel matrix with 3 possible states to cycle through
+#'     my_matrix <- click_pixels(n_rows = 3, n_cols = 4, n_states = 3)
 #'
-#' # Update the original matrix, allow for an extra state
-#' mat_udpated <- edit_pixels(m = mat, n_states = 4)
+#'     # Update the original matrix, allow for an extra state
+#'     my_matrix_edited <- edit_pixels(m = my_matrix, n_states = 4)
 #' }
 edit_pixels <- function(m, n_states = NULL, grid = TRUE) {
 

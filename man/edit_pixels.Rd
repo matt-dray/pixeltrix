@@ -36,10 +36,10 @@ pixel.
 }
 \examples{
 \dontrun{
-# Create a 3 x 4 pixel matrix with 3 possible states to cycle through
-mat <- click_pixels(n_rows = 3, n_cols = 4, n_states = 3)
+    # Create a 3 x 4 pixel matrix with 3 possible states to cycle through
+    my_matrix <- click_pixels(n_rows = 3, n_cols = 4, n_states = 3)
 
-# Update the original matrix, allow for an extra state
-mat_udpated <- edit_pixels(m = mat, n_states = 4)
+    # Update the original matrix, allow for an extra state
+    my_matrix_edited <- edit_pixels(m = my_matrix, n_states = 4)
 }
 }

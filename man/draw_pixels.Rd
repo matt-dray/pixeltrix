@@ -28,7 +28,7 @@ output from \code{\link{click_pixels}} (or \code{\link{edit_pixels}}).
 }
 \examples{
 \dontrun{
-  m <- click_pixels(n_states = 3)
-  draw_pixels(m, c("black", "blue", "green"))  # one colour per state
+  my_matrix <- click_pixels(n_states = 3)
+  draw_pixels(my_matrix, c("black", "#0000FF", "green"))  # one colour per state
 }
 }

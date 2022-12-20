@@ -28,16 +28,16 @@ Opens a new interactive plotting canvas with a grid of clickable squares
 ('pixels').
 }
 \details{
-Click the pixels in the plotting window repeatedly to cycle through
-a number of 'states'. Successive clicks increase the state value by 1
-(wrapping back to 0, the default when the canvas is first plotted) and
-make the pixel darker grey in colour. Press the ESCAPE key to exit the
-mode and be returned a matrix that contains the state values of each
-pixel.
+Click repeatedly the pixels in the interactive plotting window to
+cycle through a number of 'states'. The initial state value is 0 and
+successive clicks increase it by 1, wrapping back to 0 after the maximum
+state value has been reached. Press the ESCAPE key to exit the
+interactive mode and be returned a matrix that contains the state value
+of each pixel.
 }
 \examples{
 \dontrun{
-# Create a 16 x 16 pixel matrix with 3 possible states to cycle through
-click_pixels(n_rows = 16, n_cols = 16, n_states = 3, grid = TRUE)
+    # Create a 16 x 16 pixel matrix with 3 possible states to cycle through
+    my_matrix <- click_pixels(n_rows = 16, n_cols = 16, n_states = 3)
 }
 }
