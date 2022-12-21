@@ -187,7 +187,7 @@ edit_pixels <- function(m, n_states = NULL, colours = NULL, grid = TRUE) {
 
   .plot_canvas(m, n_states, colours)
   if (grid) .add_grid(m)
-  .repeat_loop(m, n_states, colours, grid)
+  m <- .repeat_loop(m, n_states, colours, grid)
 
   attr(m, "n_states") <- as.integer(n_states)
   attr(m, "colours")  <- setNames(colours, seq(0, n_states - 1))

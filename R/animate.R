@@ -35,22 +35,23 @@ frame_pixels <- function(
     n_rows   = 8L,
     n_cols   = 8L,
     n_states = 2L,
+    colours  = NULL,
     grid     = TRUE
 ) {
 
-  m_list <- list()
+  m_list  <- list()
 
-  m <- click_pixels(n_rows, n_cols, n_states, grid)  # start first matrix
-
-  m_list[[1]] <- m  # add first matrix to list
+  m_first <- click_pixels(n_rows, n_cols, n_states, colours, grid)
+  m_list  <- append(m_list, list(m_first))
 
   repeat {
 
     answer <- readline("Add a frame? y/n: ")
 
     if (substr(answer, 1, 1) == "y") {
-      m <- edit_pixels(m, n_states)  # edit the previous matrix
-      m_list <- append(m_list, list(m))
+      m_last <- m_list[[length(m_list)]]
+      m_new  <- edit_pixels(m_last, grid = grid)
+      m_list <- append(m_list, list(m_new))
       message("Current frame count: ", length(m_list))
     }
 
@@ -61,7 +62,7 @@ frame_pixels <- function(
 
   }
 
-  return(m_list)
+  m_list
 
 }
 

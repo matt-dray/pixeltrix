@@ -4,7 +4,13 @@
 \alias{frame_pixels}
 \title{Create Frames of a Pixel Animation}
 \usage{
-frame_pixels(n_rows = 8L, n_cols = 8L, n_states = 2L, grid = TRUE)
+frame_pixels(
+  n_rows = 8L,
+  n_cols = 8L,
+  n_states = 2L,
+  colours = NULL,
+  grid = TRUE
+)
 }
 \arguments{
 \item{n_rows}{Integer. The number of 'pixels' high that the plot should be.
