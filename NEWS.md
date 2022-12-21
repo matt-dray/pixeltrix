@@ -1,3 +1,8 @@
+# pixeltrix 0.2.0
+
+* State count and colour carried as extra attributes in matrix outputs from `click_pixels()` (#17, thanks @TimTaylor).
+* Colour accepted as input to `click_pixels()`, `edit pixels()`, `draw_pixels()` and `frame_pixels()`.
+
 # pixeltrix 0.1.3
 
 * Fixed lack of `n_states()` being passed to `edit_pixels()` in `frame_pixels()` (#18, thanks @TimTaylor), replacing dots in `frame_pixels()` with full set of arguments to pass to `click_pixels()` and `edit_pixels()`.
