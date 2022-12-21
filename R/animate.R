@@ -4,15 +4,21 @@
 #' Opens a new interactive plotting canvas with a grid of clickable squares
 #' ('pixels'). When finished, the user is prompted to provide another.
 #'
-#' @param n_rows Integer. The number of 'pixels' high that the plot should be.
+#' @param n_rows Integer. The number of pixels high that the plot should be.
 #'     Numeric values are coerced to integer.
-#' @param n_cols Integer. The number of 'pixels' wide that the plot should be.
+#' @param n_cols Integer. The number of pixels wide that the plot should be.
 #'     Numeric values are coerced to integer.
 #' @param n_states Integer. The number of states that a pixel can be. Click a
 #'     pixel to cycle through the states. Numeric values are coerced to integer.
 #'     See details.
+#' @param colours Character vector. As many named/hex colours as n_state. Each
+#'     click in the interactive plot will cycle a pixel through these colours.
+#'     Defaults to NULL, which results in an attempt to find and use the
+#'     'colours' attribute (named character vector) of the input matrix, 'm'.
+#'     This attribute is added by default to matrices created with
+#'     \code{\link{click_pixels}} (recommended).
 #' @param grid Logical. Should a boundary line be placed around the pixels to
-#'     make them easier to differentiate? Defaults to TRUE.
+#'     make them easier to differentiate between them? Defaults to TRUE.
 #'
 #' @details Click the pixels in the plotting window repeatedly to cycle through
 #'     a number of 'states'. Successive clicks increase the state value by 1
@@ -29,7 +35,12 @@
 #'
 #' @examples \dontrun{
 #'     # Begin interactive sequence to create animation frames
-#'     my_matrix <- frame_pixels(n_rows = 16, n_cols = 16, n_states = 3)
+#'     my_frames <- frame_pixels(
+#'       n_rows   = 16L,
+#'       n_cols   = 16L,
+#'       n_states = 3L,
+#'       colours  = c("grey25", "green", "#0000FF")
+#'     )
 #' }
 frame_pixels <- function(
     n_rows   = 8L,
@@ -73,17 +84,19 @@ frame_pixels <- function(
 
 #' Write Frames of a Pixel Animation to GIF
 #'
-#' Draws each list element (matrices) from the output of \code{\link{frame_pixels}}
-#' and writes it to an animated gif. Requires user to install the 'gifski'
-#' package.
+#' Plots (using \code{\link{draw_pixels}}) each matrix from a list (ideally
+#' created using \code{\link{frame_pixels}}) and writes it to an animated GIF.
+#' Requires the 'gifski' package.
 #'
-#' @param frames A list of matrices preferably produced by \code{\link{frame_pixels}}.
-#'     Each is a matrix with the same dimension and possible values that
-#'     represents a single frame of an animation.
-#' @param colours A character vector of named colours. One for each value in m,
-#'     the provided matrix. The order you provide the colours matches the order
-#'     of the values in the matrix, from 0 to n. Defaults to NULL, which means
-#'     random colours will be selected on your behalf.
+#' @param frames A list of matrices. preferably produced by \code{\link{frame_pixels}}.
+#'     Each matrix in the list is a frame of the final animation.
+#' @param colours A character vector of named colours. One for each unique value
+#'     in the matrices of the 'frames' list. The order you provide the colours
+#'     matches the sorted order of the values in the matrix. Defaults to NULL,
+#'     which means colours will be extracted from the 'colours' attribute of the
+#'     matrices (which is added to the object when using the recommended
+#'     \code{\link{frame_pixels}} function), otherwise a gradated palette of
+#'     greys will be selected.
 #' @param file A filepath expressed as a character vector, ending with
 #'     extension '.gif'. This is where the output animation will be written.
 #' @param ...  Parameters to pass to \code{\link[gifski]{save_gif}} (you must
@@ -94,14 +107,19 @@ frame_pixels <- function(
 #' @export
 #'
 #' @examples \dontrun{
-#'     # Create interactively a list of matrices, i.e. frames of an animation
-#'     my_frames <- frame_pixels(n_rows = 8, n_cols = 8, n_states = 3)
+#'     # Begin interactive sequence to create animation frames
+#'     my_frames <- frame_pixels(
+#'       n_rows   = 16L,
+#'       n_cols   = 16L,
+#'       n_states = 3L,
+#'       colours  = c("grey25", "green", "#0000FF")
+#'     )
 #'
-#'     # Write
+#'     # Write list of matrices to gif (requires 'gifski' installation)
 #'     gif_pixels(
 #'       frames = my_frames,
-#'       colours = c("black", "blue", "#0000FF"),  # one colour per matrix value
-#'       tempfile("example", ".gif")  # location to write GIF
+#'       file = "example.gif",  # location to write GIF
+#'       delay = 0.1            # passed to gifski::save_gif()
 #'     )
 #' }
 gif_pixels <- function(
@@ -111,12 +129,9 @@ gif_pixels <- function(
     ...
 ) {
 
-  .check_colours_char(colours)
-  .check_colours_unique(frames, colours)
-
   if (
     !is.list(frames) |
-    !all(sapply(frames, function(x) identical(x, frames[[1]])))
+    !all(sapply(frames, function(x) identical(dim(x), dim(frames[[1]]))))
   ) {
     stop(
       "Argument 'frames' must be a list of matrices of the same dimensions ",
@@ -128,7 +143,7 @@ gif_pixels <- function(
   if (
     !inherits(file, "character") |
     length(file) != 1 |
-    substr(file, nchar(file) - 3, nchar(file)) != ".gif"
+    tools::file_ext(file) != "gif"
   ) {
     stop(
       "Argument 'file' must be a character-string filepath ending '.gif'.",
@@ -136,19 +151,23 @@ gif_pixels <- function(
     )
   }
 
+  # If the first frame has a 'colours' attribute, then use these
+  if (is.null(colours) & !is.null(attr(frames[[1]], "colours"))) {
+    colours <- attr(frames[[1]], "colours")
+  }
+
+  # If no 'colours' attribute and colours is NULL, then choose gradated greys
+  if (is.null(colours)) {
+    get_greys <- grDevices::colorRampPalette(c("white", "grey20"))
+    colours   <- get_greys(n_states)  # gradated colours from white to dark grey
+  }
+
+  .check_colours_char(colours)
+  .check_colours_unique(frames, colours)
+
+  # Write to
   gifski::save_gif(
-    invisible(
-      lapply(
-        frames,
-        function(frame) {
-          if (is.null(colours)) {
-            draw_pixels(frame)
-          } else {
-            draw_pixels(frame, colours)
-          }
-        }
-      )
-    ),
+    invisible(lapply(frames, function(frame) draw_pixels(frame, colours))),
     gif_file = file,
     ...
   )

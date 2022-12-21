@@ -18,10 +18,10 @@ Defaults to NULL, which results in an attempt to find and use the
 added by default to matrices created with \code{\link{click_pixels}}
 (recommended).}
 
-\item{colours}{Character vector. As many named/hex colours as n_state. Each
+\item{colours}{Character vector. As many named/hex colours as 'n_state'. Each
 click in the interactive plot will cycle a pixel through these colours.
 Defaults to NULL, which results in an attempt to find and use the
-'colours' attribute (named character vector) of the input matrix, 'm'.
+'colours' attribute (a named character vector) of the input matrix, 'm'.
 This attribute is added by default to matrices created with
 \code{\link{click_pixels}} (recommended).}
 
@@ -37,20 +37,19 @@ Opens an interactive plotting canvas with a grid of clickable squares
 ideally the output from \code{\link{click_pixels}}.
 }
 \details{
-Click the pixels in the plotting window repeatedly to cycle through
-a number of 'states'. Successive clicks increase the state value by 1
-(wrapping back to 0, the default when the canvas is first plotted) and
-make the pixel darker grey in colour. Press the ESCAPE key to exit the
-mode and be returned a matrix that contains the state values of each
-pixel.
+Click repeatedly the pixels in the interactive plotting window to
+cycle through the provided number of 'states'. The initial state value is
+0 and successive clicks increase it by 1, wrapping back to 0 once the
+maximum number of states is exceeded. Press the ESCAPE key to exit the
+interactive mode.
 }
 \examples{
 \dontrun{
     # Create a 3 x 4 pixel matrix with 3 possible states to cycle through
     my_matrix <- click_pixels(
-      n_rows   = 3,
-      n_cols   = 4,
-      n_states = 3,
+      n_rows   = 3L,
+      n_cols   = 4L,
+      n_states = 3L,
       colours  = c("white", "red", "#0000FF")
     )
 
@@ -60,7 +59,7 @@ pixel.
     # Update the original matrix with additional state, different colours
     my_matrix_augmented <- edit_pixels(
       m        = my_matrix,
-      n_states = 4,  # one more than in the original
+      n_states = 4L,  # one more than in the original
       colours  = c("bisque3", "orchid", "chartreuse", "olivedrab")
     )
 }

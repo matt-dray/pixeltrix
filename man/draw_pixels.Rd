@@ -11,10 +11,12 @@ draw_pixels(m, colours = NULL)
 of pixel states desired. Override by supplying a 'n_states' value larger
 than the maximum in the matrix.}
 
-\item{colours}{A character vector of named colours. One for each value in m,
-the provided matrix. The order you provide the colours matches the order
-of the values in the matrix, from 0 to n. Defaults to NULL, which means
-random colours will be selected on your behalf.}
+\item{colours}{Character vector. As many named/hex colours as unique state
+values in 'm'. Each click in the interactive plot will cycle a pixel
+through these colours. Defaults to NULL, which results in an attempt to
+find and use the 'colours' attribute (a named character vector) of the
+input matrix, 'm', which is added by default to matrices created
+with \code{\link{click_pixels}} (recommended).}
 }
 \value{
 Nothing.
@@ -25,7 +27,7 @@ output from \code{\link{click_pixels}} (or \code{\link{edit_pixels}}).
 }
 \examples{
 \dontrun{
-  my_matrix <- click_pixels(n_states = 3)
+  my_matrix <- click_pixels(n_states = 3L)
   draw_pixels(my_matrix, c("black", "#0000FF", "green"))  # one colour per state
 }
 }

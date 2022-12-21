@@ -23,7 +23,7 @@ Numeric values are coerced to integer.}
 through with successive clicks. Numeric values are coerced to integer.
 See details.}
 
-\item{colours}{Character vector. As many named/hex colours as n_state. Each
+\item{colours}{Character vector. As many named/hex colours as 'n_state'. Each
 click in the interactive plot will cycle a pixel through these colours.
 Defaults to NULL, which generates a gradation from white to dark grey.
 See details.}
@@ -32,12 +32,11 @@ See details.}
 to help differentiate between them? Defaults to TRUE.}
 }
 \value{
-A matrix. Values correspond to the state of each pixel, which is
-determined by the number of clicks. There are two additional attributes:
-'n_states' is the number of pixel state values provided; 'colours' is
-a character vector provided by the user (or a gradated set of greys
-provided by default when colours' is NULL), which is named according to
-the corresponding state value in the output matrix.
+A matrix. The zero-indexed values correspond to the state of each
+pixel, which is determined by the number of clicks. Has an additional
+attribute: a named character vector, 'colours', which maps the values in
+the matrix to the colours provided by the user (or a gradated set of
+greys provided by default when the 'colours' argument is NULL).
 }
 \description{
 Opens an interactive plot with a grid of squares ('pixels') that you can
@@ -54,9 +53,9 @@ interactive mode.
 \dontrun{
     # Create a 16 x 16 pixel matrix with 3 possible pixel states
     my_matrix <- click_pixels(
-      n_rows   = 16,
-      n_cols   = 16,
-      n_states = 3,
+      n_rows   = 16L,
+      n_cols   = 16L,
+      n_states = 3L,
       colours  = c("blue", "#FF0000", "yellow")
     )
 }

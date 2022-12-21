@@ -49,14 +49,20 @@
 
 .check_colours_unique <- function(object, colours) {
 
-  if (inherits(object, "list")) {
+  if (is.list(object)) {
     object <- unlist(object)
   }
 
-  if (length(seq(0, max(as.vector(object)))) < length(colours)) {
+  if (is.matrix(object)) (
+    object <- as.vector(object)
+  )
+
+  states_len <- length(unique(object))
+
+  if (length(colours) != states_len) {
     stop(
-      "Length of argument 'colours' should not exceed the number of unique ",
-      "pixel states in matrix 'm'.",
+      "Length of argument 'colours' should match the number of unique ",
+      "pixel states (", states_len, ").",
       call. = FALSE
     )
   }

@@ -10,7 +10,7 @@
 #' @param n_states Integer. The number of states that a pixel can be cycled
 #'     through with successive clicks. Numeric values are coerced to integer.
 #'     See details.
-#' @param colours Character vector. As many named/hex colours as n_state. Each
+#' @param colours Character vector. As many named/hex colours as 'n_state'. Each
 #'     click in the interactive plot will cycle a pixel through these colours.
 #'     Defaults to NULL, which generates a gradation from white to dark grey.
 #'     See details.
@@ -23,21 +23,20 @@
 #'     maximum number of states is exceeded. Press the ESCAPE key to exit the
 #'     interactive mode.
 #'
-#' @return A matrix. Values correspond to the state of each pixel, which is
-#'     determined by the number of clicks. There are two additional attributes:
-#'     'n_states' is the number of pixel state values provided; 'colours' is
-#'     a character vector provided by the user (or a gradated set of greys
-#'     provided by default when colours' is NULL), which is named according to
-#'     the corresponding state value in the output matrix.
+#' @return A matrix. The zero-indexed values correspond to the state of each
+#'     pixel, which is determined by the number of clicks. Has an additional
+#'     attribute: a named character vector, 'colours', which maps the values in
+#'     the matrix to the colours provided by the user (or a gradated set of
+#'     greys provided by default when the 'colours' argument is NULL).
 #'
 #' @export
 #'
 #' @examples \dontrun{
 #'     # Create a 16 x 16 pixel matrix with 3 possible pixel states
 #'     my_matrix <- click_pixels(
-#'       n_rows   = 16,
-#'       n_cols   = 16,
-#'       n_states = 3,
+#'       n_rows   = 16L,
+#'       n_cols   = 16L,
+#'       n_states = 3L,
 #'       colours  = c("blue", "#FF0000", "yellow")
 #'     )
 #' }
@@ -69,7 +68,6 @@ click_pixels <- function(
   if (grid) .add_grid(m)
   m <- .repeat_loop(m, n_states, colours, grid)
 
-  attr(m, "n_states") <- as.integer(n_states)
   attr(m, "colours")  <- setNames(colours, seq(0, n_states - 1))
 
   m
@@ -91,21 +89,20 @@ click_pixels <- function(
 #'     'n_states' attribute (integer) of the input matrix, 'm'. The attribute is
 #'     added by default to matrices created with \code{\link{click_pixels}}
 #'     (recommended).
-#' @param colours Character vector. As many named/hex colours as n_state. Each
+#' @param colours Character vector. As many named/hex colours as 'n_state'. Each
 #'     click in the interactive plot will cycle a pixel through these colours.
 #'     Defaults to NULL, which results in an attempt to find and use the
-#'     'colours' attribute (named character vector) of the input matrix, 'm'.
+#'     'colours' attribute (a named character vector) of the input matrix, 'm'.
 #'     This attribute is added by default to matrices created with
 #'     \code{\link{click_pixels}} (recommended).
 #' @param grid Logical. Should a black boundary line be placed around the pixels
 #'     to help differentiate between them? Defaults to TRUE.
 #'
-#' @details Click the pixels in the plotting window repeatedly to cycle through
-#'     a number of 'states'. Successive clicks increase the state value by 1
-#'     (wrapping back to 0, the default when the canvas is first plotted) and
-#'     make the pixel darker grey in colour. Press the ESCAPE key to exit the
-#'     mode and be returned a matrix that contains the state values of each
-#'     pixel.
+#' @details Click repeatedly the pixels in the interactive plotting window to
+#'     cycle through the provided number of 'states'. The initial state value is
+#'     0 and successive clicks increase it by 1, wrapping back to 0 once the
+#'     maximum number of states is exceeded. Press the ESCAPE key to exit the
+#'     interactive mode.
 #'
 #' @return A matrix.
 #'
@@ -114,9 +111,9 @@ click_pixels <- function(
 #' @examples \dontrun{
 #'     # Create a 3 x 4 pixel matrix with 3 possible states to cycle through
 #'     my_matrix <- click_pixels(
-#'       n_rows   = 3,
-#'       n_cols   = 4,
-#'       n_states = 3,
+#'       n_rows   = 3L,
+#'       n_cols   = 4L,
+#'       n_states = 3L,
 #'       colours  = c("white", "red", "#0000FF")
 #'     )
 #'
@@ -126,7 +123,7 @@ click_pixels <- function(
 #'     # Update the original matrix with additional state, different colours
 #'     my_matrix_augmented <- edit_pixels(
 #'       m        = my_matrix,
-#'       n_states = 4,  # one more than in the original
+#'       n_states = 4L,  # one more than in the original
 #'       colours  = c("bisque3", "orchid", "chartreuse", "olivedrab")
 #'     )
 #' }
@@ -158,13 +155,11 @@ edit_pixels <- function(
   }
 
   # Coerce state count to integer if provided
-  if (!is.null(n_states)) {
-    n_states <- as.integer(n_states)
-  }
+    n_states <- .convert_to_int(n_states)
 
   # Take n_states from attributes of input matrix, if present
   if (is.null(n_states) & !is.null(attr(m, "n_states"))) {
-    n_states <- attr(m, "n_states")
+    n_states <- length(attr(m, "colours"))
   }
 
   # Take colours from attributes of input matrix, if present
@@ -176,7 +171,6 @@ edit_pixels <- function(
   if (grid) .add_grid(m)
   m <- .repeat_loop(m, n_states, colours, grid)
 
-  attr(m, "n_states") <- as.integer(n_states)
   attr(m, "colours")  <- setNames(colours, seq(0, n_states - 1))
 
   m

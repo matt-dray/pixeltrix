@@ -13,18 +13,25 @@ frame_pixels(
 )
 }
 \arguments{
-\item{n_rows}{Integer. The number of 'pixels' high that the plot should be.
+\item{n_rows}{Integer. The number of pixels high that the plot should be.
 Numeric values are coerced to integer.}
 
-\item{n_cols}{Integer. The number of 'pixels' wide that the plot should be.
+\item{n_cols}{Integer. The number of pixels wide that the plot should be.
 Numeric values are coerced to integer.}
 
 \item{n_states}{Integer. The number of states that a pixel can be. Click a
 pixel to cycle through the states. Numeric values are coerced to integer.
 See details.}
 
+\item{colours}{Character vector. As many named/hex colours as n_state. Each
+click in the interactive plot will cycle a pixel through these colours.
+Defaults to NULL, which results in an attempt to find and use the
+'colours' attribute (named character vector) of the input matrix, 'm'.
+This attribute is added by default to matrices created with
+\code{\link{click_pixels}} (recommended).}
+
 \item{grid}{Logical. Should a boundary line be placed around the pixels to
-make them easier to differentiate? Defaults to TRUE.}
+make them easier to differentiate between them? Defaults to TRUE.}
 }
 \value{
 A list of matrices.
@@ -46,6 +53,11 @@ your animation.
 \examples{
 \dontrun{
     # Begin interactive sequence to create animation frames
-    my_matrix <- frame_pixels(n_rows = 16, n_cols = 16, n_states = 3)
+    my_frames <- frame_pixels(
+      n_rows   = 16L,
+      n_cols   = 16L,
+      n_states = 3L,
+      colours  = c("grey25", "green", "#0000FF")
+    )
 }
 }
