@@ -7,10 +7,26 @@ test_that("error occurs when 'm' is not a matrix", {
 
 })
 
-test_that("error occurs when 'n_states' is not an integer", {
+test_that("error occurs when 'n_states' is not numeric", {
 
   expect_error(edit_pixels(n_states = "x"))
   expect_error(edit_pixels(n_states = mtcars))
+  expect_error(edit_pixels(n_states = FALSE))
+
+})
+
+test_that("error occurs when 'colours' isn't a character vector", {
+
+  expect_error(edit_pixels(colours = 1))
+  expect_error(edit_pixels(colours = mtcars))
+  expect_error(edit_pixels(colours = FALSE))
+
+})
+
+test_that("error occurs when 'n_states' is lower than max matrix value", {
+
+  m_test <- matrix(rep(0:2, 3), 3)
+  expect_error(edit_pixels(m = m_test, n_states = 1))
 
 })
 

@@ -21,20 +21,8 @@
 #' }
 draw_pixels <- function(m, colours = NULL) {
 
-  if (!inherits(m, "matrix") | !is.numeric(m) | all(diff(1:3) != 1)) {
-    stop(
-      "Argument 'm' must be a matrix composed of consecutive numeric values.",
-      call. = FALSE
-    )
-  }
-
-  if (length(seq(0, max(as.vector(m)))) < length(colours)) {
-    stop(
-      "Length of argument 'colours' should not exceed the number of unique ",
-      "pixel states in matrix 'm'.",
-      call. = FALSE
-    )
-  }
+  .check_matrix(m)
+  .check_colours_unique(m, colours)
 
   # Take colours from attributes of input matrix, if present
   if (is.null(colours) & !is.null(attr(m, "colours"))) {

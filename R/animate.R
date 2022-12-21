@@ -39,6 +39,11 @@ frame_pixels <- function(
     grid     = TRUE
 ) {
 
+  .check_n_numeric(n_rows, n_cols, n_states)
+  .check_colours_char(colours)
+  .check_colours_len(colours, n_states)
+  .check_grid(grid)
+
   m_list  <- list()
 
   m_first <- click_pixels(n_rows, n_cols, n_states, colours, grid)
@@ -106,18 +111,16 @@ gif_pixels <- function(
     ...
 ) {
 
-  if (!inherits(frames, "list")) {
-    stop(
-      "Argument 'frames' must be a list of matrices of the same size, ",
-      "preferably produced by the frame_pixels() function.",
-      call. = FALSE
-    )
-  }
+  .check_colours_char(colours)
+  .check_colours_unique(frames, colours)
 
-  if (length(seq(0, max(as.vector(unlist(frames))))) < length(colours)) {
+  if (
+    !is.list(frames) |
+    !all(sapply(frames, function(x) identical(x, frames[[1]])))
+  ) {
     stop(
-      "Length of argument 'colours' should not exceed the number of unique ",
-      "pixel states in matrix 'm'.",
+      "Argument 'frames' must be a list of matrices of the same dimensions ",
+      "(preferably produced by the frame_pixels() function).",
       call. = FALSE
     )
   }

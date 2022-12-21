@@ -150,14 +150,3 @@
   m
 
 }
-
-# Force numeric inputs to integer
-.convert_to_int <- function(n) {
-
-  if (!is.null(n) && is.numeric(n)) {
-    n <- as.integer(n)
-  }
-
-  n
-
-}

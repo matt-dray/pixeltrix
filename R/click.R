@@ -49,24 +49,14 @@ click_pixels <- function(
     grid     = TRUE
 ) {
 
-  if (!is.numeric(c(n_rows, n_cols, n_states))) {
-    stop("Arguments 'n_rows', 'n_cols' and 'n_states' must be integer values.")
-  }
+  .check_n_numeric(n_rows, n_cols, n_states)
+  .check_colours_char(colours)
+  .check_colours_len(colours, n_states)
+  .check_grid(grid)
 
-  if (!is.logical(grid)) {
-    stop("Argument 'grid' must be TRUE or FALSE.", call. = FALSE)
-  }
-
-  if (!is.null(colours) && (length(colours) != n_states)) {
-    stop(
-      "Argument 'colours' must be a character vector of length 'n_states'.",
-      call. = FALSE
-    )
-  }
-
-  n_rows   <- as.integer(n_rows)
-  n_cols   <- as.integer(n_cols)
-  n_states <- as.integer(n_states)
+  n_rows   <- .convert_to_int(n_rows)
+  n_cols   <- .convert_to_int(n_cols)
+  n_states <- .convert_to_int(n_states)
 
   if (is.null(colours)) {
     get_greys <- grDevices::colorRampPalette(c("white", "grey20"))
@@ -140,19 +130,20 @@ click_pixels <- function(
 #'       colours  = c("bisque3", "orchid", "chartreuse", "olivedrab")
 #'     )
 #' }
-edit_pixels <- function(m, n_states = NULL, colours = NULL, grid = TRUE) {
+edit_pixels <- function(
+    m,
+    n_states = NULL,
+    colours = NULL,
+    grid = TRUE
+) {
 
-  if (!is.matrix(m) | !is.integer(m)) {
-    stop(
-      "Argument 'm' must be a matrix object composed of integers.",
-      call. = FALSE
-    )
-  }
+  .check_matrix(m)
+  .check_grid(grid)
 
   if (!is.null(n_states)) {
     if (!is.numeric(n_states)) {
       stop(
-        "Argument 'n_states' must be an integer value or NULL.",
+        "Argument 'n_states' must be a numeric value or NULL.",
         call. = FALSE
       )
     }
@@ -164,10 +155,6 @@ edit_pixels <- function(m, n_states = NULL, colours = NULL, grid = TRUE) {
       "the maximum value in the provided matrix, 'm'.",
       call. = FALSE
     )
-  }
-
-  if (!is.logical(grid)) {
-    stop("Argument 'grid' must be TRUE or FALSE.", call. = FALSE)
   }
 
   # Coerce state count to integer if provided
