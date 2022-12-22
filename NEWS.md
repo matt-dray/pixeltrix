@@ -2,10 +2,11 @@
 
 * A named character of colours is now provided as an extra attribute to matrices output from `click_pixels()` (#3, #17, thanks @TimTaylor).
 * A named character vector of colours is now accepted as input to `click_pixels()`, `edit pixels()`, `draw_pixels()` and `frame_pixels()`.
-* Demo datasets (`pkmn_sprite` and `mario_frames`) updated to include attributes (#22).
+* Breaking: `blue` and `mario` demo datasets no longer available; `pkmn_sprite` and `mario_frames` replace them (#22).
 * Updated and expanded function documentation and README (#21).
 * Reused input checks have been generalised into 'R/utils-check.R'.
 * Expanded tests to cover argument input errors.
+* 
 
 # pixeltrix 0.1.3
 

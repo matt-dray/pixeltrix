@@ -40,7 +40,7 @@ library(pixeltrix)
 Basic use:
 
 1. Use `click_pixels()` to begin an interactive, clickable plot of squares ('pixels').
-2. Click pixels repetitively to cycle through their states.
+2. Click individual pixels repetitively to cycle through their states.
 3. Press the <kbd>Esc</kbd> key when you're done, or the 'Finish' button in RStudio's plot window, to return a matrix that encodes your image.
 
 You can also:
@@ -49,14 +49,9 @@ You can also:
 * draw your matrix to the plotting window as an image with `draw_pixels()`
 * create a list of animation 'frames' with `frame_pixels()` and write them to a gif with `gif_pixels()`
 
-This is a concept package with limitations like:
-
-* you can only click one square at a time
-* you can't change colours on the fly
-
 ## Examples
 
-### One frame
+### Sprite
 
 Let's create a sprite of the player character from _Pokémon_ (1996) using `click_pixels()`:
 
@@ -74,7 +69,7 @@ This opens an interactive plot window. You can click to cycle the pixels through
 
 <img src="man/figures/pkmn-rstudio.png" alt="An RStudio window. The console has run the function click_pixels(blue) and has printed the message 'click squares in the plot window, press Esc to end.' In the plot pane is a 16 by 14 pixel grid with a sprite of the main character from the first generation of Pokemon games for the Game Boy. The background is white, the outlines are dark grey and the highlights are light blue There's a black grid around the pixels." width="50%">
 
-A matrix is returned when you've finished clicking and pressed <kbd>Escape</kbd>. Note that the colour palette is stored in the `colours` attribute, where the name of each element corresponds to its pixel state value in the matrix.
+A matrix is returned when you've finished clicking and pressed <kbd>Esc</kbd>. Note that the colour palette is stored in the `colours` attribute, where the name of each element corresponds to its pixel state value in the matrix.
 
 ```{r eval=TRUE}
 str(pkmn_sprite)
@@ -91,7 +86,7 @@ draw_pixels(
 
 <img src="man/figures/pkmn.png" alt="A 14 by 16 pixel grid with a sprite of the main character from the first generation of Pokemon games for the Game Boy. It's coloured using the green shades of the original Game Boy." width="33%">
 
-### Animated frames
+### Animation
 
 You can create multiple animation frames with `frame_pixels()`. The prior frame is used as a template for the next. Here's how it might look to recreate Mario's walk cycle from _Super Mario Brothers_ (1983):
 

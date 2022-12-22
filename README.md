@@ -37,7 +37,7 @@ Basic use:
 
 1.  Use `click_pixels()` to begin an interactive, clickable plot of
     squares (‘pixels’).
-2.  Click pixels repetitively to cycle through their states.
+2.  Click individual pixels repetitively to cycle through their states.
 3.  Press the <kbd>Esc</kbd> key when you’re done, or the ‘Finish’
     button in RStudio’s plot window, to return a matrix that encodes
     your image.
@@ -51,14 +51,9 @@ You can also:
 - create a list of animation ‘frames’ with `frame_pixels()` and write
   them to a gif with `gif_pixels()`
 
-This is a concept package with limitations like:
-
-- you can only click one square at a time
-- you can’t change colours on the fly
-
 ## Examples
 
-### One frame
+### Sprite
 
 Let’s create a sprite of the player character from *Pokémon* (1996)
 using `click_pixels()`:
@@ -103,7 +98,7 @@ draw_pixels(
 
 <img src="man/figures/pkmn.png" alt="A 14 by 16 pixel grid with a sprite of the main character from the first generation of Pokemon games for the Game Boy. It's coloured using the green shades of the original Game Boy." width="33%">
 
-### Animated frames
+### Animation
 
 You can create multiple animation frames with `frame_pixels()`. The
 prior frame is used as a template for the next. Here’s how it might look
