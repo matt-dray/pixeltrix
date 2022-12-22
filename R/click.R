@@ -154,17 +154,30 @@ edit_pixels <- function(
     )
   }
 
-  # Coerce state count to integer if provided
-  n_states <- .convert_to_int(n_states)
+  # Coerce n_states to integer, if provided
+  if (!is.null(n_states)) {
+    n_states <- as.integer(n_states)
+  }
 
-  # Take n_states from attributes of input matrix, if present
+  # Otherwise get n_state from attrbutes
   if (is.null(n_states) & !is.null(attr(m, "colours"))) {
     n_states <- length(attr(m, "colours"))  # n colours, so n states
+  }
+
+  # Otherwise take n_states from content of input matrix
+  if (is.null(n_states) & is.null(attr(m, "colours"))) {
+    n_states <- length(unique(as.vector(m)))
   }
 
   # Take colours from attributes of input matrix, if present
   if (is.null(colours) & !is.null(attr(m, "colours"))) {
     colours <- attr(m, "colours")
+  }
+
+  # If no 'colours' attribute and colours is NULL, then choose gradated greys
+  if (is.null(colours)) {
+    get_greys <- grDevices::colorRampPalette(c("white", "grey20"))
+    colours   <- get_greys(n_states)  # gradated colours from white to dark grey
   }
 
   .plot_canvas(m, n_states, colours)
