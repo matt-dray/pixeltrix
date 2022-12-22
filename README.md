@@ -74,9 +74,9 @@ through each of the three states. Here’s how that looks in RStudio:
 <img src="man/figures/pkmn-rstudio.png" alt="An RStudio window. The console has run the function click_pixels(blue) and has printed the message 'click squares in the plot window, press Esc to end.' In the plot pane is a 16 by 14 pixel grid with a sprite of the main character from the first generation of Pokemon games for the Game Boy. The background is white, the outlines are dark grey and the highlights are light blue There's a black grid around the pixels." width="50%">
 
 A matrix is returned when you’ve finished clicking and pressed
-<kbd>Escape</kbd>. Note that the colour palette is stored in the
-`colours` attribute, where the name of each element corresponds to its
-pixel state value in the matrix.
+<kbd>Esc</kbd>. Note that the colour palette is stored in the `colours`
+attribute, where the name of each element corresponds to its pixel state
+value in the matrix.
 
 ``` r
 str(pkmn_sprite)
