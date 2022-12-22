@@ -68,7 +68,7 @@ click_pixels <- function(
   if (grid) .add_grid(m)
   m <- .repeat_loop(m, n_states, colours, grid)
 
-  attr(m, "colours")  <- setNames(colours, seq(0, n_states - 1))
+  attr(m, "colours")  <- stats::setNames(colours, seq(0, n_states - 1))
 
   m
 
@@ -130,8 +130,8 @@ click_pixels <- function(
 edit_pixels <- function(
     m,
     n_states = NULL,
-    colours = NULL,
-    grid = TRUE
+    colours  = NULL,
+    grid     = TRUE
 ) {
 
   .check_matrix(m)
@@ -159,7 +159,7 @@ edit_pixels <- function(
     n_states <- as.integer(n_states)
   }
 
-  # Otherwise get n_state from attrbutes
+  # Otherwise get n_state from attributes
   if (is.null(n_states) & !is.null(attr(m, "colours"))) {
     n_states <- length(attr(m, "colours"))  # n colours, so n states
   }
@@ -184,7 +184,7 @@ edit_pixels <- function(
   if (grid) .add_grid(m)
   m <- .repeat_loop(m, n_states, colours, grid)
 
-  attr(m, "colours")  <- setNames(colours, seq(0, n_states - 1))
+  attr(m, "colours") <- stats::setNames(colours, seq(0, n_states - 1))
 
   m
 

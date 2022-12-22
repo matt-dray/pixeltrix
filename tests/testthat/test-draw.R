@@ -10,7 +10,7 @@ test_that("error occurs when 'm' is not a matrix", {
 test_that("error occurs when 'colours' length exceeds max matrix value", {
 
   expect_error(
-    edit_pixels(
+    draw_pixels(
       m = matrix(rep(0:1, 3), 3),
       colours = c("red", "yellow", "blue")
     )
