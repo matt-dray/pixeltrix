@@ -1,19 +1,21 @@
 # Loop continuously to accept a click, update matrix values, then re-plot
-.repeat_loop <- function(m, n, g) {
+.repeat_loop <- function(m, n_states, colours, grid) {
+
+  message("Click squares in the plot window. Press <Esc> to end.")
 
   repeat {
 
-    p <- .locate_on_grid(m)
+    point <- .locate_on_grid(m)
 
-    if (is.null(p)) break
+    if (is.null(point)) break
 
-    m <- .update_matrix(m, p, n)
+    m <- .update_matrix(m, point, n_states)
 
     grDevices::dev.off()
 
-    .plot_canvas(m, n)
+    .plot_canvas(m, n_states, colours)
 
-    if (g) .add_grid(m)
+    if (grid) .add_grid(m)
 
   }
 
@@ -22,7 +24,7 @@
 }
 
 # Plot 'pixels' given the dimensions of the input matrix
-.plot_canvas <- function(m, n) {
+.plot_canvas <- function(m, n_states, colours) {
 
   par_start <- graphics::par(mar = rep(0, 4))  # set margins, save current
 
@@ -30,20 +32,17 @@
   n_cols <- ncol(m)
 
   if (n_rows > 1 & n_cols > 1) {
-    m <- t(m[nrow(m):1, ])
+    m <- t(m[seq(n_rows, 1), ])
   }
 
-  # Transposition and reversal required with pixel dimension of 1
+  # Transpose/reverse needed with pixel dimension of 1
   if (n_rows == 1) m <- t(m)
   if (n_cols == 1) m <- t(rev(m))
 
-  # Generate greyscale colour palette, darker for higher values
-  pal <- grDevices::colorRampPalette(c("white", "black"))
-
   graphics::image(
     m,
-    zlim = c(0, n),
-    col  = pal(n + 1),
+    zlim = c(0, n_states - 1),
+    col  = colours,
     axes = FALSE,
     xlab = "",
     ylab = ""
@@ -111,43 +110,54 @@
   y_unit <- 1 / (y_n - 1)
   y_mids <- seq(0, 1, y_unit)
 
-  p <- graphics::locator(1)  # prompt for interactive click
+  point <- graphics::locator(1)  # prompt for interactive click
 
-  if (length(p) == 0) {  # if early escape from locator()
+  if (length(point) == 0) {  # if early escape from locator()
     return(NULL)
   }
 
   # Calculate distances xy from clicked point to pixel centres
-  x_diffs <- abs(p$x - x_mids)
-  y_diffs <- rev(abs(p$y - y_mids))
+  x_diffs <- abs(point$x - x_mids)
+  y_diffs <- rev(abs(point$y - y_mids))
 
   # Identify pixel closest to click
-  p <- list(
+  point <- list(
     x = which.min(x_diffs),
     y = which.min(y_diffs)
   )
 
-  #
-  if (length(p$x) == 0) p$x <- 1
-  if (length(p$y) == 0) p$y <- 1
+  # Default to 1 if there's no point
+  if (length(point$x) == 0) point$x <- 1
+  if (length(point$y) == 0) point$y <- 1
 
-  return(p)
+  return(point)
 
 }
 
 # Increment the value of the matrix that corresponds to the clicked 'pixel'
-.update_matrix <- function(m, p, n) {  # matrix, pixel coordinates, n_states
+.update_matrix <- function(m, point, n_states) {
 
-  states <- seq(0L, n - 1L)         # available pixel state values (0, 1, ...)
-  current_state <- m[p$y, p$x]      # current state value of pixel (e.g. 0)
-  next_state <- current_state + 1L  # next consecutive state value (e.g. 1)
+  states        <- seq(0L, n_states - 1L)  # available pixel states (0, 1, ...)
+  current_state <- m[point$y, point$x]     # current state of pixel (e.g. 0)
+  next_state    <- current_state + 1L      # next consecutive state (e.g. 1)
 
-  if (next_state > n - 1L) {
-    next_state <- states[1]  # wrap from last to first state value (e.g. 0, 1, 0)
+  if (next_state > n_states - 1L) {
+    next_state <- states[1]  # wrap from last to first state (e.g. 0, 1, 0)
   }
 
-  m[p$y, p$x] <- next_state  # update the state value in the matrix for that pixel
+  m[point$y, point$x] <- next_state  # update the state for that pixel
 
-  return(m)
+  m
+
+}
+
+# Force numeric inputs to integer
+.convert_to_int <- function(n) {
+
+  if (!is.null(n) && is.numeric(n)) {
+    n <- as.integer(n)
+  }
+
+  n
 
 }

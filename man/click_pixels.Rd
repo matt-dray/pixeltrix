@@ -4,40 +4,59 @@
 \alias{click_pixels}
 \title{Click 'Pixels' in an Interactive Plot}
 \usage{
-click_pixels(n_rows = 8L, n_cols = 8L, n_states = 2L, grid = TRUE)
+click_pixels(
+  n_rows = 8L,
+  n_cols = 8L,
+  n_states = 2L,
+  colours = NULL,
+  grid = TRUE
+)
 }
 \arguments{
-\item{n_rows}{Integer. The number of 'pixels' high that the plot should be.
+\item{n_rows}{Integer. The number of pixels high that the plot should be.
 Numeric values are coerced to integer.}
 
-\item{n_cols}{Integer. The number of 'pixels' wide that the plot should be.
+\item{n_cols}{Integer. The number of pixels wide that the plot should be.
 Numeric values are coerced to integer.}
 
-\item{n_states}{Integer. The number of states that a pixel can be. Click a
-pixel to cycle through the states. Numeric values are coerced to integer.
+\item{n_states}{Integer. The number of states that a pixel can be cycled
+through with successive clicks. Numeric values are coerced to integer.
 See details.}
 
-\item{grid}{Logical. Should a boundary line be placed around the pixels to
-make them easier to differentiate? Defaults to TRUE.}
+\item{colours}{Character vector. As many named/hex colours as 'n_state'. Each
+click in the interactive plot will cycle a pixel through these colours.
+Defaults to NULL, which generates a gradation from white to dark grey.
+See details.}
+
+\item{grid}{Logical. Should a black boundary line be placed around the pixels
+to help differentiate between them? Defaults to TRUE.}
 }
 \value{
-A matrix.
+A matrix. The zero-indexed values correspond to the state of each
+pixel, which is determined by the number of clicks. Has an additional
+attribute: a named character vector, 'colours', which maps the values in
+the matrix to the colours provided by the user (or a gradated set of
+greys provided by default when the 'colours' argument is NULL).
 }
 \description{
-Opens a new interactive plotting canvas with a grid of clickable squares
-('pixels').
+Opens an interactive plot with a grid of squares ('pixels') that you can
+click to cycle through. Returns a matrix 'blueprint' of your image.
 }
 \details{
-Click the pixels in the plotting window repeatedly to cycle through
-a number of 'states'. Successive clicks increase the state value by 1
-(wrapping back to 0, the default when the canvas is first plotted) and
-make the pixel darker grey in colour. Press the ESCAPE key to exit the
-mode and be returned a matrix that contains the state values of each
-pixel.
+Click repeatedly the pixels in the interactive plotting window to
+cycle through the provided number of 'states'. The initial state value is
+0 and successive clicks increase it by 1, wrapping back to 0 once the
+maximum number of states is exceeded. Press the ESCAPE key to exit the
+interactive mode.
 }
 \examples{
 \dontrun{
-# Create a 16 x 16 pixel matrix with 3 possible states to cycle through
-click_pixels(n_rows = 16, n_cols = 16, n_states = 3, grid = TRUE)
+    # Create a 16 x 16 pixel matrix with 3 possible pixel states
+    my_matrix <- click_pixels(
+      n_rows   = 16L,
+      n_cols   = 16L,
+      n_states = 3L,
+      colours  = c("blue", "#FF0000", "yellow")
+    )
 }
 }

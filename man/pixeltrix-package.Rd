@@ -4,9 +4,9 @@
 \name{pixeltrix-package}
 \alias{pixeltrix}
 \alias{pixeltrix-package}
-\title{pixeltrix: Simple Interactive Sprite Creator}
+\title{pixeltrix: Simple Interactive Pixel Art}
 \description{
-A very simple tool that lets you click ‘pixels’ interactively in a plot window and returns your final image as a matrix. Provide multiple frames to create an animated gif.
+A very simple 'pixel art' tool that lets you click squares interactively in a plot window and returns your final image as a matrix. Provide multiple frames to create an animated gif.
 }
 \seealso{
 Useful links:

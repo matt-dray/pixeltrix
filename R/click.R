@@ -1,63 +1,76 @@
 #' Click 'Pixels' in an Interactive Plot
 #'
-#' Opens a new interactive plotting canvas with a grid of clickable squares
-#' ('pixels').
+#' Opens an interactive plot with a grid of squares ('pixels') that you can
+#' click to cycle through. Returns a matrix 'blueprint' of your image.
 #'
-#' @param n_rows Integer. The number of 'pixels' high that the plot should be.
+#' @param n_rows Integer. The number of pixels high that the plot should be.
 #'     Numeric values are coerced to integer.
-#' @param n_cols Integer. The number of 'pixels' wide that the plot should be.
+#' @param n_cols Integer. The number of pixels wide that the plot should be.
 #'     Numeric values are coerced to integer.
-#' @param n_states Integer. The number of states that a pixel can be. Click a
-#'     pixel to cycle through the states. Numeric values are coerced to integer.
+#' @param n_states Integer. The number of states that a pixel can be cycled
+#'     through with successive clicks. Numeric values are coerced to integer.
 #'     See details.
-#' @param grid Logical. Should a boundary line be placed around the pixels to
-#'     make them easier to differentiate? Defaults to TRUE.
+#' @param colours Character vector. As many named/hex colours as 'n_state'. Each
+#'     click in the interactive plot will cycle a pixel through these colours.
+#'     Defaults to NULL, which generates a gradation from white to dark grey.
+#'     See details.
+#' @param grid Logical. Should a black boundary line be placed around the pixels
+#'     to help differentiate between them? Defaults to TRUE.
 #'
-#' @details Click the pixels in the plotting window repeatedly to cycle through
-#'     a number of 'states'. Successive clicks increase the state value by 1
-#'     (wrapping back to 0, the default when the canvas is first plotted) and
-#'     make the pixel darker grey in colour. Press the ESCAPE key to exit the
-#'     mode and be returned a matrix that contains the state values of each
-#'     pixel.
+#' @details Click repeatedly the pixels in the interactive plotting window to
+#'     cycle through the provided number of 'states'. The initial state value is
+#'     0 and successive clicks increase it by 1, wrapping back to 0 once the
+#'     maximum number of states is exceeded. Press the ESCAPE key to exit the
+#'     interactive mode.
 #'
-#' @return A matrix.
+#' @return A matrix. The zero-indexed values correspond to the state of each
+#'     pixel, which is determined by the number of clicks. Has an additional
+#'     attribute: a named character vector, 'colours', which maps the values in
+#'     the matrix to the colours provided by the user (or a gradated set of
+#'     greys provided by default when the 'colours' argument is NULL).
 #'
 #' @export
 #'
 #' @examples \dontrun{
-#' # Create a 16 x 16 pixel matrix with 3 possible states to cycle through
-#' click_pixels(n_rows = 16, n_cols = 16, n_states = 3, grid = TRUE)
+#'     # Create a 16 x 16 pixel matrix with 3 possible pixel states
+#'     my_matrix <- click_pixels(
+#'       n_rows   = 16L,
+#'       n_cols   = 16L,
+#'       n_states = 3L,
+#'       colours  = c("blue", "#FF0000", "yellow")
+#'     )
 #' }
 click_pixels <- function(
     n_rows   = 8L,
     n_cols   = 8L,
     n_states = 2L,
+    colours  = NULL,
     grid     = TRUE
 ) {
 
-  if (!is.numeric(c(n_rows, n_cols, n_states))) {
-    stop("Arguments 'n_rows', 'n_cols' and 'n_states' must be integer values.")
-  }
+  .check_n_numeric(n_rows, n_cols, n_states)
+  .check_colours_char(colours)
+  .check_colours_len(colours, n_states)
+  .check_grid(grid)
 
-  if (!is.logical(grid)) {
-    stop("Argument 'grid' must be TRUE or FALSE.", call. = FALSE)
-  }
+  n_rows   <- .convert_to_int(n_rows)
+  n_cols   <- .convert_to_int(n_cols)
+  n_states <- .convert_to_int(n_states)
 
-  n_rows   <- as.integer(n_rows)
-  n_cols   <- as.integer(n_cols)
-  n_states <- as.integer(n_states)
+  if (is.null(colours)) {
+    get_greys <- grDevices::colorRampPalette(c("white", "grey20"))
+    colours   <- get_greys(n_states)  # gradated colours from white to dark grey
+  }
 
   m <- matrix(0L, n_rows, n_cols)
 
-  .plot_canvas(m, n_states)
+  .plot_canvas(m, n_states, colours)
+  if (grid) .add_grid(m)
+  m <- .repeat_loop(m, n_states, colours, grid)
 
-  if (grid) {
-    .add_grid(m)
-  }
+  attr(m, "colours")  <- stats::setNames(colours, seq(0, n_states - 1))
 
-  message("Click squares in the plot window. Press <Esc> to end.")
-
-  .repeat_loop(m, n_states, grid)
+  m
 
 }
 
@@ -70,43 +83,64 @@ click_pixels <- function(
 #' @param m A matrix of integers. The maximum value is assumed to be the number
 #'     of pixel states desired. Override by supplying a 'n_states' value larger
 #'     than the maximum in the matrix.
-#' @param n_states Integer. The number of states that a pixel can be. Click a
-#'     pixel to cycle through the states. Numeric values are coerced to integer.
-#'     See details.
-#' @param grid Logical. Should a boundary line be placed around the pixels to
-#'     make them easier to differentiate? Defaults to TRUE.
+#' @param n_states Integer. The number of states that a pixel can be cycled
+#'     through with successive clicks. Numeric values are coerced to integer.
+#'     Defaults to NULL, which results in an attempt to find and use the
+#'     'n_states' attribute (integer) of the input matrix, 'm'. The attribute is
+#'     added by default to matrices created with \code{\link{click_pixels}}
+#'     (recommended).
+#' @param colours Character vector. As many named/hex colours as 'n_state'. Each
+#'     click in the interactive plot will cycle a pixel through these colours.
+#'     Defaults to NULL, which results in an attempt to find and use the
+#'     'colours' attribute (a named character vector) of the input matrix, 'm'.
+#'     This attribute is added by default to matrices created with
+#'     \code{\link{click_pixels}} (recommended).
+#' @param grid Logical. Should a black boundary line be placed around the pixels
+#'     to help differentiate between them? Defaults to TRUE.
 #'
-#' @details Click the pixels in the plotting window repeatedly to cycle through
-#'     a number of 'states'. Successive clicks increase the state value by 1
-#'     (wrapping back to 0, the default when the canvas is first plotted) and
-#'     make the pixel darker grey in colour. Press the ESCAPE key to exit the
-#'     mode and be returned a matrix that contains the state values of each
-#'     pixel.
+#' @details Click repeatedly the pixels in the interactive plotting window to
+#'     cycle through the provided number of 'states'. The initial state value is
+#'     0 and successive clicks increase it by 1, wrapping back to 0 once the
+#'     maximum number of states is exceeded. Press the ESCAPE key to exit the
+#'     interactive mode.
 #'
 #' @return A matrix.
 #'
 #' @export
 #'
 #' @examples \dontrun{
-#' # Create a 3 x 4 pixel matrix with 3 possible states to cycle through
-#' mat <- click_pixels(n_rows = 3, n_cols = 4, n_states = 3)
+#'     # Create a 3 x 4 pixel matrix with 3 possible states to cycle through
+#'     my_matrix <- click_pixels(
+#'       n_rows   = 3L,
+#'       n_cols   = 4L,
+#'       n_states = 3L,
+#'       colours  = c("white", "red", "#0000FF")
+#'     )
 #'
-#' # Update the original matrix, allow for an extra state
-#' mat_udpated <- edit_pixels(m = mat, n_states = 4)
+#'.    # Update the original matrix
+#'     my_matrix_edited <- edit_pixels(m = my_matrix)
+#'
+#'     # Update the original matrix with additional state, different colours
+#'     my_matrix_augmented <- edit_pixels(
+#'       m        = my_matrix,
+#'       n_states = 4L,  # one more than in the original
+#'       colours  = c("bisque3", "orchid", "chartreuse", "olivedrab")
+#'     )
 #' }
-edit_pixels <- function(m, n_states = NULL, grid = TRUE) {
+edit_pixels <- function(
+    m,
+    n_states = NULL,
+    colours  = NULL,
+    grid     = TRUE
+) {
 
-  if (!is.matrix(m) | !is.integer(m)) {
-    stop(
-      "Argument 'm' must be a matrix object composed of integers.",
-      call. = FALSE
-    )
-  }
+  .check_matrix(m)
+  .check_grid(grid)
 
   if (!is.null(n_states)) {
     if (!is.numeric(n_states)) {
       stop(
-        "Argument 'n_states' must be an integer value or NULL.",
+        "Argument 'n_states' must be a numeric value or NULL.",
         call. = FALSE
       )
     }
@@ -120,24 +154,40 @@ edit_pixels <- function(m, n_states = NULL, grid = TRUE) {
     )
   }
 
-  if (!is.logical(grid)) {
-    stop("Argument 'grid' must be TRUE or FALSE.", call. = FALSE)
-  }
-
-  if (is.null(n_states)) {
-    n_states <-  max(m) + 1L
-  } else if (is.null(n_states)) {
+  # Coerce n_states to integer, if provided
+  if (!is.null(n_states)) {
     n_states <- as.integer(n_states)
   }
 
-  .plot_canvas(m, n_states)
-
-  if (grid) {
-    .add_grid(m)
+  # Otherwise get n_state from attributes
+  if (is.null(n_states) & !is.null(attr(m, "colours"))) {
+    n_states <- length(attr(m, "colours"))  # n colours, so n states
   }
 
-  message("Click squares in the plot window. Press <Esc> to end.")
+  # Otherwise take n_states from content of input matrix
+  if (is.null(n_states) & is.null(attr(m, "colours"))) {
+    n_states <- length(unique(as.vector(m)))
+  }
 
-  .repeat_loop(m, n_states, grid)
+  # Take colours from attributes of input matrix, if present
+  if (is.null(colours) & !is.null(attr(m, "colours"))) {
+    colours <- attr(m, "colours")
+  }
+
+  # If no 'colours' attribute and colours is NULL, then choose gradated greys
+  if (is.null(colours)) {
+    get_greys <- grDevices::colorRampPalette(c("white", "grey20"))
+    colours   <- get_greys(n_states)  # gradated colours from white to dark grey
+  }
+
+  .check_colours_unique(m, colours)
+
+  .plot_canvas(m, n_states, colours)
+  if (grid) .add_grid(m)
+  m <- .repeat_loop(m, n_states, colours, grid)
+
+  attr(m, "colours") <- stats::setNames(colours, seq(0, n_states - 1))
+
+  m
 
 }
