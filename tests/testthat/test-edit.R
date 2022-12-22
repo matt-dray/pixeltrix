@@ -30,6 +30,24 @@ test_that("error occurs when 'n_states' is lower than max matrix value", {
 
 })
 
+test_that("error occurs when 'colours' length doesn't match 'n_states'", {
+
+  expect_error(
+    edit_pixels(
+      m = matrix(rep(0:1, 3), 3),
+      colours = c("red", "yellow", "blue")
+    )
+  )
+
+  expect_error(
+    edit_pixels(
+      m = matrix(rep(0:1, 3), 3),
+      colours = "red"
+    )
+  )
+
+})
+
 test_that("error occurs when 'grid' is not logical", {
 
   expect_error(edit_pixels(grid = 1))
