@@ -155,11 +155,11 @@ edit_pixels <- function(
   }
 
   # Coerce state count to integer if provided
-    n_states <- .convert_to_int(n_states)
+  n_states <- .convert_to_int(n_states)
 
   # Take n_states from attributes of input matrix, if present
-  if (is.null(n_states) & !is.null(attr(m, "n_states"))) {
-    n_states <- length(attr(m, "colours"))
+  if (is.null(n_states) & !is.null(attr(m, "colours"))) {
+    n_states <- length(attr(m, "colours"))  # n colours, so n states
   }
 
   # Take colours from attributes of input matrix, if present
