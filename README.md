@@ -16,9 +16,9 @@ coverage](https://codecov.io/gh/matt-dray/pixeltrix/branch/main/graph/badge.svg)
 posts](https://img.shields.io/badge/rostrum.blog-posts-008900?labelColor=000000&logo=data%3Aimage%2Fgif%3Bbase64%2CR0lGODlhEAAQAPEAAAAAABWCBAAAAAAAACH5BAlkAAIAIf8LTkVUU0NBUEUyLjADAQAAACwAAAAAEAAQAAAC55QkISIiEoQQQgghRBBCiCAIgiAIgiAIQiAIgSAIgiAIQiAIgRAEQiAQBAQCgUAQEAQEgYAgIAgIBAKBQBAQCAKBQEAgCAgEAoFAIAgEBAKBIBAQCAQCgUAgEAgCgUBAICAgICAgIBAgEBAgEBAgEBAgECAgICAgECAQIBAQIBAgECAgICAgICAgECAQECAQICAgICAgICAgEBAgEBAgEBAgICAgICAgECAQIBAQIBAgECAgICAgIBAgECAQECAQIBAgICAgIBAgIBAgEBAgECAgECAgICAgICAgECAgECAgQIAAAQIKAAAh%2BQQJZAACACwAAAAAEAAQAAAC55QkIiESIoQQQgghhAhCBCEIgiAIgiAIQiAIgSAIgiAIQiAIgRAEQiAQBAQCgUAQEAQEgYAgIAgIBAKBQBAQCAKBQEAgCAgEAoFAIAgEBAKBIBAQCAQCgUAgEAgCgUBAICAgICAgIBAgEBAgEBAgEBAgECAgICAgECAQIBAQIBAgECAgICAgICAgECAQECAQICAgICAgICAgEBAgEBAgEBAgICAgICAgECAQIBAQIBAgECAgICAgIBAgECAQECAQIBAgICAgIBAgIBAgEBAgECAgECAgICAgICAgECAgECAgQIAAAQIKAAA7)](https://www.rostrum.blog/tags/pixeltrix/)
 <!-- badges: end -->
 
-A simple R package that lets you select ‘pixels’ interactively from a
-plot window and returns your final image as a matrix, or a list of
-matrices that can be converted to a gif.
+Create static and animated pixel art from an interactive plot window in
+R. Returns your image’s ‘blueprint’ as a matrix. Pixel + matrix =
+{pixeltrix}.
 
 ## How to
 
@@ -44,16 +44,16 @@ Basic use:
 
 You can also:
 
-- pass a matrix output from `click_pixels()` to `edit_pixels()` and make
-  changes
-- draw your matrix to the plotting window as an image with
-  `draw_pixels()`
-- create a list of animation ‘frames’ with `frame_pixels()` and write
-  them to a gif with `gif_pixels()`
+-   draw your matrix to the plotting window as an image with
+    `draw_pixels()`
+-   to make changes, pass a matrix output from `click_pixels()` into
+    `edit_pixels()`
+-   create animation frames (a list of matrices) with `frame_pixels()`
+    and write them to a gif with `gif_pixels()`
 
 ## Examples
 
-### Sprite
+### Static sprite
 
 Let’s create a sprite of the player character from *Pokémon* (1996)
 using `click_pixels()`:
@@ -62,7 +62,7 @@ using `click_pixels()`:
 pkmn_sprite <- click_pixels(
   n_rows   = 16,
   n_cols   = 14,
-  n_states = 3,
+  n_states = 3,  # number of states that a pixel can take
   colours  = c("white", "#879afb", "grey20")  # Pokémon Blue palette
 )
 # Click squares in the plot window. Press <Esc> to end.
@@ -74,9 +74,8 @@ through each of the three states. Here’s how that looks in RStudio:
 <img src="man/figures/pkmn-rstudio.png" alt="An RStudio window. The console has run the function click_pixels(blue) and has printed the message 'click squares in the plot window, press Esc to end.' In the plot pane is a 16 by 14 pixel grid with a sprite of the main character from the first generation of Pokemon games for the Game Boy. The background is white, the outlines are dark grey and the highlights are light blue There's a black grid around the pixels." width="50%">
 
 A matrix is returned when you’ve finished clicking and pressed
-<kbd>Esc</kbd>. Note that the colour palette is stored in the `colours`
-attribute, where the name of each element corresponds to its pixel state
-value in the matrix.
+<kbd>Esc</kbd>. Note that the values are zero-indexed and the
+corresponding colour palette is stored in a `colours` attribute.
 
 ``` r
 str(pkmn_sprite)
@@ -85,9 +84,12 @@ str(pkmn_sprite)
 #   ..- attr(*, "names")= chr [1:3] "0" "1" "2"
 ```
 
-You can pass the matrix to `edit_pixels()` to reopen the editor and make
-adjustments. The `draw_pixels()` function simply plots your matrix,
-optionally with a new colour palette:
+You can pass the matrix to `edit_pixels()` to reopen the interactive
+plotting window to make adjustments. You can also increase `n_states` or
+change the colour palette.
+
+The `draw_pixels()` function simply plots your matrix, optionally with a
+new colour palette:
 
 ``` r
 draw_pixels(
@@ -98,11 +100,14 @@ draw_pixels(
 
 <img src="man/figures/pkmn.png" alt="A 14 by 16 pixel grid with a sprite of the main character from the first generation of Pokemon games for the Game Boy. It's coloured using the green shades of the original Game Boy." width="33%">
 
-### Animation
+### Animated sprite
 
 You can create multiple animation frames with `frame_pixels()`. The
-prior frame is used as a template for the next. Here’s how it might look
-to recreate Mario’s walk cycle from *Super Mario Brothers* (1983):
+prior frame is used as a template for the next.
+
+Here’s how it might look to recreate Mario’s walk cycle from *Super
+Mario Brothers* (1983), including an interactive prompt to add more
+frames as required:
 
 ``` r
 mario_frames <- frame_pixels(
@@ -144,13 +149,30 @@ You can then convert the frames to a gif with `gif_pixels()`.
 ``` r
 gif_pixels(
   frames  = mario_frames, 
-  colours = super_colours,
-  file    = "super-mario.gif", 
+  file    = "mario.gif",  # write location
   delay   = 0.15  # passed to gifski::save_gif()
 )
 # Inserting image 3 at 0.30s (100%)...
 # Encoding to gif... done!
-# [1] "super-mario.gif"
+# [1] "mario.gif"
 ```
 
+Which results in this:
+
 <img src="man/figures/mario.gif" alt="An animated 16 by 16 pixel grid with a coloured sprite of Mario from the original Super Mario Bros for the NES. There are three frames that each show a step in Mario's walk cycle." width="33%">
+
+## Limitations
+
+This package is a relatively simple concept that does what I need it to
+do; it doesn’t match the quality of a real pixel art editor.
+
+Some known limitations are that:
+
+-   you can only click one pixel at a time
+-   each click only increments the pixel state by 1
+-   you can’t change the number of states nor the colour palette on the
+    fly
+-   I’ve built and tested the package in RStudio on macOS, but it may
+    not work perfectly for your platform and editor
+
+Issues or pull requests are welcome.
