@@ -21,11 +21,10 @@ the walk cycle.
 }
 \examples{
 \dontrun{
-    # Write a list of matrices to a gif
+    # Write the list of matrices to a gif
     gif_pixels(
       frames = pixeltrix::mario_frames,
-      colours = c("#8861FE", "#F6B95B", "#FFFFFF", "#29A41F"),
-      file = "super-mario.gif",
+      file = "mario.gif",
       delay = 0.15  # passed to gifski::save_gif()
     )
 }

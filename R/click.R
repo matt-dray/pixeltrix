@@ -180,7 +180,7 @@ edit_pixels <- function(
     colours   <- get_greys(n_states)  # gradated colours from white to dark grey
   }
 
-  .check_colours_unique(m, colours)
+  # .check_colours_unique(m, colours)
 
   .plot_canvas(m, n_states, colours)
   if (grid) .add_grid(m)
