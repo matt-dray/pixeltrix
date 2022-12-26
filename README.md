@@ -170,8 +170,8 @@ Some known limitations are that:
 
 -   you can only click one pixel at a time
 -   each click only increments the pixel state by 1
--   you can’t change the number of states nor the colour palette on the
-    fly
+-   you can’t change the number of pixel states on the fly, nor the
+    colour palette
 -   I’ve built and tested the package in RStudio on macOS, but it may
     not work perfectly for your platform and editor
 

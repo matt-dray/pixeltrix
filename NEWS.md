@@ -1,3 +1,9 @@
+# pixeltrix 0.2.1
+
+* Added additional input checks to check-utils.R.
+* `draw_pixels()` now finds `n_states` (#24).
+* Allow for an increased number of states in `edit_pixels()` (#25).
+
 # pixeltrix 0.2.0
 
 * A named character of colours is now provided as an extra attribute to matrices output from `click_pixels()` (#3, #17, thanks @TimTaylor).
@@ -6,7 +12,6 @@
 * Updated and expanded function documentation and README (#21).
 * Reused input checks have been generalised into 'R/utils-check.R'.
 * Expanded tests to cover argument input errors.
-* 
 
 # pixeltrix 0.1.3
 

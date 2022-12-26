@@ -14,7 +14,6 @@
     grDevices::dev.off()
 
     .plot_canvas(m, n_states, colours)
-
     if (grid) .add_grid(m)
 
   }
@@ -151,13 +150,22 @@
 
 }
 
-# Force numeric inputs to integer
-.convert_to_int <- function(n) {
+# Force numeric inputs to integer with warning
+.convert_to_int <- function(n_arg) {
 
-  if (!is.null(n) && is.numeric(n)) {
-    n <- as.integer(n)
+  if (!is.null(n_arg) && is.numeric(n_arg)) {
+
+    if (n_arg != as.integer(n_arg)) {
+      warning(
+        "Argument '", deparse(substitute(n_arg)), "' converted to integer.",
+        call. = FALSE
+      )
+    }
+
+    n_arg <- as.integer(n_arg)
+
   }
 
-  n
+  n_arg
 
 }

@@ -6,6 +6,8 @@
 \alias{pixeltrix-package}
 \title{pixeltrix: Simple Interactive Pixel Art}
 \description{
+\if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
+
 A very simple 'pixel art' tool that lets you click squares interactively in a plot window and returns your final image as a matrix. Provide multiple frames to create an animated gif.
 }
 \seealso{

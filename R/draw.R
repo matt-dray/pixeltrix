@@ -25,20 +25,28 @@ draw_pixels <- function(m, colours = NULL) {
 
   .check_matrix(m)
 
+  # Retrieve n_states from attributes or matrix values
+  if (!is.null(attr(m, "colours"))) {
+    n_states <- length(attr(m, "colours"))
+  } else if (is.null(attr(m, "colours"))) {
+    n_states <- max(unique(as.vector(m))) + 1L
+  }
+
   # Take colours from attributes of input matrix, if present
   if (is.null(colours) & !is.null(attr(m, "colours"))) {
     colours <- attr(m, "colours")
   }
 
-  # If matrix has no 'colour' attribute, create gradated grey palette
-  if (is.null(colours)) {
+  # If matrix has no 'colours' attribute, create gradated grey palette
+  if (is.null(colours) & is.null(attr(m, "colours"))) {
     get_greys <- grDevices::colorRampPalette(c("white", "grey20"))
     colours   <- get_greys(n_states)  # gradated colours from white to dark grey
   }
 
-  .check_colours_unique(m, colours)
+  # Check number of colours provided
+  .check_colours_states(m, n_states, colours)
 
-  par_start <- graphics::par(mar = rep(0, 4))
+  par_start <- graphics::par(mar = rep(0, 4))  # set margins, store previous par
 
   graphics::image(
     t(m[nrow(m):1, ]),  # reverse matrix rows and transpose

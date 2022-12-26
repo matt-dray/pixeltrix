@@ -48,27 +48,33 @@ click_pixels <- function(
     grid     = TRUE
 ) {
 
-  .check_n_numeric(n_rows, n_cols, n_states)
+  # Check inputs
+  .check_n_arg_numeric(n_rows)
+  .check_n_arg_numeric(n_cols)
+  .check_n_arg_numeric(n_states)
   .check_colours_char(colours)
-  .check_colours_len(colours, n_states)
+  .check_colours_len(n_states, colours)
   .check_grid(grid)
 
+  # Convert to integer if required
   n_rows   <- .convert_to_int(n_rows)
   n_cols   <- .convert_to_int(n_cols)
   n_states <- .convert_to_int(n_states)
 
+  # Generate a palette of gradated greys if colours not provided by user
   if (is.null(colours)) {
     get_greys <- grDevices::colorRampPalette(c("white", "grey20"))
-    colours   <- get_greys(n_states)  # gradated colours from white to dark grey
+    colours   <- get_greys(n_states)
   }
 
+  # Initiate matrix, draw, let user interact
   m <- matrix(0L, n_rows, n_cols)
-
   .plot_canvas(m, n_states, colours)
   if (grid) .add_grid(m)
   m <- .repeat_loop(m, n_states, colours, grid)
 
-  attr(m, "colours")  <- stats::setNames(colours, seq(0, n_states - 1))
+  # Add colours as an attribute to returned matrix
+  attr(m, "colours") <- stats::setNames(colours, seq(0, n_states - 1))
 
   m
 
@@ -134,58 +140,38 @@ edit_pixels <- function(
     grid     = TRUE
 ) {
 
+  # Check inputs
   .check_matrix(m)
   .check_grid(grid)
+  .check_n_arg_numeric(n_states, null_allowed = TRUE)
+  .check_n_states_size(m, n_states)
 
-  if (!is.null(n_states)) {
-    if (!is.numeric(n_states)) {
-      stop(
-        "Argument 'n_states' must be a numeric value or NULL.",
-        call. = FALSE
-      )
-    }
-  }
-
-  if (!is.null(n_states) && n_states < max(m + 1L)) {
-    stop(
-      "The number of states, 'n_states', can't be less than ",
-      "the maximum value in the provided matrix, 'm'.",
-      call. = FALSE
-    )
-  }
-
-  # Coerce n_states to integer, if provided
-  if (!is.null(n_states)) {
+  # Handle n_states
+  if (!is.null(n_states)) {  # if provided, convert to integer
     n_states <- as.integer(n_states)
+  } else if (is.null(n_states) & !is.null(attr(m, "colours"))) {  # via attribute
+    n_states <- length(attr(m, "colours"))
+  } else if (is.null(n_states) & is.null(attr(m, "colours"))) {  # via matrix
+    n_states <- max(unique(as.vector(m)) + 1L)
   }
 
-  # Otherwise get n_state from attributes
-  if (is.null(n_states) & !is.null(attr(m, "colours"))) {
-    n_states <- length(attr(m, "colours"))  # n colours, so n states
-  }
-
-  # Otherwise take n_states from content of input matrix
-  if (is.null(n_states) & is.null(attr(m, "colours"))) {
-    n_states <- length(unique(as.vector(m)))
-  }
-
-  # Take colours from attributes of input matrix, if present
-  if (is.null(colours) & !is.null(attr(m, "colours"))) {
+  # Handle colours if not provided
+  if (is.null(colours) & !is.null(attr(m, "colours"))) {  # via attribute
     colours <- attr(m, "colours")
-  }
-
-  # If no 'colours' attribute and colours is NULL, then choose gradated greys
-  if (is.null(colours)) {
+  } else if (is.null(colours)) {  # otherwise a grey palette
     get_greys <- grDevices::colorRampPalette(c("white", "grey20"))
-    colours   <- get_greys(n_states)  # gradated colours from white to dark grey
+    colours <- get_greys(n_states)
   }
 
-  # .check_colours_unique(m, colours)
+  # Check n_states and colours values match
+  .check_colours_states(m, n_states, colours)
 
+  # Draw matrix, let user interact
   .plot_canvas(m, n_states, colours)
   if (grid) .add_grid(m)
   m <- .repeat_loop(m, n_states, colours, grid)
 
+  # Add colours as an attribute to returned matrix
   attr(m, "colours") <- stats::setNames(colours, seq(0, n_states - 1))
 
   m
