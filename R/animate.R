@@ -50,9 +50,11 @@ frame_pixels <- function(
     grid     = TRUE
 ) {
 
-  .check_n_numeric(n_rows, n_cols, n_states)
+  .check_n_arg_numeric(n_rows)
+  .check_n_arg_numeric(n_cols)
+  .check_n_arg_numeric(n_states)
   .check_colours_char(colours)
-  .check_colours_len(colours, n_states)
+  .check_colours_len(n_states, colours)
   .check_grid(grid)
 
   m_list  <- list()
@@ -129,26 +131,14 @@ gif_pixels <- function(
     ...
 ) {
 
-  if (
-    !is.list(frames) |
-    !all(sapply(frames, function(x) identical(dim(x), dim(frames[[1]]))))
-  ) {
-    stop(
-      "Argument 'frames' must be a list of matrices of the same dimensions ",
-      "(preferably produced by the frame_pixels() function).",
-      call. = FALSE
-    )
-  }
+  .check_frames_dims(frames)
+  .check_file_gif(file)
 
-  if (
-    !inherits(file, "character") |
-    length(file) != 1 |
-    tools::file_ext(file) != "gif"
-  ) {
-    stop(
-      "Argument 'file' must be a character-string filepath ending '.gif'.",
-      call. = FALSE
-    )
+  # Retrieve n_states from attributes or matrix values
+  if (!is.null(attr(frames[[1]], "colours"))) {
+    n_states <- length(attr(frames[[1]], "colours"))
+  } else if (is.null(attr(frames, "colours"))) {
+    n_states <- max(unique(unlist(frames))) + 1L
   }
 
   # If the first frame has a 'colours' attribute, then use these
@@ -163,7 +153,7 @@ gif_pixels <- function(
   }
 
   .check_colours_char(colours)
-  .check_colours_unique(frames, colours)
+  .check_colours_states(frames, n_states, colours)
 
   # Write to
   gifski::save_gif(
