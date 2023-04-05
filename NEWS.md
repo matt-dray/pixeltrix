@@ -1,3 +1,7 @@
+# pixeltrix 0.2.1.9000
+
+* Added warning to README and function docs about flickering and the bell (#31, #32, thanks @adrianadepalma)
+
 # pixeltrix 0.2.1
 
 * Added additional input checks to check-utils.R.

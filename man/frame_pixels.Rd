@@ -49,6 +49,12 @@ mode. You'll be prompted interactively in the console to add a new frame
 or not. If you refuse a new frame, you'll be returned a list of matrices,
 each of which contain the state values of each pixel for each frame of
 your animation.
+
+If your editor opens a separate graphics window (i.e. not RStudio),
+each click may result in a brief flash as the image refreshes, while a
+resized window may return to its original dimensions. You may also hear a
+bell sound on click, which you can disable by setting
+\code{options(locatorBell = FALSE)}.
 }
 \examples{
 \dontrun{

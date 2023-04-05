@@ -29,6 +29,12 @@
 #'     each of which contain the state values of each pixel for each frame of
 #'     your animation.
 #'
+#' @details If your editor opens a separate graphics window (i.e. not RStudio),
+#'     each click may result in a brief flash as the image refreshes, while a
+#'     resized window may return to its original dimensions. You may also hear a
+#'     bell sound on click, which you can disable by setting
+#'     `options(locatorBell = FALSE)`.
+#'
 #' @return A list of matrices.
 #'
 #' @export
@@ -155,7 +161,7 @@ gif_pixels <- function(
   .check_colours_char(colours)
   .check_colours_states(frames, n_states, colours)
 
-  # Write to
+  # Write to gif
   gifski::save_gif(
     invisible(lapply(frames, function(frame) draw_pixels(frame, colours))),
     gif_file = file,
