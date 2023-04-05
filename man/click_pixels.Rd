@@ -48,6 +48,12 @@ cycle through the provided number of 'states'. The initial state value is
 0 and successive clicks increase it by 1, wrapping back to 0 once the
 maximum number of states is exceeded. Press the ESCAPE key to exit the
 interactive mode.
+
+If your editor opens a separate graphics window (i.e. not RStudio),
+each click may result in a brief flash as the image refreshes, while a
+resized window may return to its original dimensions. You may also hear a
+bell sound on click, which you can disable by setting
+\code{options(locatorBell = FALSE)}.
 }
 \examples{
 \dontrun{

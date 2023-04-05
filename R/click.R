@@ -23,6 +23,12 @@
 #'     maximum number of states is exceeded. Press the ESCAPE key to exit the
 #'     interactive mode.
 #'
+#' @details If your editor opens a separate graphics window (i.e. not RStudio),
+#'     each click may result in a brief flash as the image refreshes, while a
+#'     resized window may return to its original dimensions. You may also hear a
+#'     bell sound on click, which you can disable by setting
+#'     `options(locatorBell = FALSE)`.
+#'
 #' @return A matrix. The zero-indexed values correspond to the state of each
 #'     pixel, which is determined by the number of clicks. Has an additional
 #'     attribute: a named character vector, 'colours', which maps the values in
@@ -109,6 +115,11 @@ click_pixels <- function(
 #'     0 and successive clicks increase it by 1, wrapping back to 0 once the
 #'     maximum number of states is exceeded. Press the ESCAPE key to exit the
 #'     interactive mode.
+#' @details If your editor opens a separate graphics window (i.e. not RStudio),
+#'     each click may result in a brief flash as the image refreshes, while a
+#'     resized window may return to its original dimensions. You may also hear a
+#'     bell sound on click, which you can disable by setting
+#'     `options(locatorBell = FALSE)`.
 #'
 #' @return A matrix.
 #'
