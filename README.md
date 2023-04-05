@@ -44,12 +44,28 @@ Basic use:
 
 You can also:
 
--   draw your matrix to the plotting window as an image with
-    `draw_pixels()`
--   to make changes, pass a matrix output from `click_pixels()` into
-    `edit_pixels()`
--   create animation frames (a list of matrices) with `frame_pixels()`
-    and write them to a gif with `gif_pixels()`
+- draw your matrix to the plotting window as an image with
+  `draw_pixels()`
+- make changes by passing the matrix output from `click_pixels()` into
+  `edit_pixels()`
+- create animation frames (a list of matrices) with `frame_pixels()` and
+  write them to a gif with `gif_pixels()`
+
+## Limitations
+
+This package does what I need it to do; it doesn’t match the quality of
+a real pixel art editor. Some known limitations are that:
+
+- you can only click one pixel at a time
+- each click only increments the pixel state by 1
+- you can’t change the number of pixel states on the fly, nor the colour
+  palette
+
+If your editor opens a separate graphics window (i.e. not RStudio), each
+click may result in a brief flash as the image refreshes, while a
+resized window may return to its original dimensions. You may also hear
+a bell sound on click, which you can disable by setting
+`options(locatorBell = FALSE)`.
 
 ## Examples
 
@@ -160,19 +176,3 @@ gif_pixels(
 Which results in this:
 
 <img src="man/figures/mario.gif" alt="An animated 16 by 16 pixel grid with a coloured sprite of Mario from the original Super Mario Bros for the NES. There are three frames that each show a step in Mario's walk cycle." width="33%">
-
-## Limitations
-
-This package is a relatively simple concept that does what I need it to
-do; it doesn’t match the quality of a real pixel art editor.
-
-Some known limitations are that:
-
--   you can only click one pixel at a time
--   each click only increments the pixel state by 1
--   you can’t change the number of pixel states on the fly, nor the
-    colour palette
--   I’ve built and tested the package in RStudio on macOS, but it may
-    not work perfectly for your platform and editor
-
-Issues or pull requests are welcome.
