@@ -1,10 +1,11 @@
-# pixeltrix 0.2.1.9000
+# pixeltrix 0.2.2
 
-* Added warning to README and function docs about flickering and the bell (#31, #32, thanks @adrianadepalma)
+* Added 'pixeltrix' class to matrix objects output by `click_pixels()` and `edit_pixels()`, and included `is_pixeltrix()` and `as_pixeltrix()` to detect and coerce (#36, thanks @trevorld).
+* Added warning to README and function docs about flickering and the bell (#31, #32, thanks @adrianadepalma).
 
 # pixeltrix 0.2.1
 
-* Added additional input checks to check-utils.R.
+* Added additional input checks to `check-utils.R`.
 * `draw_pixels()` now finds `n_states` (#24).
 * Allow for an increased number of states in `edit_pixels()` (#25).
 
@@ -14,7 +15,7 @@
 * A named character vector of colours is now accepted as input to `click_pixels()`, `edit pixels()`, `draw_pixels()` and `frame_pixels()`.
 * Breaking: `blue` and `mario` demo datasets no longer available; `pkmn_sprite` and `mario_frames` replace them (#22).
 * Updated and expanded function documentation and README (#21).
-* Reused input checks have been generalised into 'R/utils-check.R'.
+* Reused input checks have been generalised into `R/utils-check.R`.
 * Expanded tests to cover argument input errors.
 
 # pixeltrix 0.1.3
@@ -45,7 +46,7 @@
 # pixeltrix 0.0.0.9004
 
 * Added an `edit_pixels()` function so that a matrix created with `click_pixels()` can be updated (#6).
-* Moved support functions to utils.R.
+* Moved support functions to `utils.R`.
 * Simplified the README and added a blog badge.
 
 # pixeltrix 0.0.0.9003
@@ -58,7 +59,7 @@
 # pixeltrix 0.0.0.9002
 
 * Went the non-Shiny route and used `locator()` and `image()` for interactivity in the `click_pixel()` function (#2).
-* Added GitHub Actions for R-CMD check, tests, {pkgdown} webbite.
+* Added GitHub Actions for R-CMD check, tests, {pkgdown} website.
 * This version was [previewed in a tweet](https://twitter.com/mattdray/status/1573053714788753408?s=20&t=0HzMLD0fjc5evjtCKqQY3g).
 
 # pixeltrix 0.0.0.9001

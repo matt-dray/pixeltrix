@@ -5,7 +5,8 @@
 \alias{logo}
 \title{Example Sprite Matrix: 'pixeltrix' Package Logo Text}
 \format{
-A matrix with 10 rows and 21 columns, taking integers from 0 to 2.
+A 'pixeltrix'-class matrix with 10 rows and 21 columns, taking
+integers from 0 to 2.
 }
 \usage{
 logo
@@ -17,9 +18,8 @@ in a font with letters that are 3 by 3 pixels.
 }
 \examples{
 \dontrun{
-    # Plot the matrix as an image
-    draw_pixels(m = pixeltrix::logo)
-}
+# Plot the matrix as an image
+draw_pixels(m = pixeltrix::logo)}
 
 }
 \keyword{datasets}

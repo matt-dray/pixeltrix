@@ -58,12 +58,11 @@ bell sound on click, which you can disable by setting
 }
 \examples{
 \dontrun{
-    # Begin interactive sequence to create animation frames
-    my_frames <- frame_pixels(
-      n_rows   = 16L,
-      n_cols   = 16L,
-      n_states = 3L,
-      colours  = c("grey25", "green", "#0000FF")
-    )
-}
+# Begin interactive sequence to create animation frames
+my_frames <- frame_pixels(
+  n_rows   = 16L,
+  n_cols   = 16L,
+  n_states = 3L,
+  colours  = c("grey25", "green", "#0000FF")
+)}
 }

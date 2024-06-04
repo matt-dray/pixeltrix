@@ -18,9 +18,8 @@
 #' @export
 #'
 #' @examples \dontrun{
-#'   my_matrix <- click_pixels(n_states = 3L)
-#'   draw_pixels(my_matrix, c("black", "#0000FF", "green"))  # one colour per state
-#' }
+#' my_matrix <- click_pixels(n_states = 3L)
+#' draw_pixels(my_matrix, c("black", "#0000FF", "green"))  # a colour per state}
 draw_pixels <- function(m, colours = NULL) {
 
   .check_matrix(m)

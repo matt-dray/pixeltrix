@@ -5,8 +5,8 @@
 \alias{mario_frames}
 \title{Example Sprite Matrix: Mario}
 \format{
-A list of matrices, each with 16 rows and 16 columns, taking integers
-from 0 to 2.
+A list of 'pixeltrix'-class matrices, each with 16 rows and 16
+columns, taking integers from 0 to 2.
 }
 \source{
 Super Mario Bros (1983), Nintendo.
@@ -21,13 +21,12 @@ the walk cycle.
 }
 \examples{
 \dontrun{
-    # Write the list of matrices to a gif
-    gif_pixels(
-      frames = pixeltrix::mario_frames,
-      file = "mario.gif",
-      delay = 0.15  # passed to gifski::save_gif()
-    )
-}
+# Write the list of matrices to a gif
+gif_pixels(
+  frames = pixeltrix::mario_frames,
+  file = "mario.gif",
+  delay = 0.15  # passed to gifski::save_gif()
+)}
 
 }
 \keyword{datasets}
