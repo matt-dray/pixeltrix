@@ -29,7 +29,11 @@ This attribute is added by default to matrices created with
 to help differentiate between them? Defaults to TRUE.}
 }
 \value{
-A matrix.
+A 'pixeltrix'-class matrix. The zero-indexed values correspond to the
+state of each pixel, which is determined by the number of clicks a user
+gave each pixel. Has a named character-vector attribute, 'colours', which
+maps the matrix values to hex colours provided by the user (or a gradated
+set of greys provided by default when the 'colours' argument is NULL).
 }
 \description{
 Opens an interactive plotting canvas with a grid of clickable squares
@@ -51,22 +55,21 @@ bell sound on click, which you can disable by setting
 }
 \examples{
 \dontrun{
-    # Create a 3 x 4 pixel matrix with 3 possible states to cycle through
-    my_matrix <- click_pixels(
-      n_rows   = 3L,
-      n_cols   = 4L,
-      n_states = 3L,
-      colours  = c("white", "red", "#0000FF")
-    )
+# Create a 3 x 4 pixel matrix with 3 possible states to cycle through
+my_matrix <- click_pixels(
+  n_rows   = 3L,
+  n_cols   = 4L,
+  n_states = 3L,
+  colours  = c("white", "red", "#0000FF")
+)
 
-.    # Update the original matrix
-    my_matrix_edited <- edit_pixels(m = my_matrix)
+.# Update the original matrix
+my_matrix_edited <- edit_pixels(m = my_matrix)
 
-    # Update the original matrix with additional state, different colours
-    my_matrix_augmented <- edit_pixels(
-      m        = my_matrix,
-      n_states = 4L,  # one more than in the original
-      colours  = c("bisque3", "orchid", "chartreuse", "olivedrab")
-    )
-}
+# Update the original matrix with additional state, different colours
+my_matrix_augmented <- edit_pixels(
+  m        = my_matrix,
+  n_states = 4L,  # one more than in the original
+  colours  = c("bisque3", "orchid", "chartreuse", "olivedrab")
+)}
 }

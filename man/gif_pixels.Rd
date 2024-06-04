@@ -34,19 +34,18 @@ Requires the 'gifski' package.
 }
 \examples{
 \dontrun{
-    # Begin interactive sequence to create animation frames
-    my_frames <- frame_pixels(
-      n_rows   = 16L,
-      n_cols   = 16L,
-      n_states = 3L,
-      colours  = c("grey25", "green", "#0000FF")
-    )
+# Begin interactive sequence to create animation frames
+my_frames <- frame_pixels(
+  n_rows   = 16L,
+  n_cols   = 16L,
+  n_states = 3L,
+  colours  = c("grey25", "green", "#0000FF")
+)
 
-    # Write list of matrices to gif (requires 'gifski' installation)
-    gif_pixels(
-      frames = my_frames,
-      file = "example.gif",  # location to write GIF
-      delay = 0.1            # passed to gifski::save_gif()
-    )
-}
+# Write list of matrices to gif (requires 'gifski' installation)
+gif_pixels(
+  frames = my_frames,
+  file = "example.gif",  # location to write GIF
+  delay = 0.1            # passed to gifski::save_gif()
+)}
 }

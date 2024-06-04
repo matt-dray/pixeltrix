@@ -5,7 +5,8 @@
 \alias{pkmn_sprite}
 \title{Example Sprite Matrix: Pokémon}
 \format{
-A matrix with 16 rows and 14 columns, taking integers from 0 to 2.
+A 'pixeltrix'-class matrix with 16 rows and 14 columns, taking
+integers from 0 to 2.
 }
 \source{
 Hand-copied from Pokemon (1996), The Pokemon Company.
@@ -19,12 +20,11 @@ a player sprite from Pokémon.
 }
 \examples{
 \dontrun{
-    # Plot the matrix as an image
-    draw_pixels(
-      m = pixeltrix::pkmn_sprite,
-      colours = c("#9bbc0f", "#8bac0f", "#306230")
-    )
-}
+# Plot the matrix as an image
+draw_pixels(
+  m = pixeltrix::pkmn_sprite,
+  colours = c("#9bbc0f", "#8bac0f", "#306230")
+)}
 
 }
 \keyword{datasets}

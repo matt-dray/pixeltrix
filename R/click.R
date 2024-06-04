@@ -29,22 +29,22 @@
 #'     bell sound on click, which you can disable by setting
 #'     `options(locatorBell = FALSE)`.
 #'
-#' @return A matrix. The zero-indexed values correspond to the state of each
-#'     pixel, which is determined by the number of clicks. Has an additional
-#'     attribute: a named character vector, 'colours', which maps the values in
-#'     the matrix to the colours provided by the user (or a gradated set of
-#'     greys provided by default when the 'colours' argument is NULL).
+#' @return A 'pixeltrix'-class matrix. The zero-indexed values correspond to the
+#'     state of each pixel, which is determined by the number of clicks a user
+#'     gave each pixel. Has a named character-vector attribute, 'colours', which
+#'     maps the matrix values to hex colours provided by the user (or a gradated
+#'     set of greys provided by default when the 'colours' argument is NULL).
 #'
 #' @export
 #'
 #' @examples \dontrun{
-#'     # Create a 16 x 16 pixel matrix with 3 possible pixel states
-#'     my_matrix <- click_pixels(
-#'       n_rows   = 16L,
-#'       n_cols   = 16L,
-#'       n_states = 3L,
-#'       colours  = c("blue", "#FF0000", "yellow")
-#'     )
+#' # Create a 16 x 16 pixel matrix with 3 possible pixel states
+#' my_matrix <- click_pixels(
+#'   n_rows   = 16L,
+#'   n_cols   = 16L,
+#'   n_states = 3L,
+#'   colours  = c("blue", "#FF0000", "yellow")
+#' )
 #' }
 click_pixels <- function(
     n_rows   = 8L,
@@ -79,7 +79,8 @@ click_pixels <- function(
   if (grid) .add_grid(m)
   m <- .repeat_loop(m, n_states, colours, grid)
 
-  # Add colours as an attribute to returned matrix
+  # Add class and colours as attributes to returned matrix
+  class(m) <- "pixeltrix"
   attr(m, "colours") <- stats::setNames(colours, seq(0, n_states - 1))
 
   m
@@ -121,29 +122,32 @@ click_pixels <- function(
 #'     bell sound on click, which you can disable by setting
 #'     `options(locatorBell = FALSE)`.
 #'
-#' @return A matrix.
+#' @return A 'pixeltrix'-class matrix. The zero-indexed values correspond to the
+#'     state of each pixel, which is determined by the number of clicks a user
+#'     gave each pixel. Has a named character-vector attribute, 'colours', which
+#'     maps the matrix values to hex colours provided by the user (or a gradated
+#'     set of greys provided by default when the 'colours' argument is NULL).
 #'
 #' @export
 #'
 #' @examples \dontrun{
-#'     # Create a 3 x 4 pixel matrix with 3 possible states to cycle through
-#'     my_matrix <- click_pixels(
-#'       n_rows   = 3L,
-#'       n_cols   = 4L,
-#'       n_states = 3L,
-#'       colours  = c("white", "red", "#0000FF")
-#'     )
+#' # Create a 3 x 4 pixel matrix with 3 possible states to cycle through
+#' my_matrix <- click_pixels(
+#'   n_rows   = 3L,
+#'   n_cols   = 4L,
+#'   n_states = 3L,
+#'   colours  = c("white", "red", "#0000FF")
+#' )
 #'
-#'.    # Update the original matrix
-#'     my_matrix_edited <- edit_pixels(m = my_matrix)
+#'.# Update the original matrix
+#' my_matrix_edited <- edit_pixels(m = my_matrix)
 #'
-#'     # Update the original matrix with additional state, different colours
-#'     my_matrix_augmented <- edit_pixels(
-#'       m        = my_matrix,
-#'       n_states = 4L,  # one more than in the original
-#'       colours  = c("bisque3", "orchid", "chartreuse", "olivedrab")
-#'     )
-#' }
+#' # Update the original matrix with additional state, different colours
+#' my_matrix_augmented <- edit_pixels(
+#'   m        = my_matrix,
+#'   n_states = 4L,  # one more than in the original
+#'   colours  = c("bisque3", "orchid", "chartreuse", "olivedrab")
+#' )}
 edit_pixels <- function(
     m,
     n_states = NULL,
@@ -182,9 +186,61 @@ edit_pixels <- function(
   if (grid) .add_grid(m)
   m <- .repeat_loop(m, n_states, colours, grid)
 
-  # Add colours as an attribute to returned matrix
+  # Add class and colours as attributes to returned matrix
+  class(m) <- "pixeltrix"
   attr(m, "colours") <- stats::setNames(colours, seq(0, n_states - 1))
 
   m
 
+}
+
+#' Coerce to a 'pixeltrix' Object
+#'
+#' Functions to check if an object is of 'pixeltrix' class, or coerce to it if
+#' possible.
+#'
+#' @param m A matrix of integers to coerce.
+#'
+#' @details To be successfully coerced, `m` must be a matrix composed only of
+#'     integers.
+#'
+#' @return \code{as_pixeltrix} returns an object of class 'pixeltrix' if
+#'     possible. \code{is_pixeltrix} returns \code{TRUE} if the object has class
+#'     'pixeltrix', otherwise \code{FALSE}. If coerced, a named character-vector
+#'     attribute, 'colours', is also added, which maps the matrix values to a
+#'     gradated palette of greys in hex form.
+#'
+#' @examples
+#' m <- matrix(c(0L, 1L, 1L, 0L), 2, 2)
+#' is_pixeltrix(m)
+#' m
+#'
+#' m <- as_pixeltrix(m)
+#' is_pixeltrix(m)
+#' m
+#'
+#' @export
+as_pixeltrix <- function(m) {
+
+  .check_matrix(m)
+
+  if (inherits(m, "pixeltrix")) {
+    return(m)
+  }
+
+  n_states <- max(unique(as.vector(m)) + 1L)
+  get_greys <- grDevices::colorRampPalette(c("white", "grey20"))
+  colours <- get_greys(n_states)
+
+  class(m) <- "pixeltrix"
+  attr(m, "colours") <- stats::setNames(colours, seq(0, n_states - 1))
+
+  m
+
+}
+
+#' @rdname as_pixeltrix
+#' @export
+is_pixeltrix <- function(m) {
+  inherits(m, "pixeltrix")
 }

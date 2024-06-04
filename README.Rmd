@@ -75,17 +75,21 @@ pkmn_sprite <- click_pixels(
 # Click squares in the plot window. Press <Esc> to end.
 ```
 
-This opens an interactive plot window. You can click to cycle the pixels through each of the three states. Here's how that looks in RStudio:
+This opens an interactive plot window. You can click to cycle the pixels through each of the three states. Here's how the finished version looks in RStudio:
 
 <img src="man/figures/pkmn-rstudio.png" alt="An RStudio window. The console has run the function click_pixels(blue) and has printed the message 'click squares in the plot window, press Esc to end.' In the plot pane is a 16 by 14 pixel grid with a sprite of the main character from the first generation of Pokemon games for the Game Boy. The background is white, the outlines are dark grey and the highlights are light blue There's a black grid around the pixels." width="50%">
 
-A matrix is returned when you've finished clicking and pressed <kbd>Esc</kbd>. Note that the values are zero-indexed and the corresponding colour palette is stored in a `colours` attribute.
+A matrix is returned when you've finished clicking and pressed <kbd>Esc</kbd>. Note that the values are zero-indexed and the corresponding colour palette is stored in a `colours` attribute. The object also gets the class 'pixeltrix'.
 
 ```{r eval=TRUE}
 str(pkmn_sprite)
+
+is_pixeltrix(pkmn_sprite)
 ```
 
-You can pass the matrix to `edit_pixels()` to reopen the interactive plotting window to make adjustments. You can also increase `n_states` or change the colour palette.
+The `pkmn_sprite` object is built-in to {pixeltrix} for demo purposes.
+
+You can pass the 'pixeltrix' object to `edit_pixels()` to reopen the interactive plotting window to make adjustments. You can also increase `n_states` or change the colour palette. You could also create a matrix 'by hand' and use `as_pixeltrix()` to coerce it to a 'pixeltrix' object with a greyscale palette.
 
 The `draw_pixels()` function simply plots your matrix, optionally with a new colour palette:
 
@@ -122,7 +126,7 @@ mario_frames <- frame_pixels(
 # Final frame count: 3
 ```
 
-The structure of the object is a list of matrices, where each matrix is a frame of the animation.
+The structure of the object is a list of matrices, where each matrix is a frame of the animation. This object is provided in {pixeltrix} as a demo dataset.
 
 ```{r eval=TRUE}
 str(mario_frames)

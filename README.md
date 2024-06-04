@@ -13,7 +13,7 @@ proof-of-concept.](https://www.repostatus.org/badges/latest/concept.svg)](https:
 [![Codecov test
 coverage](https://codecov.io/gh/matt-dray/pixeltrix/branch/main/graph/badge.svg)](https://app.codecov.io/gh/matt-dray/pixeltrix?branch=main)
 [![Blog
-posts](https://img.shields.io/badge/rostrum.blog-posts-008900?labelColor=000000&logo=data%3Aimage%2Fgif%3Bbase64%2CR0lGODlhEAAQAPEAAAAAABWCBAAAAAAAACH5BAlkAAIAIf8LTkVUU0NBUEUyLjADAQAAACwAAAAAEAAQAAAC55QkISIiEoQQQgghRBBCiCAIgiAIgiAIQiAIgSAIgiAIQiAIgRAEQiAQBAQCgUAQEAQEgYAgIAgIBAKBQBAQCAKBQEAgCAgEAoFAIAgEBAKBIBAQCAQCgUAgEAgCgUBAICAgICAgIBAgEBAgEBAgEBAgECAgICAgECAQIBAQIBAgECAgICAgICAgECAQECAQICAgICAgICAgEBAgEBAgEBAgICAgICAgECAQIBAQIBAgECAgICAgIBAgECAQECAQIBAgICAgIBAgIBAgEBAgECAgECAgICAgICAgECAgECAgQIAAAQIKAAAh%2BQQJZAACACwAAAAAEAAQAAAC55QkIiESIoQQQgghhAhCBCEIgiAIgiAIQiAIgSAIgiAIQiAIgRAEQiAQBAQCgUAQEAQEgYAgIAgIBAKBQBAQCAKBQEAgCAgEAoFAIAgEBAKBIBAQCAQCgUAgEAgCgUBAICAgICAgIBAgEBAgEBAgEBAgECAgICAgECAQIBAQIBAgECAgICAgICAgECAQECAQICAgICAgICAgEBAgEBAgEBAgICAgICAgECAQIBAQIBAgECAgICAgIBAgECAQECAQIBAgICAgIBAgIBAgEBAgECAgECAgICAgICAgECAgECAgQIAAAQIKAAA7)](https://www.rostrum.blog/index.html#category=pixeltrix)
+posts](https://img.shields.io/badge/rostrum.blog-posts-008900?labelColor=000000&logo=data%3Aimage%2Fgif%3Bbase64%2CR0lGODlhEAAQAPEAAAAAABWCBAAAAAAAACH5BAlkAAIAIf8LTkVUU0NBUEUyLjADAQAAACwAAAAAEAAQAAAC55QkISIiEoQQQgghRBBCiCAIgiAIgiAIQiAIgSAIgiAIQiAIgRAEQiAQBAQCgUAQEAQEgYAgIAgIBAKBQBAQCAKBQEAgCAgEAoFAIAgEBAKBIBAQCAQCgUAgEAgCgUBAICAgICAgIBAgEBAgEBAgEBAgECAgICAgECAQIBAQIBAgECAgICAgICAgECAQECAQICAgICAgICAgEBAgEBAgEBAgICAgICAgECAQIBAQIBAgECAgICAgIBAgECAQECAQIBAgICAgIBAgIBAgEBAgECAgECAgICAgICAgECAgECAgQIAAAQIKAAAh%2BQQJZAACACwAAAAAEAAQAAAC55QkIiESIoQQQgghhAhCBCEIgiAIgiAIQiAIgSAIgiAIQiAIgRAEQiAQBAQCgUAQEAQEgYAgIAgIBAKBQBAQCAKBQEAgCAgEAoFAIAgEBAKBIBAQCAQCgUAgEAgCgUBAICAgICAgIBAgEBAgEBAgEBAgECAgICAgECAQIBAQIBAgECAgICAgICAgECAQECAQICAgICAgICAgEBAgEBAgEBAgICAgICAgECAQIBAQIBAgECAgICAgIBAgECAQECAQIBAgICAgIBAgIBAgEBAgECAgECAgICAgICAgECAgECAgQIAAAQIKAAA7)](https://www.rostrum.blog/tags/pixeltrix/)
 <!-- badges: end -->
 
 Create static and animated pixel art from an interactive plot window in
@@ -85,24 +85,33 @@ pkmn_sprite <- click_pixels(
 ```
 
 This opens an interactive plot window. You can click to cycle the pixels
-through each of the three states. Here’s how that looks in RStudio:
+through each of the three states. Here’s how the finished version looks
+in RStudio:
 
 <img src="man/figures/pkmn-rstudio.png" alt="An RStudio window. The console has run the function click_pixels(blue) and has printed the message 'click squares in the plot window, press Esc to end.' In the plot pane is a 16 by 14 pixel grid with a sprite of the main character from the first generation of Pokemon games for the Game Boy. The background is white, the outlines are dark grey and the highlights are light blue There's a black grid around the pixels." width="50%">
 
 A matrix is returned when you’ve finished clicking and pressed
 <kbd>Esc</kbd>. Note that the values are zero-indexed and the
-corresponding colour palette is stored in a `colours` attribute.
+corresponding colour palette is stored in a `colours` attribute. The
+object also gets the class ‘pixeltrix’.
 
 ``` r
 str(pkmn_sprite)
-#  int [1:16, 1:14] 0 0 0 0 0 0 2 2 0 0 ...
+#  'pixeltrix' int [1:16, 1:14] 0 0 0 0 0 0 2 2 0 0 ...
 #  - attr(*, "colours")= Named chr [1:3] "white" "#879afb" "grey20"
 #   ..- attr(*, "names")= chr [1:3] "0" "1" "2"
+
+is_pixeltrix(pkmn_sprite)
+# [1] TRUE
 ```
 
-You can pass the matrix to `edit_pixels()` to reopen the interactive
-plotting window to make adjustments. You can also increase `n_states` or
-change the colour palette.
+The `pkmn_sprite` object is built-in to {pixeltrix} for demo purposes.
+
+You can pass the ‘pixeltrix’ object to `edit_pixels()` to reopen the
+interactive plotting window to make adjustments. You can also increase
+`n_states` or change the colour palette. You could also create a matrix
+‘by hand’ and use `as_pixeltrix()` to coerce it to a ‘pixeltrix’ object
+with a greyscale palette.
 
 The `draw_pixels()` function simply plots your matrix, optionally with a
 new colour palette:
@@ -144,7 +153,8 @@ mario_frames <- frame_pixels(
 ```
 
 The structure of the object is a list of matrices, where each matrix is
-a frame of the animation.
+a frame of the animation. This object is provided in {pixeltrix} as a
+demo dataset.
 
 ``` r
 str(mario_frames)

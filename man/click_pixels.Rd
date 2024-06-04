@@ -32,11 +32,11 @@ See details.}
 to help differentiate between them? Defaults to TRUE.}
 }
 \value{
-A matrix. The zero-indexed values correspond to the state of each
-pixel, which is determined by the number of clicks. Has an additional
-attribute: a named character vector, 'colours', which maps the values in
-the matrix to the colours provided by the user (or a gradated set of
-greys provided by default when the 'colours' argument is NULL).
+A 'pixeltrix'-class matrix. The zero-indexed values correspond to the
+state of each pixel, which is determined by the number of clicks a user
+gave each pixel. Has a named character-vector attribute, 'colours', which
+maps the matrix values to hex colours provided by the user (or a gradated
+set of greys provided by default when the 'colours' argument is NULL).
 }
 \description{
 Opens an interactive plot with a grid of squares ('pixels') that you can
@@ -57,12 +57,12 @@ bell sound on click, which you can disable by setting
 }
 \examples{
 \dontrun{
-    # Create a 16 x 16 pixel matrix with 3 possible pixel states
-    my_matrix <- click_pixels(
-      n_rows   = 16L,
-      n_cols   = 16L,
-      n_states = 3L,
-      colours  = c("blue", "#FF0000", "yellow")
-    )
+# Create a 16 x 16 pixel matrix with 3 possible pixel states
+my_matrix <- click_pixels(
+  n_rows   = 16L,
+  n_cols   = 16L,
+  n_states = 3L,
+  colours  = c("blue", "#FF0000", "yellow")
+)
 }
 }
