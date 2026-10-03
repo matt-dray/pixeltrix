@@ -3,18 +3,25 @@
 
   message("Click squares in the plot window. Press <Esc> to end.")
 
+  is_rstudio <- identical(.Platform[["GUI"]], "RStudio")
+
   repeat {
 
     point <- .locate_on_grid(m)
-
     if (is.null(point)) break
 
     m <- .update_matrix(m, point, n_states)
 
-    grDevices::dev.off()
-
-    .plot_canvas(m, n_states, colours)
-    if (grid) .add_grid(m)
+    if (is_rstudio) {
+      grDevices::dev.off()
+      .plot_canvas(m, n_states, colours)
+      if (grid) .add_grid(m)
+    } else {
+      grDevices::dev.hold()
+      .plot_canvas(m, n_states, colours)
+      if (grid) .add_grid(m)
+      grDevices::dev.flush()
+    }
 
   }
 
