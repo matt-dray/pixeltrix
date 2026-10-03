@@ -14,7 +14,6 @@ A very simple 'pixel art' tool that lets you click squares interactively in a pl
 Useful links:
 \itemize{
   \item \url{https://github.com/matt-dray/pixeltrix}
-  \item \url{https://matt-dray.github.io/pixeltrix}
   \item Report bugs at \url{https://github.com/matt-dray/pixeltrix/issues}
 }
 
