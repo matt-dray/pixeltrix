@@ -1,17 +1,21 @@
 Package: pixeltrix
 Title: A Simple Interactive Pixel Art Editor
-Version: 0.2.2
+Version: 0.2.2.9000
 Authors@R: 
-    person("Matt", "Dray", , "mwdray@gmail.com", role = c("aut", "cre"))
+    person("Matt", "Dray", , "mwdray+pixeltrix@gmail.com", role = c("aut", "cre"))
 Description: A very simple 'pixel art' tool that lets you click squares
     interactively in a plot window and returns your final image as a
-    matrix.  Provide multiple frames to create an animated gif.
+    matrix. Provide multiple frames to create an animated gif.
 License: MIT + file LICENSE
 URL: https://github.com/matt-dray/pixeltrix,
     https://matt-dray.github.io/pixeltrix
 BugReports: https://github.com/matt-dray/pixeltrix/issues
 Depends: 
     R (>= 2.10)
+Imports:
+    graphics,
+    grDevices,
+    stats
 Suggests: 
     gifski,
     testthat (>= 3.0.0)
@@ -19,4 +23,4 @@ Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1
+Config/roxygen2/version: 8.0.0
