@@ -31,12 +31,12 @@ draw_pixels <- function(m, colours = NULL) {
   }
 
   # Take colours from attributes of input matrix, if present
-  if (is.null(colours) & !is.null(attr(m, "colours"))) {
+  if (is.null(colours) && !is.null(attr(m, "colours"))) {
     colours <- attr(m, "colours")
   }
 
   # If matrix has no 'colours' attribute, create gradated grey palette
-  if (is.null(colours) & is.null(attr(m, "colours"))) {
+  if (is.null(colours) && is.null(attr(m, "colours"))) {
     get_greys <- grDevices::colorRampPalette(c("white", "grey20"))
     colours <- get_greys(n_states) # gradated colours from white to dark grey
   }

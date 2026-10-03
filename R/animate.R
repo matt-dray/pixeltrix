@@ -68,14 +68,14 @@ frame_pixels <- function(
   repeat {
     answer <- readline("Add a frame? y/n: ")
 
-    if (substr(answer, 1, 1) == "y") {
+    if (startsWith(answer, "y")) {
       m_last <- m_list[[length(m_list)]]
       m_new <- edit_pixels(m_last, grid = grid)
       m_list <- append(m_list, list(m_new))
       message("Current frame count: ", length(m_list))
     }
 
-    if (substr(answer, 1, 1) == "n") {
+    if (startsWith(answer, "n")) {
       message("Final frame count: ", length(m_list))
       break
     }
@@ -140,7 +140,7 @@ gif_pixels <- function(
   }
 
   # If the first frame has a 'colours' attribute, then use these
-  if (is.null(colours) & !is.null(attr(frames[[1]], "colours"))) {
+  if (is.null(colours) && !is.null(attr(frames[[1]], "colours"))) {
     colours <- attr(frames[[1]], "colours")
   }
 

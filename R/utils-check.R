@@ -1,5 +1,5 @@
 .check_matrix <- function(m) {
-  if (!is.matrix(m) | !is.integer(m)) {
+  if (!is.matrix(m) || !is.integer(m)) {
     stop(
       "Argument 'm' must be a matrix object composed of integers.",
       call. = FALSE
@@ -11,7 +11,7 @@
   if (!null_allowed) {
     # used in click_pixels, where defaults are provided
 
-    if (is.logical(n_arg) | !is.numeric(c(n_arg))) {
+    if (is.logical(n_arg) || !is.numeric(c(n_arg))) {
       stop(
         "Argument '",
         deparse(substitute(n_arg)),
@@ -133,7 +133,7 @@
 
 .check_frames_dims <- function(frames) {
   if (
-    !is.list(frames) |
+    !is.list(frames) ||
       !all(sapply(frames, function(frame) {
         identical(dim(frame), dim(frames[[1]]))
       }))
@@ -148,8 +148,8 @@
 
 .check_file_gif <- function(file) {
   if (
-    !inherits(file, "character") |
-      length(file) != 1 |
+    !inherits(file, "character") ||
+      length(file) != 1 ||
       tools::file_ext(file) != "gif"
   ) {
     stop(

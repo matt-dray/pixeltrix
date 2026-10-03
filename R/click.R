@@ -170,16 +170,16 @@ edit_pixels <- function(
   if (!is.null(n_states)) {
     # if provided, convert to integer
     n_states <- as.integer(n_states)
-  } else if (is.null(n_states) & !is.null(attr(m, "colours"))) {
+  } else if (is.null(n_states) && !is.null(attr(m, "colours"))) {
     # via attribute
     n_states <- length(attr(m, "colours"))
-  } else if (is.null(n_states) & is.null(attr(m, "colours"))) {
+  } else if (is.null(n_states) && is.null(attr(m, "colours"))) {
     # via matrix
     n_states <- max(unique(as.vector(m)) + 1L)
   }
 
   # Handle colours if not provided
-  if (is.null(colours) & !is.null(attr(m, "colours"))) {
+  if (is.null(colours) && !is.null(attr(m, "colours"))) {
     # via attribute
     colours <- attr(m, "colours")
   } else if (is.null(colours)) {

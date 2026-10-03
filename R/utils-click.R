@@ -36,7 +36,7 @@
   n_rows <- nrow(m)
   n_cols <- ncol(m)
 
-  if (n_rows > 1 & n_cols > 1) {
+  if (n_rows > 1 && n_cols > 1) {
     m <- t(m[seq(n_rows, 1), ])
   }
 
