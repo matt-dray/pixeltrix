@@ -73,6 +73,10 @@ click_pixels <- function(
     colours   <- get_greys(n_states)
   }
 
+  # Open a new graphics device if needed
+  opened <- .open_interactive_device()
+  if (opened) on.exit(grDevices::dev.off(), add = TRUE)
+
   # Initiate matrix, draw, let user interact
   m <- matrix(0L, n_rows, n_cols)
   .plot_canvas(m, n_states, colours)
