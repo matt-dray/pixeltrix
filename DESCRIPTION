@@ -1,6 +1,6 @@
 Package: pixeltrix
 Title: A Simple Interactive Pixel Art Editor
-Version: 0.2.2.9000
+Version: 0.3.0
 Authors@R: 
     person("Matt", "Dray", , "mwdray+pixeltrix@gmail.com", role = c("aut", "cre"))
 Description: A very simple 'pixel art' tool that lets you click squares
