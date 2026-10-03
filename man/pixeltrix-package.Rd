@@ -20,7 +20,12 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Matt Dray \email{mwdray@gmail.com}
+\strong{Maintainer}: Matt Dray \email{mwdray+pixeltrix@gmail.com}
+
+Authors:
+\itemize{
+  \item Matt Dray \email{mwdray+pixeltrix@gmail.com}
+}
 
 }
 \keyword{internal}
