@@ -1,4 +1,3 @@
-
 #' Create Frames of a Pixel Animation
 #'
 #' Opens a new interactive plotting canvas with a grid of clickable squares
@@ -48,13 +47,12 @@
 #'   colours  = c("grey25", "green", "#0000FF")
 #' )}
 frame_pixels <- function(
-    n_rows   = 8L,
-    n_cols   = 8L,
-    n_states = 2L,
-    colours  = NULL,
-    grid     = TRUE
+  n_rows = 8L,
+  n_cols = 8L,
+  n_states = 2L,
+  colours = NULL,
+  grid = TRUE
 ) {
-
   .check_n_arg_numeric(n_rows)
   .check_n_arg_numeric(n_cols)
   .check_n_arg_numeric(n_states)
@@ -62,18 +60,17 @@ frame_pixels <- function(
   .check_colours_len(n_states, colours)
   .check_grid(grid)
 
-  m_list  <- list()
+  m_list <- list()
 
   m_first <- click_pixels(n_rows, n_cols, n_states, colours, grid)
-  m_list  <- append(m_list, list(m_first))
+  m_list <- append(m_list, list(m_first))
 
   repeat {
-
     answer <- readline("Add a frame? y/n: ")
 
     if (substr(answer, 1, 1) == "y") {
       m_last <- m_list[[length(m_list)]]
-      m_new  <- edit_pixels(m_last, grid = grid)
+      m_new <- edit_pixels(m_last, grid = grid)
       m_list <- append(m_list, list(m_new))
       message("Current frame count: ", length(m_list))
     }
@@ -82,11 +79,9 @@ frame_pixels <- function(
       message("Final frame count: ", length(m_list))
       break
     }
-
   }
 
   m_list
-
 }
 
 #' Write Frames of a Pixel Animation to GIF
@@ -129,12 +124,11 @@ frame_pixels <- function(
 #'   delay = 0.1            # passed to gifski::save_gif()
 #' )}
 gif_pixels <- function(
-    frames,
-    colours = NULL,
-    file,
-    ...
+  frames,
+  colours = NULL,
+  file,
+  ...
 ) {
-
   .check_frames_dims(frames)
   .check_file_gif(file)
 
@@ -153,7 +147,7 @@ gif_pixels <- function(
   # If no 'colours' attribute and colours is NULL, then choose gradated greys
   if (is.null(colours)) {
     get_greys <- grDevices::colorRampPalette(c("white", "grey20"))
-    colours   <- get_greys(n_states)  # gradated colours from white to dark grey
+    colours <- get_greys(n_states) # gradated colours from white to dark grey
   }
 
   .check_colours_char(colours)
@@ -165,5 +159,4 @@ gif_pixels <- function(
     gif_file = file,
     ...
   )
-
 }

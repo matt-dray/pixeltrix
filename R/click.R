@@ -47,13 +47,12 @@
 #' )
 #' }
 click_pixels <- function(
-    n_rows   = 8L,
-    n_cols   = 8L,
-    n_states = 2L,
-    colours  = NULL,
-    grid     = TRUE
+  n_rows = 8L,
+  n_cols = 8L,
+  n_states = 2L,
+  colours = NULL,
+  grid = TRUE
 ) {
-
   # Check inputs
   .check_n_arg_numeric(n_rows)
   .check_n_arg_numeric(n_cols)
@@ -63,24 +62,28 @@ click_pixels <- function(
   .check_grid(grid)
 
   # Convert to integer if required
-  n_rows   <- .convert_to_int(n_rows)
-  n_cols   <- .convert_to_int(n_cols)
+  n_rows <- .convert_to_int(n_rows)
+  n_cols <- .convert_to_int(n_cols)
   n_states <- .convert_to_int(n_states)
 
   # Generate a palette of gradated greys if colours not provided by user
   if (is.null(colours)) {
     get_greys <- grDevices::colorRampPalette(c("white", "grey20"))
-    colours   <- get_greys(n_states)
+    colours <- get_greys(n_states)
   }
 
   # Open a new graphics device if needed
   opened <- .open_interactive_device()
-  if (opened) on.exit(grDevices::dev.off(), add = TRUE)
+  if (opened) {
+    on.exit(grDevices::dev.off(), add = TRUE)
+  }
 
   # Initiate matrix, draw, let user interact
   m <- matrix(0L, n_rows, n_cols)
   .plot_canvas(m, n_states, colours)
-  if (grid) .add_grid(m)
+  if (grid) {
+    .add_grid(m)
+  }
   m <- .repeat_loop(m, n_states, colours, grid)
 
   # Add class and colours as attributes to returned matrix
@@ -88,7 +91,6 @@ click_pixels <- function(
   attr(m, "colours") <- stats::setNames(colours, seq(0, n_states - 1))
 
   m
-
 }
 
 #' Edit 'Pixels' in an Interactive Plot
@@ -153,12 +155,11 @@ click_pixels <- function(
 #'   colours  = c("bisque3", "orchid", "chartreuse", "olivedrab")
 #' )}
 edit_pixels <- function(
-    m,
-    n_states = NULL,
-    colours  = NULL,
-    grid     = TRUE
+  m,
+  n_states = NULL,
+  colours = NULL,
+  grid = TRUE
 ) {
-
   # Check inputs
   .check_matrix(m)
   .check_grid(grid)
@@ -166,18 +167,23 @@ edit_pixels <- function(
   .check_n_states_size(m, n_states)
 
   # Handle n_states
-  if (!is.null(n_states)) {  # if provided, convert to integer
+  if (!is.null(n_states)) {
+    # if provided, convert to integer
     n_states <- as.integer(n_states)
-  } else if (is.null(n_states) & !is.null(attr(m, "colours"))) {  # via attribute
+  } else if (is.null(n_states) & !is.null(attr(m, "colours"))) {
+    # via attribute
     n_states <- length(attr(m, "colours"))
-  } else if (is.null(n_states) & is.null(attr(m, "colours"))) {  # via matrix
+  } else if (is.null(n_states) & is.null(attr(m, "colours"))) {
+    # via matrix
     n_states <- max(unique(as.vector(m)) + 1L)
   }
 
   # Handle colours if not provided
-  if (is.null(colours) & !is.null(attr(m, "colours"))) {  # via attribute
+  if (is.null(colours) & !is.null(attr(m, "colours"))) {
+    # via attribute
     colours <- attr(m, "colours")
-  } else if (is.null(colours)) {  # otherwise a grey palette
+  } else if (is.null(colours)) {
+    # otherwise a grey palette
     get_greys <- grDevices::colorRampPalette(c("white", "grey20"))
     colours <- get_greys(n_states)
   }
@@ -187,7 +193,9 @@ edit_pixels <- function(
 
   # Draw matrix, let user interact
   .plot_canvas(m, n_states, colours)
-  if (grid) .add_grid(m)
+  if (grid) {
+    .add_grid(m)
+  }
   m <- .repeat_loop(m, n_states, colours, grid)
 
   # Add class and colours as attributes to returned matrix
@@ -195,7 +203,6 @@ edit_pixels <- function(
   attr(m, "colours") <- stats::setNames(colours, seq(0, n_states - 1))
 
   m
-
 }
 
 #' Coerce to a 'pixeltrix' Object
@@ -225,7 +232,6 @@ edit_pixels <- function(
 #'
 #' @export
 as_pixeltrix <- function(m) {
-
   .check_matrix(m)
 
   if (inherits(m, "pixeltrix")) {
@@ -240,7 +246,6 @@ as_pixeltrix <- function(m) {
   attr(m, "colours") <- stats::setNames(colours, seq(0, n_states - 1))
 
   m
-
 }
 
 #' @rdname as_pixeltrix

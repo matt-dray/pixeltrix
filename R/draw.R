@@ -21,7 +21,6 @@
 #' my_matrix <- click_pixels(n_states = 3L)
 #' draw_pixels(my_matrix, c("black", "#0000FF", "green"))  # a colour per state}
 draw_pixels <- function(m, colours = NULL) {
-
   .check_matrix(m)
 
   # Retrieve n_states from attributes or matrix values
@@ -39,22 +38,21 @@ draw_pixels <- function(m, colours = NULL) {
   # If matrix has no 'colours' attribute, create gradated grey palette
   if (is.null(colours) & is.null(attr(m, "colours"))) {
     get_greys <- grDevices::colorRampPalette(c("white", "grey20"))
-    colours   <- get_greys(n_states)  # gradated colours from white to dark grey
+    colours <- get_greys(n_states) # gradated colours from white to dark grey
   }
 
   # Check number of colours provided
   .check_colours_states(m, n_states, colours)
 
-  par_start <- graphics::par(mar = rep(0, 4))  # set margins, store previous par
+  par_start <- graphics::par(mar = rep(0, 4)) # set margins, store previous par
 
   graphics::image(
-    t(m[nrow(m):1, ]),  # reverse matrix rows and transpose
+    t(m[nrow(m):1, ]), # reverse matrix rows and transpose
     col = colours,
     axes = FALSE,
     xlab = "",
     ylab = ""
   )
 
-  on.exit(graphics::par(par_start))  # revert to user's original settings
-
+  on.exit(graphics::par(par_start)) # revert to user's original settings
 }
